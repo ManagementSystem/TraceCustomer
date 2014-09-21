@@ -24,8 +24,7 @@
 	<mvc:resources mapping="/font/**" location="WEB-INF/font/" /> 
 	<mvc:resources mapping="/js/**" location="WEB-INF/js/" /> 
 	<mvc:resources mapping="/jsp/**" location="WEB-INF/jsp/" />
-	
-	
+	<mvc:resources mapping="index.html" location="WEB-INF/index.html" />
 	
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>

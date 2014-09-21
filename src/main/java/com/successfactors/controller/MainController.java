@@ -10,6 +10,6 @@ public class MainController {
 	
 	@RequestMapping(value="/login")
 	public ModelAndView getIndexPage(){
-		return new ModelAndView("index");
+		return new ModelAndView("login");
 	}
 }

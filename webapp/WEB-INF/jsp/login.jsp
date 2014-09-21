@@ -14,8 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>  
 <body>  
   	<div class="container">
-  	<h1>Login</h1>  
-      <form class="form-signin" role="form" action="./j_spring_security_check">
+      <form class="form-signin" role="form" action="./j_spring_security_check" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="text" name="j_username" class="form-control" placeholder="User Name" required autofocus>
         <input type="password" name="j_password" class="form-control" placeholder="Password" required>

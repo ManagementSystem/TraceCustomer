@@ -16,13 +16,16 @@
 		  </bean>
 		  
 		  
+		  <security:http pattern="/index.html" security="none">
+		  </security:http>
 		  <security:http auto-config="true" use-expressions="true" access-denied-page="/auth/denied" >  
 		  		<security:intercept-url pattern="/login" access="permitAll"/>  
+		  		 
 		        <security:intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>  
 		        <security:intercept-url pattern="/main**" access="hasRole('ROLE_USER')"/>  
 		          
 		        <security:form-login  
-		                login-page="/login"   
+		                login-page="/login" 
 		                authentication-failure-url="/login?error=true"   
 		                default-target-url="/dispatch" />  
 		              

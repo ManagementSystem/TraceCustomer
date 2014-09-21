@@ -24,13 +24,13 @@ public class LoginController {
 	protected static Logger logger = Logger.getLogger(LoginController.class);
 	
 	
-	@RequestMapping(value = "/main",method = RequestMethod.GET)
+	@RequestMapping(value = "/main",method = RequestMethod.POST)
 	public ModelAndView getMainPage(){
 		logger.debug("redirect to the main page");
 		return new ModelAndView("main");
 	}
 	
-	@RequestMapping(value = "/admin",method = RequestMethod.GET)
+	@RequestMapping(value = "/admin",method = RequestMethod.POST)
 	public ModelAndView getAdminPage(){
 		logger.debug("redirect to the admin manage page");
 		return new ModelAndView("admin");
@@ -42,7 +42,7 @@ public class LoginController {
 		return new ModelAndView("error");
 	}
 	
-	@RequestMapping(value = "/dispatch",method = RequestMethod.GET)
+	@RequestMapping(value = "/dispatch")
 	public ModelAndView dispatch(){
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		

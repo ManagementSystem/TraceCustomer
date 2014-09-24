@@ -1,0 +1,108 @@
+<h3>直接客户录入</h3>
+<form class="form-horizontal" role="form">
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            姓名：
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="请填入姓名">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            性别:
+        </label>
+        <div class="col-md-10">
+            <select class="form-control" ng-model="gender" ng-options="opt for opt in genderOptions.gender"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            电话：
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="请填入电话">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            地区：
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="请填入地区">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            车型要求：
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="请填入车型要求">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            购车款预算：
+        </label>
+        <div class="col-md-10">
+            <select class="form-control" ng-model="budget" ng-options="opt for opt in budgerOptions.budget"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            颜色要求：
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="请填入颜色要求">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            内饰要求：
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="请填入内饰要求">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            客户等级：
+        </label>
+        <div class="col-md-10">
+            <select class="form-control" ng-model="customerLevel" ng-options="opt for opt in customerLevelOptions.customerLevel"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            公客/私客：
+        </label>
+        <div class="col-md-10">
+            <select class="form-control" ng-model="privateCustomer" ng-options="opt for opt in privateableOptions.privateCustomer"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            
+        </label>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-6">
+                    <label ng-class="{active:mortgage.checked}" class="btn btn-primary btn-block">
+                            <input type="checkbox" class="hidden" ng-model="mortgage.checked"/>&nbsp;按揭
+                    </label>
+                </div>
+                <div class="col-md-6">
+                    <label ng-class="{active:safe.checked}" class="btn btn-primary btn-block">
+                            <input type="checkbox" class="hidden" ng-model="safe.checked"/>&nbsp;保险
+                    </label>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-primary" ng-click="backToPrevious()">返回</button>
+        </div>
+    </div>
+</form>

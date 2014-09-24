@@ -24,22 +24,22 @@ public class LoginController {
 	protected static Logger logger = Logger.getLogger(LoginController.class);
 	
 	
-	@RequestMapping(value = "/main",method = RequestMethod.POST)
+	@RequestMapping(value = "/main")
 	public ModelAndView getMainPage(){
 		logger.debug("redirect to the main page");
-		return new ModelAndView("main");
+		return new ModelAndView("index.jsp");
 	}
 	
-	@RequestMapping(value = "/admin",method = RequestMethod.POST)
+	@RequestMapping(value = "/admin")
 	public ModelAndView getAdminPage(){
 		logger.debug("redirect to the admin manage page");
-		return new ModelAndView("admin");
+		return new ModelAndView("admin.jsp");
 	}
 	
 	@RequestMapping(value = "/error")
 	public ModelAndView getErrorPage(){
 		logger.debug("redirect to the error page");
-		return new ModelAndView("error");
+		return new ModelAndView("error.jsp");
 	}
 	
 	@RequestMapping(value = "/dispatch")

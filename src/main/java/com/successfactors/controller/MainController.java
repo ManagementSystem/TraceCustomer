@@ -10,6 +10,8 @@ public class MainController {
 	
 	@RequestMapping(value="/login")
 	public ModelAndView getIndexPage(){
-		return new ModelAndView("login");
+		return new ModelAndView("login.jsp");
 	}
+	
+	
 }

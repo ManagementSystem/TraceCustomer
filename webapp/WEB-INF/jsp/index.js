@@ -1,4 +1,4 @@
-var routerApp = angular.module('routerApp', ['ui.router']);
+var routerApp = angular.module('routerApp', ['ui.router','ui.bootstrap']);
 routerApp.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/index');
     $stateProvider
@@ -149,47 +149,34 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 };
                 var vm = $scope.vm = {};
 
-                  //初始化日期
-                  vm.today = function() {
-                    vm.calendar = new Date();
+                $scope.today = function() {
+                        $scope.dt = new Date();
                   };
-                  vm.today();
+              $scope.today();
 
-                  //清除当前日期
-                  vm.clear = function() {
-                    vm.calendar = null;
-                  };
+              $scope.clear = function () {
+                $scope.dt = null;
+              };
 
+              // Disable weekend selection
+              $scope.disabled = function(date, mode) {
+                return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+              };
+              $scope.open = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
 
-                  // 不允许选择周末
-                  vm.disabled = function(date, mode) {
-                    return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-                  };
+                $scope.opened = true;
+              };
 
-                  //最小日期开关
-                  vm.toggleMin = function() {
-                    vm.minDate = vm.minDate ? null : new Date();
-                  };
-                  vm.toggleMin();
+              $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+              };
 
-                  //弹出式日历触发函数
-                  vm.open = function($event) {
-                    $event.preventDefault();
-                    $event.stopPropagation();
-
-                    vm.opened = true;
-                  };
-
-                  //自定义选项
-                  vm.dateOptions = {
-                    formatYear: 'yy',
-                    startingDay: 1,
-                    formatDayTitle: 'yyyy MMMM'
-                  };
-
-                  //输出格式控制,来源:官方date filter
-                  vm.formats = ['yyyy-MMMM-dd', 'yyyy/MM/dd', 'yyyy.MM.dd', 'shortDate'];
-                  vm.format = vm.formats[1];
+              $scope.initDate = new Date('2016-15-20');
+              $scope.formats = ['yyyy/MM/dd'];
+              $scope.format = $scope.formats[0];
             }
         })
         .state('index.carmanage.addCarType', {

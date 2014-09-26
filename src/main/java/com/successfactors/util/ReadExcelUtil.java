@@ -24,19 +24,16 @@ public class ReadExcelUtil {
 		try {
 			w = Workbook.getWorkbook(inputWorkbook);
 			Sheet sheet = w.getSheet(0);
-			for(int j = 0; j < sheet.getColumns();j++){
-				for(int i = 0 ; i < sheet.getRows();i++){
-					Cell cell = sheet.getCell(j, i);
-			          CellType type = cell.getType();
-			          if (type == CellType.LABEL) {
-			            System.out.println("I got a label "
-			                + cell.getContents());
-			          }
-
-			          if (type == CellType.NUMBER) {
-			            System.out.println("I got a number "
-			                + cell.getContents());
-			          } 
+			for(int i = 0;i < sheet.getRows();i++){
+				for(int j = 0;j < sheet.getColumns();j++){
+					Cell cell = sheet.getCell(j,i);
+					CellType type = cell.getType();
+					if(type == CellType.LABEL)
+						 System.out.println("I got a label "
+					                + cell.getContents());
+					if(type == CellType.NUMBER)
+						 System.out.println("I got a number "
+					                + cell.getContents());
 				}
 			}
 		} catch (BiffException e) {

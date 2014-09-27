@@ -6,13 +6,78 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/index',
             views: {
                 '': {
-                    templateUrl: 'jsp/view/adminView/index.html'
+                    templateUrl: 'jsp/view/adminView/index.html',
+                    controller: function($scope, $state) {
+                        $scope.items = [
+                            'The first choice!',
+                            'And another choice for you.',
+                            'but wait! A third!'
+                          ];
+
+                          $scope.status = {
+                            isopen: false
+                          };
+
+                          $scope.toggled = function(open) {
+                            console.log('Dropdown is now: ', open);
+                          };
+
+                          $scope.toggleDropdown = function($event) {
+                            $event.preventDefault();
+                            $event.stopPropagation();
+                            $scope.status.isopen = !$scope.status.isopen;
+                          };
+                        }
                 },
                 'topbar@index': {
                     templateUrl: 'jsp/view/adminView/topbar.html'
                 },
                 'main@index': {
-                    templateUrl: 'jsp/view/adminView/home.html'
+                    templateUrl: 'jsp/view/adminView/home.html',
+                    controller: function($scope, $state) {
+                        var vm = $scope.vm = {};
+                        /*每页展示*/
+                        vm.page = {
+                           size: 5,
+                           index: 1
+                         };
+
+                         //分页条参数设置
+                         $scope.totalItems = 64;
+                         $scope.currentPage = 4;
+
+                         $scope.setPage = function (pageNo) {
+                           $scope.currentPage = pageNo;
+                         };
+
+                         $scope.pageChanged = function() {
+                           console.log('Page changed to: ' + $scope.currentPage);
+                         };
+
+                         $scope.maxSize = 5;
+                         $scope.bigTotalItems = 175;
+                         $scope.bigCurrentPage = 1;
+
+                         //grid中数据展示
+                        vm.formHeadResult = [
+                            {head:'ID Number'},
+                            {head:'Name'},
+                            {head:'CarType'},
+                            {head:'Age'}
+                        ];
+                        vm.formDataResult = 
+                                [   {id:'1',name:'MR Zhang',car:'DZ',age:56},
+                                    {id:'2',name:'Miss zhu',car:'DZ',age:56},
+                                    {id:'3',name:'MR Zhang',car:'BMW',age:56},
+                                    {id:'4',name:'MR Z',car:'DZ',age:56},
+                                    {id:'5',name:'MR Zhang',car:'3fff',age:56},
+                                    {id:'6',name:'MR Li',car:'DZ',age:56},
+                                    {id:'7',name:'MR Zhang',car:'Gddd',age:56},
+                                    {id:'8',name:'MR Zhao',car:'DZ',age:56},
+                                    {id:'9',name:'MR Hang',car:'Cass',age:56},
+                                    {id:'10',name:'MR Hai',car:'DZ',age:56}
+                                ];
+                    }
                 }
             }
         })
@@ -20,18 +85,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/customer',
             views: {
                 'main@index': {
-                    templateUrl: 'jsp/view/adminView/customerManage/customer.html',
-                    controller: function($scope, $state) {
-                    	//新增直接用户
-                        $scope.addDirectCustomer = function() {
-                            $state.go("index.customer.addDirectCustomer");
-                        }
-                        //新增渠道用户
-                        $scope.addChannelCustomer = function() {
-                            $state.go("index.customer.addChannelCustomer");
-                        }
-
-                    }
+                    templateUrl: 'jsp/view/adminView/customerManage/customer.html'
                 }
             }
         })
@@ -126,17 +180,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/carmanage',
             views: {
                 'main@index': {
-                    templateUrl:'jsp/view/adminView/carManage/carManage.html',
-                    controller: function($scope, $state) {
-                    	//新增直接用户
-                        $scope.addCarSource = function() {
-                            $state.go("index.carmanage.addCarSource");
-                        }
-                        //新增渠道用户
-                        $scope.addCarType = function() {
-                            $state.go("index.carmanage.addCarType");
-                        }
-                    }
+                    templateUrl:'jsp/view/adminView/carManage/carManage.html'
                 }
             }
         })
@@ -181,7 +225,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('index.carmanage.addCarType', {
             url: '/addCarSource',
-            templateUrl: 'jsp/view/adminView/carManage/carSourceManage/addCarTypeform.html',
+            templateUrl: 'jsp/view/adminView/carManage/carTypeManage/addCarTypeform.html',
             controller: function($scope, $state) {
                 $scope.backToPrevious = function() {
                     window.history.back();
@@ -200,7 +244,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/settings',
             views: {
                 'main@index': {
-                    template: '这里是系统设置'
+                    template: 'There is some System config'
                 }
             }
         })

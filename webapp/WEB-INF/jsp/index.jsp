@@ -8,6 +8,7 @@
     <script src="js/angular-1.3.0.js"></script>
     <script src="js/angular-animate.js"></script>
     <script src="js/angular-ui-router.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.11.0.js"></script>
     <script src="jsp/index.js"></script>
 </head>
 

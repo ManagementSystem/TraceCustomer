@@ -38,4 +38,5 @@ public interface GenericDAO<T,ID extends Serializable> {
 	
 	void doBatch(List<T> entityList, int op);
 	
+	int getCount();
 }

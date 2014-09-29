@@ -171,6 +171,12 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 	}
 
 	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return findAll().size();
+	}
+
+	@Override
 	public void doBatch(List<T> entityList, int op) {
 		// TODO Auto-generated method stub
 		int entitySize = entityList.size();

@@ -52,4 +52,14 @@ public class ReturnValue {
 	public void setError(){
 		this.returnState = ReturnValueConstants.RETURN_ERROR;
 	}
+	
+	public void setSuccess(String msg){
+		this.setSuccess();
+		this.returnMsg = msg;
+	}
+	
+	public void setError(String msg){
+		this.setError();
+		this.returnMsg = msg;
+	}
 }

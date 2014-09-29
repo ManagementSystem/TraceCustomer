@@ -29,7 +29,7 @@ public class Customer {
 	@Column(name="region")
 	private String region;
 	
-	@Column(name="car_type")
+	@Column(name="budget_range")
 	private String budgetRange;
 	
 	@Column(name="car_color")
@@ -60,7 +60,7 @@ public class Customer {
 	private Integer customerType;
 
 	@ManyToOne
-	@JoinColumn(name="cartype_id")
+	@JoinColumn(name="car_type")
 	private CarType carTpye;
 	
 	

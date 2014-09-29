@@ -1,42 +1,187 @@
-<div class="input-group pull-right global-search">
-  <label class="input-group-addon">全局搜索</label>
-  <input type="text" class="form-control" ng-model="vm.filter.$"/>
+<div class="row">
+  <div class="col-md-3" style="margin-bottom: -33px;">
+    <button type="button" class="btn btn-primary" ng-click="addItem($event)"><i class="glyphicon glyphicon-plus"></i> 新增 </button>
+  </div>
+  <div class="col-md-6">
+    
+  </div>
+  <div class="col-md-3 col-md-offset-9" style="margin-bottom: 18px;">
+    <div class="input-group pull-right global-search">
+      <label class="input-group-addon">全局搜索</label>
+      <input type="text" class="form-control" ng-model="filter.$"/>
+    </div>
+  </div>
 </div>
+
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
-    	<tr>
-    		<th ng-repeat="item in vm.formHeadResult">{{item.head}}</th>
-    	</tr>
+      <tr>
+        <th ng-repeat="item in formHeadResult">{{item.head}}</th>
+      </tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in vm.formDataResult">
-    		<td>{{item.id}}</td>
-    		<td>{{item.name}}</td>
-    		<td>{{item.car}}</td>
-    		<td>{{item.age}}</td>
-    	</tr>
+      <tr ng-repeat="item in formDataResult">
+        <td>{{item.name}}</td>
+        <td>{{item.gender}}</td>
+        <td>{{item.phoneNumber}}</td>
+        <td>{{item.area}}</td>
+        <td>{{item.carType}}</td>
+        <td>{{item.configure}}</td>
+        <td>{{item.color}}</td>
+        <td>{{item.Inside}}</td>
+        <td>
+          <div class="btn btn-sm btn-primary" ng-click="editItem($index,$event)"><i class="glyphicon glyphicon-pencil"></i> 编辑 </div>
+          <div class="btn btn-sm btn-danger" ng-click="delItem($index,$event)"><i class="glyphicon glyphicon-trash"></i> 删除 </div>
+        </td>
+      </tr>
     </tbody>
-	</table>
+  </table>
 </div>
+
 <div class="row">
   <div class="col-md-2">
   <div class="input-group">
       <div class="input-group-addon">每页条数</div>
-      <select ng-model="vm.page.size" class="form-control" title='每页显示条数'
-                  ng-options="pageSize for pageSize in [5, 20, 100]">
+      <select ng-model="paginationConf.itemsPerPage" class="form-control" title="每页条目数"
+                  ng-options="pageSize for pageSize in [10,20,30]">
           </select>
     </div>
     
   </div>
   <div class="col-md-7">
-    <pagination style='margin:0px;'total-items="bigTotalItems" ng-model="currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+    <pagination style='margin:0px;'total-items="paginationConf.totalItems" ng-model="paginationConf.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
   </div>
   <div class="col-md-3">
     <div class="input-group">
       <div class="input-group-addon">GoTo</div>
-      <input class="form-control" type="number" ng-model='currentPage'>
-      <div class="input-group-addon">Page: {{currentPage}} / {{numPages}}</div>
+      <input class="form-control" type="number" ng-model='paginationConf.currentPage' min='1' max='{{numPages}}'>
+      <div class="input-group-addon">Page: {{paginationConf.currentPage}} / {{numPages}}</div>
+    </div>
+  </div>
+</div>
+
+<!-- 修改的弹出框 -->
+<div class="modal fade bs-example-modal-sm" id="myEditModal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myEditModalLabel">编辑</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">姓名:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="姓名" ng-model="dataEditItem.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">车型:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="车型" ng-model="dataEditItem.car">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">年龄:</label>
+            <div class="col-sm-9">
+              <input type="number" class="form-control"placeholder="年龄" max='90' min="0" ng-model="dataEditItem.age">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 新增的弹出框 -->
+<div class="modal fade bs-example-modal-sm" id="myAddModal" tabindex="-1" role="dialog" aria-labelledby="myAddModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myAddModalLabel">新增</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">姓名:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="姓名" ng-model="dataAddItem.name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">先生/女士:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="车型" ng-model="dataAddItem.car">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">电话:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="车型" ng-model="dataAddItem.phone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">地区:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="车型" ng-model="dataAddItem.car">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">车型:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="车型" ng-model="dataAddItem.car">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">配置:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="车型" ng-model="dataAddItem.car">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">颜色:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="车型" ng-model="dataAddItem.car">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">内饰:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="车型" ng-model="dataAddItem.car">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 删除的弹出框 -->
+<div class="modal fade bs-example-modal-sm" id="myDelModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myDelModalLabel">提示</h4>
+      </div>
+      <div class="modal-body">
+        <p>你确定要删除这条信息吗？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">确定</button>
+      </div>
     </div>
   </div>
 </div>

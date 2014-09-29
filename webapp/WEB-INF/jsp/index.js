@@ -34,17 +34,17 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 },
                 'main@index': {
                     templateUrl: 'jsp/view/adminView/home.html',
-                    controller: function($scope, $state) {
-                        var vm = $scope.vm = {};
+                    controller: function($scope, $state,$http) {
                         /*每页展示*/
-                        vm.page = {
-                           size: 5,
-                           index: 1
-                         };
+                        var dataStore;
+                        var dataEditItem;
+                        $scope.paginationConf = {
+                                   itemsPerPage: 10,
+                                   totalItems:30
+                               };
 
-                         //分页条参数设置
-                         $scope.totalItems = 64;
-                         $scope.currentPage = 4;
+                        
+                         $scope.maxSize = 5;
 
                          $scope.setPage = function (pageNo) {
                            $scope.currentPage = pageNo;
@@ -54,29 +54,58 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                            console.log('Page changed to: ' + $scope.currentPage);
                          };
 
-                         $scope.maxSize = 5;
-                         $scope.bigTotalItems = 175;
-                         $scope.bigCurrentPage = 1;
+                         /*编辑方法*/
+                         $scope.editItem = function(index,event){
+                            /*取得选择行的数据*/
+                           console.log(dataStore[index]);
+                           $scope.dataEditItem = dataStore[index];
+                           /*获得该节点*/
+                           console.log(event.target);
+                           event.target.setAttribute('data-toggle','modal');
+                           event.target.setAttribute('data-target','#myEditModal');
+
+                         }
+                         /*新增方法*/
+                         $scope.addItem = function(event){
+                           event.target.setAttribute('data-toggle','modal');
+                           event.target.setAttribute('data-target','#myAddModal');
+                         }
+
+                         /*删除方法*/
+                         $scope.delItem = function(index,event){
+                            event.target.setAttribute('data-toggle','modal');
+                           event.target.setAttribute('data-target','#myDelModal');
+                         }
 
                          //grid中数据展示
-                        vm.formHeadResult = [
-                            {head:'ID Number'},
+                       $scope.formHeadResult = [
                             {head:'Name'},
+                            {head:'Mr/Miss'},
+                            {head:'PhoneNumber'},
+                            {head:'Area'},
                             {head:'CarType'},
-                            {head:'Age'}
+                            {head:'Configure'},
+                            {head:'Color'},
+                            {head:'Inside'},
+                            {head:'Operation'}
                         ];
-                        vm.formDataResult = 
-                                [   {id:'1',name:'MR Zhang',car:'DZ',age:56},
-                                    {id:'2',name:'Miss zhu',car:'DZ',age:56},
-                                    {id:'3',name:'MR Zhang',car:'BMW',age:56},
-                                    {id:'4',name:'MR Z',car:'DZ',age:56},
-                                    {id:'5',name:'MR Zhang',car:'3fff',age:56},
-                                    {id:'6',name:'MR Li',car:'DZ',age:56},
-                                    {id:'7',name:'MR Zhang',car:'Gddd',age:56},
-                                    {id:'8',name:'MR Zhao',car:'DZ',age:56},
-                                    {id:'9',name:'MR Hang',car:'Cass',age:56},
-                                    {id:'10',name:'MR Hai',car:'DZ',age:56}
-                                ];
+                        var reGetDatas = function(){
+                            var postData = {
+                                currentPage: $scope.paginationConf.currentPage,
+                                itemsPerPage: $scope.paginationConf.itemsPerPage
+                            }
+
+                            $http.get('jsp/data.json').success(function(data){
+                            $scope.dataStore = dataStore = data.item;
+                            $scope.formDataResult = data.item;
+                            $scope.paginationConf.currentPage = data.currentPage;
+                            $scope.paginationConf.totalItems = data.totalItems;
+                            $scope.paginationConf.itemsPerPage = data.itemsPerPage;
+                         });
+                        }
+
+                        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', reGetDatas);
+
                     }
                 }
             }

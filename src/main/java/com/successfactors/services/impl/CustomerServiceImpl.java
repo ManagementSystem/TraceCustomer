@@ -1,7 +1,9 @@
 package com.successfactors.services.impl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.successfactors.bean.Customer;
 import com.successfactors.bean.Page;
@@ -15,6 +17,8 @@ public class CustomerServiceImpl implements CustomerService{
 	@Autowired
 	private CustomerDAO customerDao;
 
+	
+	@Transactional
 	public ReturnValue getCustomerData(int currentPage,int itemsPerPage){
 		
 		ReturnValue returnValue = new ReturnValue();

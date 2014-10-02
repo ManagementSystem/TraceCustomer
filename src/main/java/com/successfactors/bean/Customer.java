@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.context.annotation.Lazy;
+
 
 @Table(name="t_customer")
 @Entity
@@ -63,6 +65,8 @@ public class Customer {
 	@JoinColumn(name="car_type")
 	private CarType carTpye;
 	
+	@Column(name="c_sex")
+	private String sex;
 	
 	public String getId() {
 		return id;
@@ -174,6 +178,22 @@ public class Customer {
 
 	public void setCustomerType(Integer customerType) {
 		this.customerType = customerType;
+	}
+
+	public CarType getCarTpye() {
+		return carTpye;
+	}
+
+	public void setCarTpye(CarType carTpye) {
+		this.carTpye = carTpye;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 	
 }

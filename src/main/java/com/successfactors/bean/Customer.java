@@ -180,14 +180,6 @@ public class Customer {
 		this.customerType = customerType;
 	}
 
-	public CarType getCarTpye() {
-		return carTpye;
-	}
-
-	public void setCarTpye(CarType carTpye) {
-		this.carTpye = carTpye;
-	}
-
 	public String getSex() {
 		return sex;
 	}

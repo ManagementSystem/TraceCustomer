@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -15,6 +16,7 @@ import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.springframework.transaction.annotation.Transactional;
 
 public abstract class BaseDAO<T, ID extends Serializable> implements
 		GenericDAO<T, ID> {
@@ -31,8 +33,8 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 	
 	protected static final int BATCH_SIZE = 100;
 	
-	@PersistenceContext
-	protected EntityManager entityManager;
+	@PersistenceContext(type = PersistenceContextType.EXTENDED)
+	private EntityManager entityManager;
 	
 
 	@SuppressWarnings("unchecked")
@@ -51,6 +53,18 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 		return (Session)entityManager.unwrap(Session.class);
 	}
 
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	public void setPersistentClass(Class<T> persistentClass) {
+		this.persistentClass = persistentClass;
+	}
+
 	@Override
 	public void setSession(Session session) {
 		// TODO Auto-generated method stub
@@ -66,6 +80,7 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 	}
 
 	@Override
+	@Transactional
 	public T findById(ID id) {
 		// TODO Auto-generated method stub
 		return findById(id, false);
@@ -73,28 +88,32 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public T findById(ID id, boolean lock) {
 		// TODO Auto-generated method stub
 		return (T) (lock ? getSession().load(getPersistentClass(), id,LockOptions.UPGRADE)
 						 : getSession().load(getPersistentClass(), id));
 	}
 	@Override
+	@Transactional
 	public List<T> findAll() {
 		// TODO Auto-generated method stub
 		return findByCriteria();
 	}
 	
+	@Transactional
 	protected List<T> findByCriteria(Criterion... criterion){
 		return findByCriteria(null, criterion);
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Transactional
 	protected List<T> findByCriteria(List<Order> orders,Criterion... criterion){
 		Criteria criteria = createCriteria(orders,criterion);
 		return criteria.list();
 	}
 	
-
+	@Transactional
 	private Criteria createCriteria(List<Order> orders, Criterion... criterion) {
 		// TODO Auto-generated method stub
 		Criteria cri = getSession().createCriteria(getPersistentClass());
@@ -112,6 +131,7 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 	}
 
 	@Override
+	@Transactional
 	public T save(T entity) {
 		// TODO Auto-generated method stub
 		getSession().saveOrUpdate(entity);
@@ -119,6 +139,7 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 	}
 
 	@Override
+	@Transactional
 	public void update(T entity) {
 		// TODO Auto-generated method stub
 		try{
@@ -129,12 +150,14 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 	}
 
 	@Override
+	@Transactional
 	public void update(List<T> entityList) {
 		// TODO Auto-generated method stub
 		doBatch(entityList,UPDATE);
 	}
 
 	@Override
+	@Transactional
 	public T add(T entity) {
 		// TODO Auto-generated method stub
 		getSession().save(entity);
@@ -142,18 +165,21 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 	}
 
 	@Override
+	@Transactional
 	public void add(List<T> entityList) {
 		// TODO Auto-generated method stub
 		doBatch(entityList, ADD);
 	}
 
 	@Override
+	@Transactional
 	public void remove(T entity) {
 		// TODO Auto-generated method stub
 		getSession().delete(entity);
 	}
 
 	@Override
+	@Transactional
 	public void remove(List<T> entityList) {
 		// TODO Auto-generated method stub
 		doBatch(entityList, REMOVE);

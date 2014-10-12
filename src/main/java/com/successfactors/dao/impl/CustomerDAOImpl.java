@@ -16,7 +16,7 @@ import com.successfactors.dao.CustomerDAO;
 
 
 @Repository
-public class CustomerDAOImpl extends BaseDAO<Customer, String> implements CustomerDAO{
+public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements CustomerDAO{
 
 	@Override
 	public Page<Customer> getCustomers(int currentPage, int itemPerPage) {

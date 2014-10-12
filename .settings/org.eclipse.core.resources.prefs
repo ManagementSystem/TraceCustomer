@@ -1,7 +1,12 @@
 eclipse.preferences.version=1
 encoding//webapp/WEB-INF/jsp/index.jsp=UTF-8
+encoding//webapp/WEB-INF/jsp/view/adminView/carManage/carManage.html=UTF-8
 encoding//webapp/WEB-INF/jsp/view/adminView/carManage/carSourceManage/addCarSourceform.html=UTF-8
+encoding//webapp/WEB-INF/jsp/view/adminView/customerManage/addChannelCustomerform.html=UTF-8
+encoding//webapp/WEB-INF/jsp/view/adminView/customerManage/addDirectCustomerform.html=UTF-8
 encoding//webapp/WEB-INF/jsp/view/adminView/customerManage/customer.html=UTF-8
 encoding//webapp/WEB-INF/jsp/view/adminView/home.html=UTF-8
 encoding//webapp/WEB-INF/jsp/view/adminView/sourceDataManage/sourceDataImport.html=UTF-8
+encoding//webapp/WEB-INF/jsp/view/adminView/topbar.html=UTF-8
+encoding//webapp/WEB-INF/jsp/welcome.jsp=UTF-8
 encoding/<project>=UTF-8

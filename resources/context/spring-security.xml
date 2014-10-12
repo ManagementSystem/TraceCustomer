@@ -15,15 +15,18 @@
 			    <property name="suffix" value=""/>
 		  </bean>
 		  
-		  
-		  <security:http pattern="/index.html" security="none">
+<!-- 		  
+		  <security:http pattern="/index" security="none">
 		  </security:http>
+		  <security:http pattern="/" security="none">
+		  </security:http> -->
 		  <security:http auto-config="true" use-expressions="true" access-denied-page="/auth/denied" >  
 		  		<security:intercept-url pattern="/login" access="permitAll"/>  
-		  		 
+		  		 <security:intercept-url pattern="/index" access="permitAll"/>
+		  		 <security:intercept-url pattern="/" access="permitAll"/>    
 		        <security:intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>  
-		        <security:intercept-url pattern="/main**" access="hasRole('ROLE_USER')"/>  
-		        <security:intercept-url pattern="/index**" access="hasRole('ROLE_USER')"/>    
+		        <security:intercept-url pattern="/customer**" access="hasRole('ROLE_CUSTOMER')"/>  
+		        <security:intercept-url pattern="/supply**" access="hasRole('ROLE_SUPPLY')"/>    
 		        <security:form-login  
 		                login-page="/login" 
 		                authentication-failure-url="/login?error=true"   

@@ -11,16 +11,16 @@ import javax.persistence.Table;
 public class Users {
 	
 	@Id
-	@Column(name= "username")
+	@Column(name= "username",nullable=false,unique=true,length=255)
 	private String username;
 	
-	@Column(name="password")
+	@Column(name="password",nullable=false,unique=false,length=255)
 	private String password;
 	
-	@Column(name="name")
+	@Column(name="name",nullable=false,unique=false,length=255)
 	private String name;
 	
-	@Column(name="permission")
+	@Column(name="permission",nullable=false,unique=false,length=255)
 	private String permission;
 
 	public String getUsername() {

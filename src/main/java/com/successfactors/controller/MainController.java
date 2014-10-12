@@ -13,5 +13,15 @@ public class MainController {
 		return new ModelAndView("login.jsp");
 	}
 	
+	@RequestMapping(value={"/index","/"})
+	public ModelAndView indexPage(){
+		return new ModelAndView("welcome.jsp");
+	}
+	
+//	@RequestMapping(value={"/index","/"})
+//	public void indexPage(HttpServletRequest request,HttpServletResponse response) throws IOException{
+//		response.sendRedirect("welcome.html");
+//		
+//	}
 	
 }

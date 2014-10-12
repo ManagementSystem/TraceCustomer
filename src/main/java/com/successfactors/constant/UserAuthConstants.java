@@ -7,5 +7,5 @@ public class UserAuthConstants {
 	
 	public static final String ROLE_CUSTOMER = "ROLE_CUSTOMER";
 	
-	public static final String ROLE_PROVIDER = "ROLE_PROVIDER";
+	public static final String ROLE_SUPPLY = "ROLE_SUPPLY";
 }

@@ -11,11 +11,15 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.successfactors.bean.Users;
 import com.successfactors.constant.UserAuthConstants;
 import com.successfactors.dao.UsersDAO;
 
+
+@Service
 public class CustomUserDetailsService implements UserDetailsService{
 
 	@Autowired
@@ -23,6 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	
 	
 	@Override
+	@Transactional
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
@@ -42,9 +47,14 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public Collection<? extends GrantedAuthority> getAuth(String permission) {
 		// TODO Auto-generated method stub
 		Set<GrantedAuthority> authSet = new HashSet<GrantedAuthority>();
-		authSet.add(new SimpleGrantedAuthority(UserAuthConstants.ROLE_USER));
 		if(permission.equals(UserAuthConstants.ROLE_ADMIN)){
+//			authSet.add(new SimpleGrantedAuthority(UserAuthConstants.ROLE_SUPPLY));
+//			authSet.add(new SimpleGrantedAuthority(UserAuthConstants.ROLE_CUSTOMER));
 			authSet.add(new SimpleGrantedAuthority(UserAuthConstants.ROLE_ADMIN));			
+		}else if(permission.equals(UserAuthConstants.ROLE_CUSTOMER)){
+			authSet.add(new SimpleGrantedAuthority(UserAuthConstants.ROLE_CUSTOMER));
+		}else if(permission.equals(UserAuthConstants.ROLE_SUPPLY)){
+			authSet.add(new SimpleGrantedAuthority(UserAuthConstants.ROLE_SUPPLY));
 		}
 		return authSet;
 	}

@@ -1,79 +1,107 @@
 package com.successfactors.bean;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.context.annotation.Lazy;
 
 
 @Table(name="t_customer")
 @Entity
-public class Customer {
+public class Customer implements Serializable{
 	
 	@Id
-	@Column(name="c_id")
-	@GeneratedValue
-	private String id;
+	@Column(name="cusotmer_id",nullable=true,unique=true)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	
-	@Column(name="c_name")
+	@Column(name="name",nullable=true,unique=false,length=255)
 	private String name;
 	
-	@Column(name="c_phone")
+	@Column(name="phone",nullable=false,unique=false,length=255)
 	private String phone;
 	
-	@Column(name="region")
+	@Column(name="region",nullable=false,unique=false,length=255)
 	private String region;
 	
-	@Column(name="budget_range")
+	@Column(name="budget_range",nullable=false,unique=false,length=255)
 	private String budgetRange;
 	
-	@Column(name="car_color")
+	@Column(name="car_color",nullable=false,unique=false,length=255)
 	private String carColor;
 	
-	@Column(name="decoration")
+	@Column(name="decoration",nullable=false,unique=false,length=255)
 	private String decoration;
 	
-	@Column(name="installment")
+	@Column(name="installment",nullable=false,unique=false)
 	private Integer installment;
 	
-	@Column(name="insurance")
+	@Column(name="insurance",nullable=false,unique=false)
 	private Integer insurance;
 	
-	@Column(name="c_level")
+	@Column(name="level",nullable=false,unique=false,length=255)
 	private String level;
 	
-	@Column(name="ispublic")
+	@Column(name="ispublic",nullable=false,unique=false)
 	private Integer ispublic;
 	
-	@Column(name="import_time")
+	@Column(name="import_time",nullable=false,unique=false)
 	private Date importTime;
 	
-	@Column(name="deadline")
+	@Column(name="deadline",nullable=false,unique=false)
 	private Integer deadline;
 	
-	@Column(name="customer_type")
+	@Column(name="customer_type",nullable=false,unique=false)
 	private Integer customerType;
 
+	@JoinColumn(name="cartype_id")
 	@ManyToOne
-	@JoinColumn(name="car_type")
-	private CarType carTpye;
+	private CarType carType;
 	
-	@Column(name="c_sex")
+	@Column(name="sex",nullable=false,unique=false,length=20)
 	private String sex;
 	
-	public String getId() {
+	
+	@Column(name="property",nullable=false,unique=false)
+	private Integer property; // (Derect customer or channel customer)
+	
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="customer")
+	private Set<CustomerRemarks> remarks;
+	
+	
+	public Set<CustomerRemarks> getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(Set<CustomerRemarks> remarks) {
+		this.remarks = remarks;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+
+	public CarType getCarType() {
+		return carType;
+	}
+
+	public void setCarType(CarType carType) {
+		this.carType = carType;
 	}
 
 	public String getName() {
@@ -187,5 +215,14 @@ public class Customer {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+
+	public Integer getProperty() {
+		return property;
+	}
+
+	public void setProperty(Integer property) {
+		this.property = property;
+	}
+	
 	
 }

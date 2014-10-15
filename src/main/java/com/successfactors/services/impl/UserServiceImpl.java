@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.successfactors.bean.Users;
+import com.successfactors.constant.UserConstants;
+import com.successfactors.controller.UserController;
 import com.successfactors.dao.UsersDAO;
 import com.successfactors.services.UserService;
 
@@ -61,6 +63,23 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 		
+	}
+
+	@Override
+	@Transactional
+	public String createUser(Users user) {
+		// TODO Auto-generated method stub
+		String returnMsg = UserConstants.RETURN_FAIL;
+		String username = user.getUsername();
+		
+		if(!usersDao.isExist(username)){
+			user.setPassword("123456");
+			usersDao.save(user);
+			returnMsg = UserConstants.RETURN_SUCCESS;
+		}else{
+			returnMsg = UserConstants.USER_ISEXIST;
+		}
+		return returnMsg;
 	}
 
 }

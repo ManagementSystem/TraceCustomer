@@ -16,6 +16,7 @@ import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 public abstract class BaseDAO<T, ID extends Serializable> implements
@@ -219,6 +220,16 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 		}
 		
 		
+	}
+
+	@Override
+	public boolean isExist(ID id) {
+		// TODO Auto-generated method stub
+		if(getSession().get(persistentClass, id) == null){
+			return false;
+		}else{
+			return true;
+		}
 	}
 	
 }

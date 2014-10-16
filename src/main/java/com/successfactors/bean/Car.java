@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.successfactors.vo.CarVO;
+
 
 @Table(name="t_car")
 @Entity
@@ -29,7 +32,7 @@ public class Car {
 	private String region;
 	
 	//car type (import,Domestic,Comprehensive)
-	@Column(name="type",nullable=true,unique=false,length=255)
+	@Column(name="product_type",nullable=true,unique=false,length=255)
 	private String type;
 	
 	@Column(name="dealer",nullable=true,unique=false,length=255)
@@ -48,31 +51,35 @@ public class Car {
 	@Column(name="telphone",nullable=true,unique=false,length=255)
 	private String telphone;
 	
-	@JoinColumn(name="cartype_id")
+	@JoinColumn(name="cartype_id",nullable=true)
 	@ManyToOne
 	private CarType carType;
 	
 	@Column(name="config",nullable=true,unique=false,length=255)
 	private String configuration;
 	
-	@Column(name="color",nullable=true,unique=false,length=255)
+	@Column(name="carColor",nullable=true,unique=false,length=255)
 	private String carColor;
 	
 	@Column(name="decoration",nullable=true,unique=false,length=255)
 	private String carDecoration;
 	
-	@Column(name="product_date")
+	@Column(name="product_date",nullable=true)
 	private Date productDate;
 
-	@Column(name="sale_region",nullable=false,unique=false,length=255)
+	@Column(name="sale_region",nullable=true,unique=false,length=255)
 	private String sealRegion;
 	
-	@Column(name="price")
+	@Column(name="price",nullable=true,unique=false)
 	private double price;
 	
-	@Column(name="istop")
+	@Column(name="istop",nullable=true,unique=false)
 	private Integer isTop;
 	
+	@Column(name="operator",nullable=true,length=255)
+	private String operator;
+	
+	@JsonIgnore
 	@OneToMany(mappedBy="car",fetch=FetchType.LAZY)
 	private Set<CarsRemarks> remarks;
 	
@@ -204,5 +211,37 @@ public class Car {
 		this.isTop = isTop;
 	}
 
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	public Set<CarsRemarks> getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(Set<CarsRemarks> remarks) {
+		this.remarks = remarks;
+	}
 	
+	public void setCarVO(CarVO vo){
+		this.operator = vo.getOperator();
+		this.isTop = vo.getIsTop();
+		this.sealRegion = vo.getSaleRegion();
+		this.configuration = vo.getConfiguration();
+		this.customerManager = vo.getCustomerManager();
+		this.carColor = vo.getCarColor();
+		this.carDecoration = vo.getCarDecoration();
+		this.dealer = vo.getDealer();
+		this.price = vo.getPrice();
+		this.principal = vo.getPrincipal();
+		this.productDate = vo.getProductDate();
+		this.region = vo.getRegion();
+		this.telphone = vo.getTelphone();
+		this.type = vo.getType();
+		this.saleManager = vo.getSaleManager();
+	}
 }

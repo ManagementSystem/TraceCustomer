@@ -30,6 +30,7 @@ public class CarsRemarks {
 	@Column(name="updateTime")
 	private Date updateTime;
 	
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="car_id")
 	private Car car;

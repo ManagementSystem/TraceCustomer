@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Table(name="t_cartype")
 @Entity
 public class CarType {
@@ -26,10 +28,11 @@ public class CarType {
 	@Column(name="type",nullable=true,unique=false,length=255)
 	private String type;
 
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "carType")
 	private Set<Customer> customers; 
 	
-	
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "carType")
 	private Set<Car> cars;
 	

@@ -7,9 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.successfactors.bean.Car;
 import com.successfactors.bean.CarType;
+import com.successfactors.bean.Page;
+import com.successfactors.bean.ReturnValue;
 import com.successfactors.constant.ReturnValueConstants;
 import com.successfactors.dao.CarDAO;
 import com.successfactors.dao.CarTypeDAO;
+import com.successfactors.dao.CustomerDAO;
 import com.successfactors.services.CarService;
 import com.successfactors.vo.CarVO;
 
@@ -53,6 +56,23 @@ public class CarServiceImpl implements CarService{
 
 	public void setDao(CarDAO dao) {
 		this.dao = dao;
+	}
+
+
+	@Override
+	@Transactional
+	public ReturnValue getCarsData(int currentPage, int itemPerPage) {
+		// TODO Auto-generated method stub
+		ReturnValue returnValue = new ReturnValue();
+		try {
+			Page<Car> page = dao.getCar(currentPage, itemPerPage);
+			returnValue.setSuccess();
+			returnValue.setReturnData(page);
+		} catch (Exception e) {
+			// TODO: handle exception
+			returnValue.setError();
+		}
+		return returnValue;
 	}
 
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.successfactors.bean.CarType;
+import com.successfactors.bean.ReturnValue;
 import com.successfactors.bean.Users;
 import com.successfactors.services.CarService;
 import com.successfactors.services.CarTypeService;
@@ -65,7 +66,14 @@ public class AdminController extends BaseController{
 	
 	
 	@RequestMapping(value="/delcartype",method=RequestMethod.GET)
+	@ResponseBody
 	public String delCarType(@RequestParam("id") Long id){
 		return carTypeService.deleteCarType(id);
+	}
+	
+	@RequestMapping(value="/getcar",method=RequestMethod.GET)
+	@ResponseBody
+	public ReturnValue getCars(@RequestParam("currentPage") int currentPage,@RequestParam("itemsPerPage") int itemsPerPage){
+		return carService.getCarsData(currentPage, itemsPerPage);
 	}
 }

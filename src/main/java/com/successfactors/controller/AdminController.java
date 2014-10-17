@@ -1,6 +1,8 @@
 package com.successfactors.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,5 +77,13 @@ public class AdminController extends BaseController{
 	@ResponseBody
 	public ReturnValue getCars(@RequestParam("currentPage") int currentPage,@RequestParam("itemsPerPage") int itemsPerPage){
 		return carService.getCarsData(currentPage, itemsPerPage);
+	}
+	
+	
+	@RequestMapping(value="/querycar",method=RequestMethod.POST)
+	@ResponseBody
+	public ReturnValue getCarsByCondition(@RequestBody Map<String, String> conditions){
+		return carService.queryCarsData(conditions);
+		
 	}
 }

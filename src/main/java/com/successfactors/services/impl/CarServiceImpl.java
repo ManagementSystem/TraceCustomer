@@ -1,5 +1,7 @@
 package com.successfactors.services.impl;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,6 +74,25 @@ public class CarServiceImpl implements CarService{
 			// TODO: handle exception
 			returnValue.setError();
 		}
+		return returnValue;
+	}
+
+
+	@Override
+	@Transactional
+	public ReturnValue queryCarsData(Map<String, String> conditions) {
+		// TODO Auto-generated method stub
+		ReturnValue returnValue = new ReturnValue();
+		
+		try {
+			Page<Car> page = dao.queryCars(conditions);
+			returnValue.setSuccess();
+			returnValue.setReturnData(page);
+		} catch (Exception e) {
+			// TODO: handle exception
+			returnValue.setError();
+		}
+		
 		return returnValue;
 	}
 

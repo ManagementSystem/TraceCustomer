@@ -221,8 +221,7 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 		
 		
 	}
-
-	@Override
+	
 	public boolean isExist(ID id) {
 		// TODO Auto-generated method stub
 		if(getSession().get(persistentClass, id) == null){
@@ -231,5 +230,6 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 			return true;
 		}
 	}
+	
 	
 }

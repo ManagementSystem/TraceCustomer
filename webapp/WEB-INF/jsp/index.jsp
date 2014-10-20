@@ -20,5 +20,10 @@
 <body>
     <div ui-view></div>
 </body>
+<style>
+    body {
+        font-family: "\5FAE\8F6F\96C5\9ED1", "Microsoft Yahei", "Hiragino Sans GB", tahoma, arial, "\5B8B\4F53" !important;
+    }
+</style>
 
 </html>

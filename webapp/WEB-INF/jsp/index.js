@@ -39,6 +39,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         var dataStore;
                         var dataEditItem;
                         $scope.paginationConf = {
+                        		   currentPage:1,
                                    itemsPerPage: 10,
                                    totalItems:30
                                };
@@ -89,7 +90,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                 itemsPerPage: $scope.paginationConf.itemsPerPage
                             }
 
-                            $http.get('jsp/sourceData/data.json').success(function(data){
+                            $http.get('http://localhost:8080/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
                             $scope.dataStore = dataStore = data.returnData.item;
                             $scope.formDataResult = data.returnData.item;
                             $scope.paginationConf.currentPage = data.returnData.currentPage;
@@ -230,8 +231,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 
                 //获取Grid数据方法
                 var reGetCarTypeDatas = function(){
-
-                    $http.get('jsp/sourceData/carType.json').success(function(data){
+                	
+                    $http.get('http://localhost:8080/employee-manage/admin/getcartype').success(function(data){
                     $scope.dataStore = dataStore = data;
                     $scope.carTypeResult = data;
                  });

@@ -39,6 +39,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         var dataStore;
                         var dataEditItem;
                         $scope.paginationConf = {
+                        		   currentPage:1,
                                    itemsPerPage: 10,
                                    totalItems:30
                                };
@@ -60,7 +61,6 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                            console.log(dataStore[index]);
                            $scope.dataEditItem = dataStore[index];
                            /*获得该节点*/
-                           console.log(event.target);
                            event.target.setAttribute('data-toggle','modal');
                            event.target.setAttribute('data-target','#myEditModal');
 
@@ -73,40 +73,39 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 
                          /*删除方法*/
                          $scope.delItem = function(index,event){
-                            event.target.setAttribute('data-toggle','modal');
+                           event.target.setAttribute('data-toggle','modal');
                            event.target.setAttribute('data-target','#myDelModal');
                          }
 
-                         //grid中数据展示
-                       $scope.formHeadResult = [
-                            {head:'Name'},
-                            {head:'Mr/Miss'},
-                            {head:'PhoneNumber'},
-                            {head:'Area'},
-                            {head:'CarType'},
-                            {head:'Configure'},
-                            {head:'Color'},
-                            {head:'Inside'},
-                            {head:'Operation'}
-                        ];
+                         // 展示详细
+                         $scope.detailItem = function(index,event){
+                          event.target.setAttribute('data-toggle','modal');
+                          event.target.setAttribute('data-target','#myDetailModal');
+                         }
+
+                        //获取Grid数据方法
                         var reGetDatas = function(){
                             var postData = {
                                 currentPage: $scope.paginationConf.currentPage,
                                 itemsPerPage: $scope.paginationConf.itemsPerPage
                             }
 
-                            $http.get('jsp/data.json').success(function(data){
-                            $scope.dataStore = dataStore = data.item;
-                            $scope.formDataResult = data.item;
-                            $scope.paginationConf.currentPage = data.currentPage;
-                            $scope.paginationConf.totalItems = data.totalItems;
-                            $scope.paginationConf.itemsPerPage = data.itemsPerPage;
+                            $http.get('http://localhost:8080/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                            $scope.dataStore = dataStore = data.returnData.item;
+                            $scope.formDataResult = data.returnData.item;
+                            $scope.paginationConf.currentPage = data.returnData.currentPage;
+                            $scope.paginationConf.totalItems = data.returnData.totalItems;
+                            $scope.paginationConf.itemsPerPage = data.returnData.itemsPerPage;
                          });
                         }
 
+                        //坚挺当前页面和每页条数来获取grid数据
                         $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', reGetDatas);
 
                     }
+                },
+                'footer@index':{
+                    templateUrl:'jsp/view/adminView/footer.html'
                 }
             }
         })
@@ -114,94 +113,22 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/customer',
             views: {
                 'main@index': {
-                    templateUrl: 'jsp/view/adminView/customerManage/customer.html'
+                    templateUrl: 'jsp/view/adminView/customerManage/customer.html',
                 }
             }
         })
-        .state('index.customer.highendusers', {
-            url: '/highendusers',
-            templateUrl: 'jsp/view/adminView/customerManage/highendusers.html'
+        .state('index.customer.addCustomer',{
+          url:'/addCustomer',
+          templateUrl:'jsp/view/adminView/customerManage/addCustomerform.html',
+          controller:function($scope,$state){
+           
+          }
         })
-        .state('index.customer.normalusers', {
-            url: '/normalusers',
-            templateUrl: 'jsp/view/adminView/customerManage/normalusers.html'
-        })
-        .state('index.customer.lowusers', {
-            url: '/lowusers',
-            templateUrl: 'jsp/view/adminView/customerManage/lowusers.html'
-        })
-        .state('index.customer.addDirectCustomer', {
-            url: '/addDirectCustomer',
-            templateUrl: 'jsp/view/adminView/customerManage/addDirectCustomerform.html',
-            controller: function($scope, $state) {
-                $scope.backToPrevious = function() {
-                    window.history.back();
-                };
-                $scope.customerLevel = '普通用户';
-                $scope.customerLevelOptions = {
-                    customerLevel:[
-                    '普通用户',
-                    'VIP用户',
-                    'VVIP用户'
-                    ]
-                };
-
-                //性别
-                $scope.gender ='男';
-                $scope.genderOptions = {
-                    gender:['男','女']
-                }
-
-                //预算
-                $scope.budget ='5万以下';
-                $scope.budgerOptions = {
-                    budget:['5万以下',
-                            '5万到10万',
-                            '10万到30万',
-                            '30万到60万',
-                            '60万到90万',
-                            '90万到120万',
-                            '120万到200万',
-                            '200万以上',]
-                }
-                
-                //按揭
-                var mortgage = $scope.mortgage = {};
-                //保险
-                var safe = $scope.safe = {};
-                //公客、私客
-                $scope.privateCustomer = '公客';
-                $scope.privateableOptions = {
-                  privateCustomer: ['公客','私客']
-                };
-            }
-        })
-        .state('index.customer.addChannelCustomer', {
-            url: '/addChannelCustomer',
-            templateUrl: 'jsp/view/adminView/customerManage/addChannelCustomerform.html',
-            controller: function($scope, $state) {
-                $scope.backToPrevious = function() {
-                    window.history.back();
-                }
-                
-
-                //性别
-                $scope.gender ='男';
-                $scope.genderOptions = {
-                    gender:['男','女']
-                }
-
-                //预算
-                $scope.budget ='5万以下';
-                $scope.budgerOptions = {
-                    budget:['5万以下',
-                            '5万到10万',
-                            '10万到30万',
-                            '30万到60万',
-                            '60万到90万',
-                            '90万到120万',
-                            '120万到200万',
-                            '200万以上',]
+        .state('index.customer.sourcedata', {
+            url: '/sourcedata',
+            views: {
+                'main@index': {
+                    templateUrl:'jsp/view/adminView/sourceDataManage/customerDataImport.html'
                 }
             }
         })
@@ -222,50 +149,104 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 };
                 var vm = $scope.vm = {};
 
-                $scope.today = function() {
+                  $scope.today = function() {
                         $scope.dt = new Date();
                   };
-              $scope.today();
+                  $scope.today();
 
-              $scope.clear = function () {
-                $scope.dt = null;
-              };
+                  $scope.clear = function () {
+                    $scope.dt = null;
+                  };
 
-              // Disable weekend selection
-              $scope.disabled = function(date, mode) {
-                return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-              };
-              $scope.open = function($event) {
-                $event.preventDefault();
-                $event.stopPropagation();
+                  // Disable weekend selection
+                  $scope.disabled = function(date, mode) {
+                    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+                  };
+                  $scope.open = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
 
-                $scope.opened = true;
-              };
+                    $scope.opened = true;
+                  };
 
-              $scope.dateOptions = {
-                formatYear: 'yy',
-                startingDay: 1
-              };
+                  $scope.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                  };
 
-              $scope.initDate = new Date('2016-15-20');
-              $scope.formats = ['yyyy/MM/dd'];
-              $scope.format = $scope.formats[0];
+                  $scope.initDate = new Date('2016-15-20');
+                  $scope.formats = ['yyyy/MM/dd'];
+                  $scope.format = $scope.formats[0];
+
+                  //新增车源
+                  $scope.addCarObject = {
+                  	isTop:"",
+                  	saleRegion:"",
+                  	configuration:"",
+                  	customerManager:"",
+                  	carColor:"",
+                  	carDecoration:"",
+                  	dealer:"",
+                  	price:"",
+                  	principal:"",
+                  	region:"",
+                  	type:"",
+                  	carTyeId:"",
+                  	telphone:""
+                  };
+
             }
         })
         .state('index.carmanage.addCarType', {
-            url: '/addCarSource',
+            url: '/addCarType',
             templateUrl: 'jsp/view/adminView/carManage/carTypeManage/addCarTypeform.html',
-            controller: function($scope, $state) {
+            controller: function($scope, $state,$http) {
                 $scope.backToPrevious = function() {
                     window.history.back();
-                }
+                };
+                /**
+                 * 新增车型
+                 */
+                $scope.saveCarType = function(event) {
+                	console.log(event.target);
+                    var postData = {
+                        brand: $scope.addCartTypeConfig.brand,
+                        type: $scope.addCartTypeConfig.type
+                    };
+                    console.log(postData);
+                	$http.post("",postData).success(function(data){
+                		if(data == success){
+                			console.log("新增车型成功！");
+                		}else{
+                			console.log("新增成型失败！");
+                		}
+                	})
+                };
+                
+//                新增参数
+                $scope.addCartTypeConfig = {
+                		brand:"",
+                		type:""
+                };
+                
+                //获取Grid数据方法
+                var reGetCarTypeDatas = function(){
+                	
+                    $http.get('http://localhost:8080/employee-manage/admin/getcartype').success(function(data){
+                    $scope.dataStore = dataStore = data;
+                    $scope.carTypeResult = data;
+                 });
+                };
+                //获取车型数据
+                reGetCarTypeDatas();
+             
             }
         })
-        .state('index.sourcedata', {
+        .state('index.carmanage.sourcedata', {
             url: '/sourcedata',
             views: {
                 'main@index': {
-                    templateUrl:'jsp/view/adminView/sourceDataManage/sourceDataImport.html'
+                    templateUrl:'jsp/view/adminView/sourceDataManage/carSourceDataImport.html'
                 }
             }
         })
@@ -273,8 +254,134 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/settings',
             views: {
                 'main@index': {
-                    template: 'There is some System config'
+                    templateUrl:'jsp/view/adminView/testPage/testPage.html'
+                    }
                 }
-            }
+           
         })
 });
+
+// 权限访问
+routerApp.factory('authService', function($http){
+  var userRole = [];
+  var userRoleRouteMap = {
+    'ROLE_ADMIN':['/admin/**'],
+    'ROLE_USER':['/user']
+  }
+  return {
+ 
+        userHasRole: function (role) {
+            for (var j = 0; j < userRole.length; j++) {
+                if (role == userRole[j]) {
+                    return true;
+                }
+            }
+            return false;
+        },
+ 
+        isUrlAccessibleForUser: function (route) {
+            for (var i = 0; i < userRole.length; i++) {
+                var role = userRole[i];
+                var validUrlsForRole = userRoleRouteMap[role];
+                if (validUrlsForRole) {
+                    for (var j = 0; j < validUrlsForRole.length; j++) {
+                        if (validUrlsForRole[j] == route)
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
+    };
+});
+
+// 按钮显示控制指令
+// 属性形式
+routerApp.directive('myAccess', ['authService', 'removeElement', function (authService, removeElement) {
+    return{
+        restrict: 'A',
+        link: function (scope, element, attributes) {
+ 
+            var hasAccess = false;
+            var allowedAccess = attributes.myAccess.split(" ");
+            for (i = 0; i < allowedAccess.length; i++) {
+                if (authService.userHasRole(allowedAccess[i])) {
+                    hasAccess = true;
+                    break;
+                }
+            }
+ 
+            if (!hasAccess) {
+                angular.forEach(element.children(), function (child) {
+                    removeElement(child);
+                });
+                removeElement(element);
+            }
+ 
+        }
+    }
+}]).constant('removeElement', function(element){
+    element && element.remove && element.remove();
+});
+
+
+/**
+ * 文件上传指令
+ */
+routerApp.directive('fileUploader', ['', function(){
+  // Runs during compile
+  return {
+    // name: '',
+    // priority: 1,
+    // terminal: true,
+    // scope: {}, // {} = isolate, true = child, false/undefined = no change
+    controller: function($scope, $fileUpload) {
+      $scope.notReady = true;
+      $scope.upload = function(){
+        $fileUpload.upload($scope.files);
+      };
+    },
+    // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+    restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+    template: '<div><input type="file" multiple/><button ng-click="upload()">上传</button></div>'+
+              '<ul><li ng-repeat="file in files">-</li></ul>',
+    // templateUrl: '',
+    // replace: true,
+    transclude: true,
+    // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+    link: function($scope,$element) {
+      var fileInput = $element.find('input[type="file"]');
+      fileInput.bind('change',function(e){
+        $scope.notReady = e.target.files.length == 0;
+        $scope.files = [];
+        for(i in e.target.files){
+          if(typeof e.target.files[i] == 'Object')
+            $scope.files.push(e.target.files[i]);
+        }
+      });
+    }
+  };
+}]);
+
+
+/**
+ * 文件上传服务
+ */
+routerApp.service('$fileUpload', ['$http', function($http){
+  this.upload = function(files){
+    var formData = new formData();
+    for(i in files){
+      formData.append('file_'+i,files[i]);
+    }
+    console.log(formData);
+    $http({
+      method:'POST',
+      url:'',
+      data:formData,
+      headers:{'Content-Type':undefined},
+      transformRequest:angular.identity
+    }).success(function(data,status,headers,config){
+
+    });
+  }
+}])

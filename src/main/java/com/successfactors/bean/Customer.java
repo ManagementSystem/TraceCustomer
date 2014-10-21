@@ -15,10 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.successfactors.vo.CustomerVO;
+
 
 @Table(name="t_customer")
 @Entity
-public class Customer implements Serializable{
+public class Customer{
 	
 	@Id
 	@Column(name="cusotmer_id",nullable=true,unique=true)
@@ -67,6 +69,11 @@ public class Customer implements Serializable{
 	@JoinColumn(name="cartype_id")
 	@ManyToOne
 	private CarType carType;
+	
+	
+	//导入的人
+	@Column(name="import_name",nullable=false,unique=false)
+	private String importName;
 	
 	@Column(name="sex",nullable=false,unique=false,length=20)
 	private String sex;
@@ -224,5 +231,29 @@ public class Customer implements Serializable{
 		this.property = property;
 	}
 	
-	
+	public String getImportName() {
+		return importName;
+	}
+
+	public void setImportName(String importName) {
+		this.importName = importName;
+	}
+
+	public void setCustomerVO(CustomerVO vo){
+		this.budgetRange = vo.getBudgetRange();
+		this.carColor = vo.getCarColor();
+		this.customerType = vo.getCustomerType();
+		this.deadline = vo.getDeadline();
+		this.decoration = vo.getDecoration();
+		this.importTime = vo.getImportTime();
+		this.installment = vo.getInstallment();
+		this.insurance = vo.getInsurance();
+		this.ispublic = vo.getIspublic();
+		this.level = vo.getLevel();
+		this.name = vo.getName();
+		this.phone = vo.getPhone();
+		this.property = vo.getProperty();
+		this.region = vo.getRegion();
+		this.importName = vo.getImportName();
+	}
 }

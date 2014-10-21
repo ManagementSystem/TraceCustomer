@@ -1,5 +1,6 @@
 package com.successfactors.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,10 @@ import com.successfactors.bean.ReturnValue;
 import com.successfactors.bean.Users;
 import com.successfactors.services.CarService;
 import com.successfactors.services.CarTypeService;
+import com.successfactors.services.CustomerService;
 import com.successfactors.services.UserService;
 import com.successfactors.vo.CarVO;
+import com.successfactors.vo.CustomerVO;
 
 
 @Controller
@@ -33,6 +36,9 @@ public class AdminController extends BaseController{
 	
 	@Autowired
 	private CarService carService;
+	
+	@Autowired
+	private CustomerService customerService;
 	
 	
 	@RequestMapping(value="/createuser",method=RequestMethod.POST)
@@ -86,4 +92,26 @@ public class AdminController extends BaseController{
 		return carService.queryCarsData(conditions);
 		
 	}
+	
+	
+	@RequestMapping(value="/getcustomer",method=RequestMethod.GET)
+	@ResponseBody
+	public ReturnValue getCustomerData(@RequestParam("currentPage") int currentPage,@RequestParam("itemsPerPage") int itemsPerPage){
+		return customerService.getCustomerData(currentPage, itemsPerPage);
+	}
+	
+	@RequestMapping(value="/querycustomer",method=RequestMethod.POST)
+	@ResponseBody
+	public ReturnValue queryCustomerData(@RequestBody Map<String, String> conditions){
+		return customerService.queryCustomerData(conditions);
+	}
+	
+	@RequestMapping(value="/createcustomer",method=RequestMethod.POST)
+	@ResponseBody
+	public String createCustomer(@RequestBody CustomerVO vo){
+		vo.setImportName("zjw");
+		vo.setImportTime(new Date());
+		return customerService.addCustomer(vo);
+	}
+	
 }

@@ -92,7 +92,6 @@ public class CarServiceImpl implements CarService{
 			// TODO: handle exception
 			returnValue.setError();
 		}
-		
 		return returnValue;
 	}
 

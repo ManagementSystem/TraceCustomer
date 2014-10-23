@@ -204,6 +204,15 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.backToPrevious = function() {
                     window.history.back();
                 };
+//                设置警告信息显示状态
+                $scope.notNullBrand = true;
+                $scope.notNullType = true;
+                
+//              新增参数
+              $scope.addCartTypeConfig = {
+              		brand:"",
+              		type:""
+              };
                 /**
                  * 新增车型
                  */
@@ -213,20 +222,24 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         brand: $scope.addCartTypeConfig.brand,
                         type: $scope.addCartTypeConfig.type
                     };
-                    console.log(postData);
-                	$http.post("",postData).success(function(data){
-                		if(data == success){
-                			console.log("新增车型成功！");
-                		}else{
-                			console.log("新增成型失败！");
-                		}
-                	})
-                };
-                
-//                新增参数
-                $scope.addCartTypeConfig = {
-                		brand:"",
-                		type:""
+                    if($scope.addCartTypeConfig.brand == ""){
+                    	$scope.notNullBrand = false;
+                    }else if($scope.addCartTypeConfig.type == ""){
+                    	$scope.notNullType = false;
+                    }else{
+                    	$http.post("http://localhost:8080/employee-manage/admin/createcartype",postData).success(function(data){
+                    		if(data == "success"){
+                    			reGetCarTypeDatas();
+                    			$scope.addCartTypeConfig = {
+                                		brand:"",
+                                		type:""
+                                };
+                    		}else{
+                    			console.log("Save Faild!");
+                    		}
+                    	});
+                    }
+                	
                 };
                 
                 //获取Grid数据方法

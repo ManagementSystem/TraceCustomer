@@ -16,8 +16,6 @@ import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.transaction.annotation.Transactional;
 
 public abstract class BaseDAO<T, ID extends Serializable> implements
 		GenericDAO<T, ID> {
@@ -229,6 +227,12 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 		}else{
 			return true;
 		}
+	}
+
+	@Override
+	public T getById(ID id) {
+		// TODO Auto-generated method stub
+		return (T) getSession().get(persistentClass, id);
 	}
 	
 	

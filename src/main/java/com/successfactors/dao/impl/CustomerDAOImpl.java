@@ -27,7 +27,7 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 		// TODO Auto-generated method stub
 		String hql = "from Customer";
 		Query query = getSession().createQuery(hql);
-		query.setFirstResult((currentPage - 1) * itemPerPage + 1);
+		query.setFirstResult((currentPage - 1) * itemPerPage);
 		query.setMaxResults(itemPerPage);
 		List<Customer> list = query.list();
 		Page<Customer> page = new Page<Customer>();

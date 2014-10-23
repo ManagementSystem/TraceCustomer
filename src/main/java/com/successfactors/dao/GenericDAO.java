@@ -12,6 +12,8 @@ public interface GenericDAO<T,ID extends Serializable> {
 	
 	T findById(ID id,boolean lock);
 	
+	T getById(ID id);
+	
 	List<T> findAll();
 	
 	T save(T entity);

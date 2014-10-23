@@ -51,7 +51,7 @@ public class Customer{
 	@Column(name="insurance",nullable=false,unique=false)
 	private Integer insurance;
 	
-	@Column(name="level",nullable=false,unique=false,length=255)
+	@Column(name="customer_level",nullable=false,unique=false,length=255)
 	private String level;
 	
 	@Column(name="ispublic",nullable=false,unique=false)
@@ -255,5 +255,6 @@ public class Customer{
 		this.property = vo.getProperty();
 		this.region = vo.getRegion();
 		this.importName = vo.getImportName();
+		this.sex = vo.getSex();
 	}
 }

@@ -1,4 +1,5 @@
 <div class="row">
+<div>{{addCarObject}}</div>
     <div class="col-md-3">
         <div class="form-group">
                 <label class="col-md-8 control-label" style="margin-top: 10px;">
@@ -24,18 +25,18 @@
                 <label class="col-md-3 control-label">
                     所在区域：
                 </label>
-                <div class="col-md-9">
+                <div class="col-md-9" ng-init="areaOptions">
                 <!-- 东南西北 -->
-                    <select class="form-control" ng-options="opt for opt in customerArea.area"></select>
+                    <select ng-model="addCarObject.region" class="form-control" ng-options="x for x in areaOptions"></select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-3 control-label">
                     类型：
                 </label>
-                <div class="col-md-9">
+                <div class="col-md-9" ng-init="typeOptions">
                 <!-- 进口、国产、综合 -->
-                    <select class="form-control" ng-options="opt for opt in customerArea.area"></select>
+                    <select ng-model="addCarObject.type" class="form-control" ng-options="opt for opt in typeOptions"></select>
                 </div>
             </div>
             <div class="form-group">
@@ -53,18 +54,10 @@
             </div>
             <div class="form-group">
                 <label class="col-md-3 control-label">
-                    经销商：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="$scope.addCarObject.customerManager" type="text" class="form-control" placeholder="请填入经销商名字">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
                     负责人：
                 </label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" placeholder="请填入负责人名字">
+                    <input ng-model="addCarObject.principal" type="text" class="form-control" placeholder="请填入负责人名字">
                 </div>
             </div>
             <div class="form-group">
@@ -72,7 +65,7 @@
                     销售经理：
                 </label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" placeholder="请填入销售经理名字">
+                    <input ng-model="addCarObject.customerManager" type="text" class="form-control" placeholder="请填入销售经理名字">
                 </div>
             </div>
             <div class="form-group">
@@ -80,15 +73,15 @@
                     大客户经理：
                 </label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" placeholder="请填入大客户经理的名字">
+                    <input ng-model="addCarObject.customerManager" type="text" class="form-control" placeholder="请填入大客户经理的名字">
                 </div>
             </div>
-            <div class="form-group">
+             <div class="form-group">
                 <label class="col-md-3 control-label">
-                    具体车型：
+                    品牌：
                 </label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" placeholder="请填入具体车型">
+                    <input ng-model="addCarObject.dealer" type="text" class="form-control" placeholder="请填入配置要求">
                 </div>
             </div>
             <div class="form-group">
@@ -96,7 +89,7 @@
                     配置：
                 </label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" placeholder="请填入配置要求">
+                    <input ng-model="addCarObject.configuration" type="text" class="form-control" placeholder="请填入配置要求">
                 </div>
             </div>
             <div class="form-group">
@@ -104,7 +97,7 @@
                     颜色：
                 </label>
                 <div class="col-md-9">
-                    <input ng-model="$scope.addCarObject.carColor" type="text" class="form-control" placeholder="请填入颜色">
+                    <input ng-model="addCarObject.carColor" type="text" class="form-control" placeholder="请填入颜色">
                 </div>
             </div>
             <div class="form-group">
@@ -112,7 +105,7 @@
                     内饰：
                 </label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" placeholder="请填入内饰">
+                    <input ng-model="addCarObject.carDecoration" type="text" class="form-control" placeholder="请填入内饰">
                 </div>
             </div>
             
@@ -121,23 +114,15 @@
                     联系方式：
                 </label>
                 <div class="col-md-9">
-                    <input ng-model="$scope.addCarObject.telphone" type="text" class="form-control" placeholder="请填入联系方式">
+                    <input ng-model="addCarObject.telphone" type="text" class="form-control" placeholder="请填入联系方式">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-3 control-label">
-                    成本价：
+                    售价：
                 </label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control" placeholder="请填入成本价">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    销售价：
-                </label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" placeholder="请填入销售价">
+                    <input ng-model="addCarObject.price" type="text" class="form-control" placeholder="请填入销售价">
                 </div>
             </div>
             <div class="form-group">
@@ -145,8 +130,8 @@
                     置顶：
                 </label>
                 <div class="col-md-9">
-                    <input type="radio" name="toTop"><label>是</label>
-                    <input type="radio" name="toTop"><label>否</label>
+                    <input ng-model="addCarObject.isTop" type="radio" name="toTop" value="1"><label>是</label>
+                    <input ng-model="addCarObject.isTop" type="radio" name="toTop" value="0"><label>否</label>
                 </div>
             </div>
             
@@ -154,12 +139,14 @@
                 <label class="col-md-3 control-label">
                     可售区域：
                 </label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" placeholder="请填入可售区域">
+                 <div class="col-md-9" ng-init="saleRegionOptions">
+                <!-- 全国、省内、小区域 -->
+                    <select ng-model="addCarObject.saleRegion" class="form-control" ng-options="opt for opt in saleRegionOptions"></select>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-3 col-md-9">
+                	<button class="btn btn-primary" ng-click="saveCarSource()">提交</button>
                     <button class="btn btn-primary" ng-click="backToPrevious()">返回</button>
                 </div>
             </div>

@@ -120,7 +120,27 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         .state('index.customer.addCustomer',{
           url:'/addCustomer',
           templateUrl:'jsp/view/adminView/customerManage/addCustomerform.html',
-          controller:function($scope,$state){
+          controller:function($scope,$state,$http){
+//        	  客户类
+           $scope.customerObjects = {
+        		name:"",
+        		phone:"",
+        		region:"",
+        		budgetRange:"",
+        		carColor:"",
+        		decoration:"",
+        		installment:"",
+        		insurance:"",
+        		level:"",
+        		ispublice:"",
+        		deadline:"",
+        		customerType:"",
+        		carTypeId:"",
+        		sex:"",
+        		property:""
+           };
+           
+           
            
           }
         })
@@ -143,7 +163,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         .state('index.carmanage.addCarSource', {
             url: '/addCarSource',
             templateUrl: 'jsp/view/adminView/carManage/carSourceManage/addCarSourceform.html',
-            controller: function($scope, $state) {
+            controller: function($scope, $state,$http) {
                 $scope.backToPrevious = function() {
                     window.history.back();
                 };
@@ -191,10 +211,37 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                   	principal:"",
                   	region:"",
                   	type:"",
-                  	carTyeId:"",
                   	telphone:""
                   };
-
+                  
+                  //初始化各个select组件
+//                  区域
+                  $scope.areaOptions=['East','South','West','North'];
+                  $scope.addCarObject.region=$scope.areaOptions[0];
+//                  类型
+                  $scope.typeOptions =['Imported','Made in China','Comprehensive'];
+                  $scope.addCarObject.type=$scope.typeOptions[0];
+//                  可售区域
+                  $scope.saleRegionOptions=['Whole Country','Province','Small place'];
+                  $scope.addCarObject.saleRegion=$scope.saleRegionOptions[0];
+                  
+                  $scope.saveCarSource = function(){
+                	  var postData = $scope.addCarObject;
+                	  
+                	  $http.post("http://localhost:8080/employee-manage/admin/createcar",postData).success(function(data){
+                  		if(data == "success"){
+                  			console.log(data);
+//                  			reGetCarTypeDatas();
+//                  			$scope.addCartTypeConfig = {
+//                              		brand:"",
+//                              		type:""
+//                              };
+                  		}else{
+                  			console.log("Save Faild!");
+                  		}
+                  	});
+                  };
+            
             }
         })
         .state('index.carmanage.addCarType', {

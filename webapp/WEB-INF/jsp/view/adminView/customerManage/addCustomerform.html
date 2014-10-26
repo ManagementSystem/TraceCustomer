@@ -1,0 +1,163 @@
+<div class="row">
+<div>{{customerObjects}}</div>
+    <div class="col-md-3">
+    <label for="">客户Excel文件：</label>
+    	<!-- 使用了权限控制的按钮 -->
+    	<div my-access='ROLE_ADMIN'><button type="button" class="btn btn-primary" ui-sref="index.customer.sourcedata">导入</button></div>
+    	<button type="button" class="btn btn-primary" ui-sref="index.customer.sourcedata">导入</button>
+    </div>
+    <div class="col-md-6">
+        <form class="form-horizontal" role="form">
+         <div class="form-group">
+                <label class="col-md-3 control-label">
+                    客户类型：
+                </label>
+                <div class="col-md-9">
+                    <input ng-model="customerObjects.customerType" type="radio" name="customerType"><label>直接客户</label>
+                    <input ng-model="customerObjects.customerType" type="radio" name="customerType"><label>渠道客户</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    姓名：
+                </label>
+                <div class="col-md-9">
+                    <input ng-model="customerObjects.name" type="text" class="form-control" placeholder="请填入姓名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    性别：
+                </label>
+                <div class="col-md-9">
+                    <input ng-model="customerObjects.sex" type="radio" name="gender" value="male"><label>男</label>
+                    <input ng-model="customerObjects.sex" type="radio" name="gender" value="female"><label>女</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    电话：
+                </label>
+                <div class="col-md-9">
+                    <input ng-model="customerObjects.phone" type="text" class="form-control" placeholder="请填入电话">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    地区：
+                </label>
+                <div class="col-md-9">
+                    <select ng-model="customerObjects.region" class="form-control" ng-options="opt for opt in customerArea.area"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    车型要求：
+                </label>
+                <div class="col-md-9">
+                    <select class="form-control" ng-model="budget" ng-options="opt for opt in carType.type"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    配置：
+                </label>
+                <div class="col-md-9">
+                    <select class="form-control" ng-model="customerObjects.decoration" ng-options="opt for opt in carType.type"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    购车预算区间：
+                </label>
+                <div class="col-md-9">
+                    <select class="form-control" ng-model="customerObjects.budgetRange" ng-options="opt for opt in budgerOptions.budget"></select>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-md-3 control-label">
+                    客户等级：
+                </label>
+                <div class="col-md-9">
+                    <select class="form-control" ng-model="customerObjects.level" ng-options="opt for opt in budgerOptions.budget"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    公客/私客：
+                </label>
+                <div class="col-md-9">
+                    <input type="radio" name="ispublice" ng-model="customerObjects.ispublice" value="userful"><label>有效</label>
+                    <input type="radio" name="ispublice" ng-model="customerObjects.ispublice" value="nouserful"><label>失效</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    有效性：
+                </label>
+                <div class="col-md-9">
+                    <input type="radio" name="userful" value="true"><label>有效</label>
+                    <input type="radio" name="userful" value="false"><label>失效</label>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-md-3 control-label">
+                    按揭：
+                </label>
+                <div class="col-md-9">
+                    <input type="radio" name="mortgage" value="true"><label>是</label>
+                    <input type="radio" name="mortgage" value="false"><label>否</label>
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="col-md-3 control-label">
+                    保险：
+                </label>
+                <div class="col-md-9">
+                   <input type="radio" name="safe" value="true"><label>是</label>
+                   <input type="radio" name="safe" value="false"><label>否</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    颜色要求：
+                </label>
+                <div class="col-md-9">
+                    <input type="text" ng-model="customerObjects.carColor" class="form-control" placeholder="请填入颜色要求">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    内饰要求：
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" placeholder="请填入内饰要求">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    回访内容：
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" placeholder="请填入回访内容">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    成交数量：
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" placeholder="请填入成交数量">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-primary" ng-click="backToPrevious()">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+

@@ -18,9 +18,13 @@ import com.successfactors.bean.ReturnValue;
 import com.successfactors.bean.Users;
 import com.successfactors.services.CarService;
 import com.successfactors.services.CarTypeService;
+import com.successfactors.services.CarsRemarkService;
+import com.successfactors.services.CustomerRemarkService;
 import com.successfactors.services.CustomerService;
 import com.successfactors.services.UserService;
+import com.successfactors.vo.CarRemarkVO;
 import com.successfactors.vo.CarVO;
+import com.successfactors.vo.CustomerRemarkVO;
 import com.successfactors.vo.CustomerVO;
 
 
@@ -39,6 +43,12 @@ public class AdminController extends BaseController{
 	
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private CarsRemarkService carRemarkService;
+	
+	@Autowired
+	private CustomerRemarkService customerRemarkService;
 	
 	
 	@RequestMapping(value="/createuser",method=RequestMethod.POST)
@@ -114,4 +124,39 @@ public class AdminController extends BaseController{
 		return customerService.addCustomer(vo);
 	}
 	
+	@RequestMapping(value="/addcarremark",method=RequestMethod.POST)
+	@ResponseBody
+	public String addCarRemark(@RequestBody CarRemarkVO vo){		
+		vo.setRemarkMan("zjw");
+		return carRemarkService.addCarsRemark(vo);
+		
+	}
+	
+	@RequestMapping(value="/getcarremarks",method=RequestMethod.GET)
+	@ResponseBody
+	public ReturnValue getCarRemark(@RequestParam(value="carid") Long id,
+									@RequestParam(value="currentPage") int currentPage,
+									@RequestParam(value="itemsPerPage") int itemsPerPage){
+		
+		return carRemarkService.getCarsRemarks(id, currentPage, itemsPerPage);
+		
+	}
+	
+	@RequestMapping(value="/addcustomerremark",method=RequestMethod.POST)
+	@ResponseBody
+	public String addCustomerRemark(@RequestBody CustomerRemarkVO vo){
+		vo.setRemarkMan("zjw");
+		return customerRemarkService.addCustomerRemark(vo);
+	}
+	
+	
+	@RequestMapping(value="/getcustomerremarks",method=RequestMethod.GET)
+	@ResponseBody
+	public ReturnValue getCustomerRemark(@RequestParam(value="customerid") Long id,
+										@RequestParam(value="currentPage") int currentPage,
+										@RequestParam(value="itemsPerPage") int itemsPerPage){
+		
+		return customerRemarkService.getCustomerRemarks(id, currentPage, itemsPerPage);
+		
+	}
 }

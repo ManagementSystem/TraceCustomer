@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.successfactors.vo.CarRemarkVO;
+
 @Entity
 @Table(name="cars_remarks")
 public class CarsRemarks {
@@ -27,10 +30,13 @@ public class CarsRemarks {
 	@Column(name="content",nullable=true,unique=false,length=255)
 	private String content;
 	
-	@Column(name="updateTime")
+	@Column(name="update_time")
 	private Date updateTime;
 	
+	@Column(name="remarkman",nullable=true,unique=false,length=255)
+	private String remarkMan;
 	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="car_id")
 	private Car car;
@@ -67,6 +73,26 @@ public class CarsRemarks {
 		this.updateTime = updateTime;
 	}
 	
-	
+	public String getRemarkMan() {
+		return remarkMan;
+	}
+
+	public void setRemarkMan(String remarkMan) {
+		this.remarkMan = remarkMan;
+	}
+
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
+	}
+
+	public void setVO(CarRemarkVO vo){
+		this.content = vo.getContent();
+		this.remarkMan = vo.getRemarkMan();
+		this.type = vo.getType();
+	}
 	
 }

@@ -16,6 +16,7 @@ import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 
 public abstract class BaseDAO<T, ID extends Serializable> implements
 		GenericDAO<T, ID> {
@@ -184,9 +185,10 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 	}
 
 	@Override
-	public int getCount() {
+	public int getCount(List<Order> orders, Criterion... criterion) {
 		// TODO Auto-generated method stub
-		return findAll().size();
+		int totalResult = ((Number)createCriteria(orders,criterion).setProjection(Projections.rowCount()).uniqueResult()).intValue();
+		return totalResult;
 	}
 
 	@Override

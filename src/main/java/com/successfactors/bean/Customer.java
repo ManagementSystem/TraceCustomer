@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.successfactors.vo.CustomerVO;
 
 
@@ -66,6 +67,7 @@ public class Customer{
 	@Column(name="customer_type",nullable=false,unique=false)
 	private Integer customerType;
 
+	@JsonIgnore
 	@JoinColumn(name="cartype_id")
 	@ManyToOne
 	private CarType carType;

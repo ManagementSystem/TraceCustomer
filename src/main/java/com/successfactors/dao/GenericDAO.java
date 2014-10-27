@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 
 
 public interface GenericDAO<T,ID extends Serializable> {
@@ -40,7 +42,7 @@ public interface GenericDAO<T,ID extends Serializable> {
 	
 	void doBatch(List<T> entityList, int op);
 	
-	int getCount();
+	int getCount(List<Order> orders, Criterion... criterion);
 	
 	boolean isExist(ID id);
 }

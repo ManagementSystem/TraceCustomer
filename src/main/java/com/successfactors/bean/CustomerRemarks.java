@@ -13,6 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.successfactors.vo.CustomerRemarkVO;
+import com.successfactors.vo.CustomerVO;
+
 
 @Entity
 @Table(name="customer_remarks")
@@ -33,6 +37,10 @@ public class CustomerRemarks {
 	@Column(name="content",nullable=true,unique=false,length=255)
 	private String content;
 
+	@Column(name="remark_man",nullable=true,unique=false,length=255)
+	private String remarkMan;
+	
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="cusotmer_id")
 	private Customer customer;
@@ -77,6 +85,10 @@ public class CustomerRemarks {
 		this.customer = customer;
 	}
 	
-	
+	public void setVO(CustomerRemarkVO vo){
+		this.content = vo.getContent();
+		this.remarkMan = vo.getRemarkMan();
+		this.type = vo.getType();
+	}
 	
 }

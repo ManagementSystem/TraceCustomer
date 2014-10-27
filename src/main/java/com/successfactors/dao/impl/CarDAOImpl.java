@@ -3,6 +3,7 @@ package com.successfactors.dao.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
@@ -12,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.successfactors.bean.Car;
+import com.successfactors.bean.CarsRemarks;
 import com.successfactors.bean.Page;
 import com.successfactors.dao.BaseDAO;
 import com.successfactors.dao.CarDAO;
@@ -19,6 +21,8 @@ import com.successfactors.dao.CarDAO;
 
 @Repository
 public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
+	
+	Logger logger = Logger.getLogger(CarDAOImpl.class);
 
 	@Override
 	public Page<Car> getCar(int currentPage, int itemPerPage) {
@@ -32,7 +36,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		page.setItem(list);
 		page.setItemsPerPage(itemPerPage);
 		page.setCurrentPage(currentPage);
-		page.setTotalItems(getCount());
+		page.setTotalItems(getCount(null));
 		return page;
 		
 	}
@@ -66,5 +70,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		page.setTotalItems(totalResult);
 		return page;
 	}
+
+	
 	
 }

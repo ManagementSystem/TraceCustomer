@@ -35,7 +35,14 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 'main@index': {
                     templateUrl: 'jsp/view/adminView/home.html',
                     controller: function($scope, $state,$http) {
-                        /*每页展示*/
+                       $scope.ReturnMsg = false;
+                        $scope.CarShow = true;
+//                        切换车源还是客源
+                        $scope.changeDataType = function(event){
+                        	$scope.CarShow = !($scope.CarShow);
+                        };
+                        
+//                        车源的数据缓存和pageBar设置
                         var dataStore;
                         var dataEditItem;
                         $scope.paginationConf = {
@@ -54,53 +61,125 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                          $scope.pageChanged = function() {
                            console.log('Page changed to: ' + $scope.currentPage);
                          };
-
+                         
                          /*编辑方法*/
                          $scope.editItem = function(index,event){
                             /*取得选择行的数据*/
                            console.log(dataStore[index]);
-                           $scope.dataEditItem = dataStore[index];
+//                           编辑item的数据项
+                           $scope.editCarObject = dataStore[index];
+                          
                            /*获得该节点*/
                            event.target.setAttribute('data-toggle','modal');
                            event.target.setAttribute('data-target','#myEditModal');
 
-                         }
-                         /*新增方法*/
-                         $scope.addItem = function(event){
-                           event.target.setAttribute('data-toggle','modal');
-                           event.target.setAttribute('data-target','#myAddModal');
-                         }
-
+                         };
+                         
+//                         确认修改
+                         $scope.saveEditCarSource = function(event){
+                        	 var postData = $scope.editCarObject;
+                        	
+                        	 $http.post("http://localhost:8080/employee-manage/admin/createcar",postData).success(function(data){
+                           		if(data == "success"){
+                           			console.log(data);
+//                           	    修改后刷新车源列表
+//                           	  reGetDatas();
+//                           	     关闭模态框
+                           			
+//                           	     置空修改项
+//                           	  $scope.editCarObject = {};
+                           			
+                           		}else{
+                           			console.log("Save Faild!");
+                           		}
+                           	});
+                         };
+                         
                          /*删除方法*/
                          $scope.delItem = function(index,event){
+                           $scope.delItemId = dataStore[index].id;
                            event.target.setAttribute('data-toggle','modal');
                            event.target.setAttribute('data-target','#myDelModal');
-                         }
+                         };
+                         
+//                         确认删除车源数据
+                         $scope.deleCarData = function(){
+                        	 $http.get('http://localhost:8080/employee-manage/admin/delcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:{id:$scope.delItemId}}).success(function(data){
+                                if(data == "success"){
+                                	console.log("Del Success!");
+                                }else{
+                                	console.log("Del Faild");
+                                }
+                              }); 
+                         };
 
                          // 展示详细
-                         $scope.detailItem = function(index,event){
-                          event.target.setAttribute('data-toggle','modal');
-                          event.target.setAttribute('data-target','#myDetailModal');
-                         }
+                          $scope.detailItem = function(index,event){
+	                          $scope.carSourceDetail = dataStore[index];
+	                          $scope.carSourceDetail.region = $scope.carSourceDetail.region;
+	                          $scope.carSourceDetail.dealer = $scope.carSourceDetail.dealer;
+	                          $scope.carSourceDetail.price = $scope.carSourceDetail.price;
+	                          $scope.carSourceDetail.type = $scope.carSourceDetail.type;
+	                          $scope.carSourceDetail.configuration = $scope.carSourceDetail.configuration;
+	                          
+	                          event.target.setAttribute('data-toggle','modal');
+	                          event.target.setAttribute('data-target','#myDetailModal');
+                         };
+                         
+//                         客源的数据缓存和pageBar设置
+                         var dataStoreForCustomer;
+                         var dataEditItemForCustomer;
+                         $scope.paginationConfForCustomer = {
+                         		   	currentPage:1,
+                                    itemsPerPage: 5,
+                                    totalItems:30
+                                };
+                          $scope.maxSize = 5;
+
+                         
 
                         //获取Grid数据方法
                         var reGetDatas = function(){
-                            var postData = {
-                                currentPage: $scope.paginationConf.currentPage,
-                                itemsPerPage: $scope.paginationConf.itemsPerPage
+                           
+//                            请求车源还是客源的URL
+                            if($scope.CarShow){
+                            	 var postData = {
+                                         currentPage: $scope.paginationConf.currentPage,
+                                         itemsPerPage: $scope.paginationConf.itemsPerPage
+                                     };
+                            	 $http.get('http://localhost:8080/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                            		 $scope.ajaxMsg ="Get CarSource Data Success!";
+                            		 $scope.dataStore = dataStore = data.returnData.item;
+                                     $scope.formDataResult = data.returnData.item;
+                                     $scope.paginationConf.currentPage = data.returnData.currentPage;
+                                     $scope.paginationConf.totalItems = data.returnData.totalItems;
+                                     $scope.paginationConf.itemsPerPage = data.returnData.itemsPerPage;
+                                  });
+                            }else{
+                            	 var postData = {
+                                         currentPage: $scope.paginationConfForCustomer.currentPage,
+                                         itemsPerPage: $scope.paginationConfForCustomer.itemsPerPage
+                                     };
+                            	 $http.get('http://localhost:8080/employee-manage/admin/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                                     if(data.returnState == "success"){
+                                    	 $scope.ajaxMsg ="Get CustomerSource Data Success!";
+                                    	 $scope.dataStoreForCustomer = dataStoreForCustomer = data.returnData.item;
+                                         $scope.formDataResultForCustomer = data.returnData.item;
+                                         $scope.paginationConfForCustomer.currentPage = data.returnData.currentPage;
+                                         $scope.paginationConfForCustomer.totalItems = data.returnData.totalItems;
+                                         $scope.paginationConfForCustomer.itemsPerPage = data.returnData.itemsPerPage;
+                                     }else{
+                                    	 $scope.ajaxMsg = "Get CustomerSource Data Error!";
+                                    }
+                            		 
+                                  });
                             }
 
-                            $http.get('http://localhost:8080/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
-                            $scope.dataStore = dataStore = data.returnData.item;
-                            $scope.formDataResult = data.returnData.item;
-                            $scope.paginationConf.currentPage = data.returnData.currentPage;
-                            $scope.paginationConf.totalItems = data.returnData.totalItems;
-                            $scope.paginationConf.itemsPerPage = data.returnData.itemsPerPage;
-                         });
+                           
                         }
 
                         //坚挺当前页面和每页条数来获取grid数据
-                        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', reGetDatas);
+                        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage + CarShow +paginationConfForCustomer.currentPage + paginationConfForCustomer.itemsPerPage', reGetDatas);
 
                     }
                 },
@@ -122,25 +201,49 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
           templateUrl:'jsp/view/adminView/customerManage/addCustomerform.html',
           controller:function($scope,$state,$http){
 //        	  客户类
-           $scope.customerObjects = {
-        		name:"",
-        		phone:"",
-        		region:"",
-        		budgetRange:"",
-        		carColor:"",
-        		decoration:"",
-        		installment:"",
-        		insurance:"",
-        		level:"",
-        		ispublice:"",
-        		deadline:"",
-        		customerType:"",
-        		carTypeId:"",
-        		sex:"",
-        		property:""
-           };
+              $scope.customerObjects = {
+           		name:"",
+           		phone:"",
+           		region:"",
+           		budgetRange:"",
+           		carColor:"",
+           		decoration:"",
+           		installment:"",
+           		insurance:"",
+           		level:"",
+           		ispublice:"",
+           		deadline:"",
+           		customerType:"",
+           		carType:"",
+           		sex:"",
+           		property:"",
+           		remarks:""
+              };
+
+//        	  车型
+        	  $http.get('http://localhost:8080/employee-manage/admin/getcartype').success(function(data){
+                  $scope.TypeOptions = data;
+               });
+        	  
+        	  
+//        	  预算区间
+        	  $scope.budgetRangeOptions = ["5W-10W","10W-15W","15W-20W","20W-30W","30W-40W","40W-60W","60W-80W","80W-100W"];
+        	  $scope.customerObjects.budgetRange = $scope.budgetRangeOptions[0];
            
-           
+//        	  等级
+        	  $scope.levelOptions = ["1","2","3","4"];
+        	  $scope.customerObjects.level = $scope.levelOptions[0];
+//        	  新增客源
+        	  $scope.addCustomer = function(){
+        		  var postData = $scope.customerObjects;
+        		  $http.get("url",{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+        			  if(data == "success"){
+        				  console.log("Save success!");
+        			  }else{
+        				  console.log("Save Faild!");
+        			  }
+        		  });
+        	  }
            
           }
         })

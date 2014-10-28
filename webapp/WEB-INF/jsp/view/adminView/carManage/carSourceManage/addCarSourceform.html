@@ -18,10 +18,11 @@
                 </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-9">
         <form class="form-horizontal" role="form">
-            
-            <div class="form-group">
+            <div class="row">
+	            <div class="col-md-6">
+	            	  <div class="form-group">
                 <label class="col-md-3 control-label">
                     所在区域：
                 </label>
@@ -76,7 +77,26 @@
                     <input ng-model="addCarObject.customerManager" type="text" class="form-control" placeholder="请填入大客户经理的名字">
                 </div>
             </div>
-             <div class="form-group">
+           
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    颜色：
+                </label>
+                <div class="col-md-9">
+                    <input ng-model="addCarObject.carColor" type="text" class="form-control" placeholder="请填入颜色">
+                </div>
+            </div>
+	            </div>
+	            <div class="col-md-6">
+	            	   <div class="form-group">
+                <label class="col-md-3 control-label">
+                    内饰：
+                </label>
+                <div class="col-md-9">
+                    <input ng-model="addCarObject.carDecoration" type="text" class="form-control" placeholder="请填入内饰">
+                </div>
+            </div>
+              <div class="form-group">
                 <label class="col-md-3 control-label">
                     品牌：
                 </label>
@@ -92,23 +112,6 @@
                     <input ng-model="addCarObject.configuration" type="text" class="form-control" placeholder="请填入配置要求">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    颜色：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="addCarObject.carColor" type="text" class="form-control" placeholder="请填入颜色">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    内饰：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="addCarObject.carDecoration" type="text" class="form-control" placeholder="请填入内饰">
-                </div>
-            </div>
-            
             <div class="form-group">
                 <label class="col-md-3 control-label">
                     联系方式：
@@ -150,8 +153,10 @@
                     <button class="btn btn-primary" ng-click="backToPrevious()">返回</button>
                 </div>
             </div>
+	            </div>
+            </div>
         </form>
     </div>
-    <div class="col-md-3"></div>
+   
 </div>
 

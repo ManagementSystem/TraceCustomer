@@ -41,6 +41,8 @@ public class CustomerVO {
 	
 	private List<Long> remarkids;
 
+	private String configuration;
+	
 	public String getName() {
 		return name;
 	}
@@ -184,6 +186,14 @@ public class CustomerVO {
 
 	public void setImportName(String importName) {
 		this.importName = importName;
+	}
+
+	public String getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(String configuration) {
+		this.configuration = configuration;
 	}
 	
 	

@@ -28,45 +28,48 @@ public class Customer{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="name",nullable=true,unique=false,length=255)
+	@Column(name="name",nullable=false,unique=false,length=255)
 	private String name;
 	
-	@Column(name="phone",nullable=false,unique=false,length=255)
+	@Column(name="phone",nullable=true,unique=false,length=255)
 	private String phone;
 	
-	@Column(name="region",nullable=false,unique=false,length=255)
+	@Column(name="region",nullable=true,unique=false,length=255)
 	private String region;
 	
-	@Column(name="budget_range",nullable=false,unique=false,length=255)
+	@Column(name="budget_range",nullable=true,unique=false,length=255)
 	private String budgetRange;
 	
-	@Column(name="car_color",nullable=false,unique=false,length=255)
+	@Column(name="car_color",nullable=true,unique=false,length=255)
 	private String carColor;
 	
-	@Column(name="decoration",nullable=false,unique=false,length=255)
+	@Column(name="decoration",nullable=true,unique=false,length=255)
 	private String decoration;
 	
-	@Column(name="installment",nullable=false,unique=false)
+	@Column(name="installment",nullable=true,unique=false)
 	private Integer installment;
 	
-	@Column(name="insurance",nullable=false,unique=false)
+	@Column(name="insurance",nullable=true,unique=false)
 	private Integer insurance;
 	
-	@Column(name="customer_level",nullable=false,unique=false,length=255)
+	@Column(name="customer_level",nullable=true,unique=false,length=255)
 	private String level;
 	
-	@Column(name="ispublic",nullable=false,unique=false)
+	@Column(name="ispublic",nullable=true,unique=false)
 	private Integer ispublic;
 	
-	@Column(name="import_time",nullable=false,unique=false)
+	@Column(name="import_time",nullable=true,unique=false)
 	private Date importTime;
 	
-	@Column(name="deadline",nullable=false,unique=false)
+	@Column(name="deadline",nullable=true,unique=false)
 	private Integer deadline;
 	
-	@Column(name="customer_type",nullable=false,unique=false)
+	@Column(name="customer_type",nullable=true,unique=false)
 	private Integer customerType;
-
+	
+	@Column(name="config",nullable=true,unique=false,length=255)
+	private String configuration;
+	
 	@JsonIgnore
 	@JoinColumn(name="cartype_id")
 	@ManyToOne
@@ -74,14 +77,14 @@ public class Customer{
 	
 	
 	//导入的人
-	@Column(name="import_name",nullable=false,unique=false)
+	@Column(name="import_name",nullable=true,unique=false)
 	private String importName;
 	
-	@Column(name="sex",nullable=false,unique=false,length=20)
+	@Column(name="sex",nullable=true,unique=false,length=20)
 	private String sex;
 	
 	
-	@Column(name="property",nullable=false,unique=false)
+	@Column(name="property",nullable=true,unique=false)
 	private Integer property; // (Derect customer or channel customer)
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="customer")
@@ -241,6 +244,14 @@ public class Customer{
 		this.importName = importName;
 	}
 
+	public String getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(String configuration) {
+		this.configuration = configuration;
+	}
+
 	public void setCustomerVO(CustomerVO vo){
 		this.budgetRange = vo.getBudgetRange();
 		this.carColor = vo.getCarColor();
@@ -258,5 +269,6 @@ public class Customer{
 		this.region = vo.getRegion();
 		this.importName = vo.getImportName();
 		this.sex = vo.getSex();
+		this.configuration = vo.getConfiguration();
 	}
 }

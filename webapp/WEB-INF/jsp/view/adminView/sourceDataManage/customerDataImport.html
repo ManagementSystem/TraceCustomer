@@ -1,5 +1,32 @@
 <div class="jumbotron text-center">
 	<label for="">请导入客户Excel文件:</label>
-	<input class="text-center" type="file">
 </div>
-<button type="button" class="btn btn-primary btn-lg">上传</button>
+<div>
+	<input class="text-center" type="file">
+	<div ng-show="uploadSuccess"><i class="glyphicon glyphicon-ok"></i> 上传成功</div>
+	<div ng-show="uploadFaild"><i class="glyphicon glyphicon-remove"> 上传失败</i></div>
+	<button type="button" class="btn btn-primary btn-lg" ng-click="upLoadCustomerSourceExcelFile($event)">上传</button>
+</div>
+
+
+<!-- 提示信息弹出框 -->
+<div class="modal fade bs-example-modal-sm" id="myMsgModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" style="width: 274px;margin-left: 32%;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myDelModalLabelTitle">提示</h4>
+      </div>
+      <div class="modal-body">
+        <p style="text-align: center;">
+        	<span ng-show="SuccessMsgShow" style="color: rgba(6, 107, 34, 0.89);font-size: 16px;">{{returnSuccessMsg}}</span>
+        	<span ng-show="!SuccessMsgShow" style="color: #BD5C5C;font-size: 16px;">{{returnErrorMsg}}</span>
+        </p>
+        
+      </div>
+      <div class="modal-footer">
+       	<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+      </div>
+    </div>
+  </div>
+</div>

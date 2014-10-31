@@ -102,15 +102,37 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                            event.target.setAttribute('data-target','#myDelModal');
                          };
                          
-//                         确认删除车源数据
-                         $scope.deleCarData = function(){
-                        	 $http.get('http://localhost:8080/employee-manage/admin/delcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:{id:$scope.delItemId}}).success(function(data){
-                                if(data == "success"){
-                                	console.log("Del Success!");
-                                }else{
-                                	console.log("Del Faild");
-                                }
-                              }); 
+//                         确认删除
+                         $scope.deleCarData = function(event){
+                        	 if($scope.CarShow){
+                            	 $http.get('http://localhost:8080/employee-manage/admin/delcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:{id:$scope.delItemId}}).success(function(data){
+                                    if(data == "success"){
+                                    	console.log("Del Success!");
+                                    	$scope.SuccessMsgShow = true;
+                                     	$scope.returnSuccessMsg = 'Good job,Well done.';
+                                     	event.target.setAttribute('data-toggle','modal');
+                                        event.target.setAttribute('data-target','#myMsgModal');
+                                    }else{
+                                    	console.log("Del Faild");
+                                    	$scope.SuccessMsgShow = false;
+                                     	$scope.returnErrorMsg = 'Sorry,Error happend.';
+                                     	event.target.setAttribute('data-toggle','modal');
+                                        event.target.setAttribute('data-target','#myMsgModal');
+                                    	
+                                    }
+                                  }).error(function(data){
+                                	  $scope.SuccessMsgShow = false;
+	                                  $scope.returnErrorMsg = 'Sorry,Error happend in Ajax Posting.';
+	                                  event.target.setAttribute('data-toggle','modal');
+                                      event.target.setAttribute('data-target','#myMsgModal');
+                                  });
+                                  
+                                  ; 
+                        	 }else{
+                        		 
+                        	 }
+                        	
+                          
                          };
 
                          // 展示详细
@@ -126,6 +148,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 	                          event.target.setAttribute('data-target','#myDetailModal');
                          };
                          
+                        
+                         
 //                         客源的数据缓存和pageBar设置
                          var dataStoreForCustomer;
                          var dataEditItemForCustomer;
@@ -136,8 +160,20 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                 };
                           $scope.maxSize = 5;
 
-                         
-
+                          //客源编辑弹窗
+                          $scope.editCoustomerItem = function(index,event){
+                        	  console.log(dataStoreForCustomer[index]);
+                              event.target.setAttribute('data-toggle','modal');
+                              event.target.setAttribute('data-target','#myeditCoustomerModal');
+                              $scope.editCustomerObject = dataStore[index];
+                            };
+                            
+//                       客源删除
+                         $scope.delCoustomerItem = function(index,event){
+                        	 $scope.delItemName = dataStoreForCustomer[index].name;
+                             event.target.setAttribute('data-toggle','modal');
+                             event.target.setAttribute('data-target','#myDelModal');
+                         };
                         //获取Grid数据方法
                         var reGetDatas = function(){
                            
@@ -236,12 +272,14 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 //        	  新增客源
         	  $scope.addCustomer = function(){
         		  var postData = $scope.customerObjects;
-        		  $http.get("url",{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+        		  $http.post(window.location.origin+"/employee-manage/admin/createcustomer",postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
         			  if(data == "success"){
         				  console.log("Save success!");
         			  }else{
         				  console.log("Save Faild!");
         			  }
+        		  }).error(function(data){
+        			  console.log("Ajax posting Faild!");
         		  });
         	  }
            
@@ -251,7 +289,47 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/sourcedata',
             views: {
                 'main@index': {
-                    templateUrl:'jsp/view/adminView/sourceDataManage/customerDataImport.html'
+                    templateUrl:'jsp/view/adminView/sourceDataManage/customerDataImport.html',
+                    controller: function($scope,$state,$http){
+                   	 var showMsg = function(event){
+                   		 event.target.setAttribute('data-toggle','modal');
+                         	 event.target.setAttribute('data-target','#myMsgModal');
+                   	 }
+               	
+               	//车源文件上传
+                   	$scope.upLoadCustomerSourceExcelFile = function(event){
+                   		if(event.target.parentNode.childNodes[1].files.length !=0){
+                   			var inputFile = event.target.parentNode.childNodes[1].files[0];
+                       		if(!(inputFile.name.indexOf(".xls")!=-1 || inputFile.name.indexOf(".xlsx")!=-1)){
+                       			$scope.SuccessMsgShow = false;
+                                	$scope.returnErrorMsg = 'File formatter is  not Support.';
+                       			showMsg(event);
+                       		}else if(inputFile.size>=4194304){//文件不超过4M
+                       			$scope.SuccessMsgShow = false;
+                                	$scope.returnErrorMsg = 'File bigger than 4M is not Support.';
+                                	showMsg(event);
+                       		}else{
+//                       			提交文件
+                       			$http.post('',inputFile).success(function(data){
+                       				$scope.uploadSuccess = true;
+                       				$scope.SuccessMsgShow = true;
+                                    	$scope.returnErrorMsg = 'Nice !';
+                                    	showMsg(event);
+                       			}).error(function(data){
+                       				$scope.uploadFaild = true;
+                       				$scope.SuccessMsgShow = false;
+                                    	$scope.returnErrorMsg = 'Ajaxing Error';
+                                    	showMsg(event);
+                       			});
+                       		}
+                   		}else{
+                   			$scope.SuccessMsgShow = false;
+                            	$scope.returnErrorMsg = 'Please chose a file!';
+                            	showMsg(event);
+                   		}
+                   		
+                   	};
+                   }
                 }
             }
         })
@@ -409,7 +487,47 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/sourcedata',
             views: {
                 'main@index': {
-                    templateUrl:'jsp/view/adminView/sourceDataManage/carSourceDataImport.html'
+                    templateUrl:'jsp/view/adminView/sourceDataManage/carSourceDataImport.html',
+                    controller: function($scope,$state,$http){
+	                    	 var showMsg = function(event){
+	                    		 event.target.setAttribute('data-toggle','modal');
+	                          	 event.target.setAttribute('data-target','#myMsgModal');
+	                    	 }
+                    	
+                    	//车源文件上传
+                        	$scope.upLoadCarSourceExcelFile = function(event){
+                        		if(event.target.parentNode.childNodes[1].files.length !=0){
+                        			var inputFile = event.target.parentNode.childNodes[1].files[0];
+                            		if(!(inputFile.name.indexOf(".xls")!=-1 || inputFile.name.indexOf(".xlsx")!=-1)){
+                            			$scope.SuccessMsgShow = false;
+                                     	$scope.returnErrorMsg = 'File formatter is  not Support.';
+                            			showMsg(event);
+                            		}else if(inputFile.size>=4194304){//文件不超过4M
+                            			$scope.SuccessMsgShow = false;
+                                     	$scope.returnErrorMsg = 'File bigger than 4M is not Support.';
+                                     	showMsg(event);
+                            		}else{
+//                            			提交文件
+                            			$http.post('',inputFile).success(function(data){
+                            				$scope.uploadSuccess = true;
+                            				$scope.SuccessMsgShow = true;
+                                         	$scope.returnErrorMsg = 'Nice !';
+                                         	showMsg(event);
+                            			}).error(function(data){
+                            				$scope.uploadFaild = true;
+                            				$scope.SuccessMsgShow = false;
+                                         	$scope.returnErrorMsg = 'Ajaxing Error';
+                                         	showMsg(event);
+                            			});
+                            		}
+                        		}else{
+                        			$scope.SuccessMsgShow = false;
+                                 	$scope.returnErrorMsg = 'Please chose a file!';
+                                 	showMsg(event);
+                        		}
+                        		
+                        	};
+                        }
                 }
             }
         })

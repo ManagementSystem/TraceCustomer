@@ -112,35 +112,38 @@
     <table class="table table-bordered table-hover table-condensed">
     <thead>
     	<tr>
-    		<th>区域</th>
-    		<th>品牌</th>
-    		<th>负责人</th>
-    		<th>客户经理</th>
+    		<th>客户类型</th>
+    		<th>姓名</th>
+    		<th>性别</th>
     		<th>联系方式</th>
+    		<th>区域</th>
+    		<th>购车预算</th>
+    		<th>客户等级</th>
+    		<th>颜色要求</th>
+    		<th>装饰要求</th>
     		<th>配置</th>
-    		<th>颜色</th>
-    		<th>装饰</th>
-    		<th>价格</th>
-    		<th>可售区域</th>
+    		<th>公/私客</th>
+    		
         <th style="width:174px;">操作</th>
     	</tr>
     </thead>
     <tbody>
     	<tr ng-repeat="item in formDataResultForCustomer">
+    		<td>{{item.customerType}}</td>
+    		<td>{{item.name}}</td>
+    		<td>{{item.sex}}</td>
+    		<td>{{item.phone}}</td>
     		<td>{{item.region}}</td>
-    		<td>{{item.dealer}}</td>
-    		<td>{{item.principal}}</td>
-    		<td>{{item.saleManager}}</td>
-    		<td>{{item.telephone}}</td>
-    		<td>{{item.configuration}}</td>
+    		<td>{{item.budgetRange}}</td>
+    		<td>{{item.level}}</td>
     		<td>{{item.carColor}}</td>
-    		<td>{{item.carDecoration}}</td>
-    		<td>{{item.price}}</td>
-    		<td>{{item.sealRegion}}</td>
+    		<td>{{item.decoration}}</td>
+    		<td>{{item.configuration}}</td>
+    		<td>{{item.ispublic}}</td>
         <td>
-         <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
-          <button type="button" ng-click="editItem($index,$event)" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i> 编辑</button>
-          <button type="button" ng-click="delItem($index,$event)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> 删除</button>
+         <button type="button" ng-click="detailCoustomerItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
+          <button type="button" ng-click="editCoustomerItem($index,$event)" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i> 编辑</button>
+          <button type="button" ng-click="delCoustomerItem($index,$event)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> 删除</button>
          
         </td>
     	</tr>
@@ -331,7 +334,7 @@
 
 
 <!-- 客源修改的弹出框 -->
-<div class="modal fade bs-example-modal-sm" id="myEditModal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel" aria-hidden="true">
+<div class="modal fade bs-example-modal-sm" id="myeditCoustomerModal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content" style="width:812px;margin-left: -18%;">
       <div class="modal-header">
@@ -347,8 +350,8 @@
                     客户类型：
                 </label>
                 <div class="col-md-9">
-                    <input ng-model="customerObjects.customerType" type="radio" name="customerType"><label>直接客户</label>
-                    <input ng-model="customerObjects.customerType" type="radio" name="customerType"><label>渠道客户</label>
+                    <input ng-model="editCustomerObject.customerType" type="radio" name="customerType"><label>直接客户</label>
+                    <input ng-model="editCustomerObject.customerType" type="radio" name="customerType"><label>渠道客户</label>
                 </div>
             </div>
             <div class="form-group">
@@ -356,7 +359,7 @@
                     姓名：
                 </label>
                 <div class="col-md-9">
-                    <input ng-model="customerObjects.name" type="text" class="form-control input-sm" placeholder="请填入姓名">
+                    <input ng-model="editCustomerObject.name" type="text" class="form-control input-sm" placeholder="请填入姓名">
                 </div>
             </div>
             <div class="form-group">
@@ -364,8 +367,8 @@
                     性别：
                 </label>
                 <div class="col-md-9">
-                    <input ng-model="customerObjects.sex" type="radio" name="gender" value="male"><label>男</label>
-                    <input ng-model="customerObjects.sex" type="radio" name="gender" value="female"><label>女</label>
+                    <input ng-model="editCustomerObject.sex" type="radio" name="gender" value="male"><label>男</label>
+                    <input ng-model="editCustomerObject.sex" type="radio" name="gender" value="female"><label>女</label>
                 </div>
             </div>
             <div class="form-group">
@@ -373,7 +376,7 @@
                     电话：
                 </label>
                 <div class="col-md-9">
-                    <input ng-model="customerObjects.phone" type="text" class="form-control input-sm" placeholder="请填入电话">
+                    <input ng-model="editCustomerObject.phone" type="text" class="form-control input-sm" placeholder="请填入电话">
                 </div>
             </div>
             <div class="form-group">
@@ -381,7 +384,7 @@
                     地区：
                 </label>
                 <div class="col-md-9">
-                    <select ng-model="customerObjects.region" class="form-control input-sm" ng-options="opt for opt in customerArea.area"></select>
+                    <select ng-model="editCustomerObject.region" class="form-control input-sm" ng-options="opt for opt in customerArea.area"></select>
                 </div>
             </div>
             <div class="form-group">
@@ -397,7 +400,7 @@
                     配置：
                 </label>
                 <div class="col-md-9">
-                    <select class="form-control" ng-model="customerObjects.decoration" ng-options="opt for opt in carType.type"></select>
+                    <select class="form-control" ng-model="editCustomerObject.decoration" ng-options="opt for opt in carType.type"></select>
                 </div>
             </div>
             <div class="form-group">
@@ -405,7 +408,7 @@
                     预算区间：
                 </label>
                 <div class="col-md-9">
-                    <select class="form-control" ng-model="customerObjects.budgetRange" ng-options="opt for opt in budgerOptions.budget"></select>
+                    <select class="form-control" ng-model="editCustomerObject.budgetRange" ng-options="opt for opt in budgerOptions.budget"></select>
                 </div>
             </div>
              <div class="form-group">
@@ -413,7 +416,7 @@
                     客户等级：
                 </label>
                 <div class="col-md-9">
-                    <select class="form-control" ng-model="customerObjects.level" ng-options="opt for opt in budgerOptions.budget"></select>
+                    <select class="form-control" ng-model="editCustomerObject.level" ng-options="opt for opt in budgerOptions.budget"></select>
                 </div>
             </div>
 		  </div>
@@ -423,8 +426,8 @@
                     公/私：
                 </label>
                 <div class="col-md-9">
-                    <input type="radio" name="ispublice" ng-model="customerObjects.ispublice" value="userful"><label>公客</label>
-                    <input type="radio" name="ispublice" ng-model="customerObjects.ispublice" value="nouserful"><label>私客</label>
+                    <input type="radio" name="ispublice" ng-model="editCustomerObject.ispublice" value="1"><label>公客</label>
+                    <input type="radio" name="ispublice" ng-model="editCustomerObject.ispublice" value="0"><label>私客</label>
                 </div>
             </div>
             <div class="form-group">
@@ -441,8 +444,8 @@
                     按揭：
                 </label>
                 <div class="col-md-9">
-                    <input type="radio" name="mortgage" value="true"><label>是</label>
-                    <input type="radio" name="mortgage" value="false"><label>否</label>
+                    <input type="radio" ng-model="editCustomerObject.installment" name="mortgage" value="true"><label>是</label>
+                    <input type="radio" ng-model="editCustomerObject.installment" name="mortgage" value="false"><label>否</label>
                 </div>
             </div>
              <div class="form-group">
@@ -450,8 +453,8 @@
                     保险：
                 </label>
                 <div class="col-md-9">
-                   <input type="radio" name="safe" value="true"><label>是</label>
-                   <input type="radio" name="safe" value="false"><label>否</label>
+                   <input type="radio" ng-model="editCustomerObject.insurance" name="safe" value="true"><label>是</label>
+                   <input type="radio" ng-model="editCustomerObject.insurance" name="safe" value="false"><label>否</label>
                 </div>
             </div>
             <div class="form-group">
@@ -459,7 +462,7 @@
                     颜色要求：
                 </label>
                 <div class="col-md-9">
-                    <input type="text" ng-model="customerObjects.carColor" class="form-control input-sm" placeholder="请填入颜色要求">
+                    <input type="text" ng-model="editCustomerObject.carColor" class="form-control input-sm" placeholder="请填入颜色要求">
                 </div>
             </div>
             <div class="form-group">
@@ -467,7 +470,7 @@
                     内饰要求：
                 </label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control input-sm" placeholder="请填入内饰要求">
+                    <input type="text" ng-model="editCustomerObject.decoration" class="form-control input-sm" placeholder="请填入内饰要求">
                 </div>
             </div>
             <div class="form-group">
@@ -475,15 +478,7 @@
                     回访内容：
                 </label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control input-sm" placeholder="请填入回访内容">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    成交数量：
-                </label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control input-sm" placeholder="请填入成交数量">
+                    <input type="text" ng-model="editCustomerObject.remarks" class="form-control input-sm" placeholder="请填入回访内容">
                 </div>
             </div>
 		  </div>
@@ -500,7 +495,7 @@
 
 
 
-<!-- 删除车源的弹出框 -->
+<!-- 删除的弹出框 -->
 <div class="modal fade bs-example-modal-sm" id="myDelModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -509,36 +504,21 @@
         <h4 class="modal-title" id="myDelModalLabelTitle">提示</h4>
       </div>
       <div class="modal-body">
-        <p style="text-align: center;margin-top: 13px;font-size: 18px;color: #BD5C5C;">你确定要id为：<span>{{delItemId}}</span>删除这条信息吗？</p>
+        <p style="text-align: center;margin-top: 13px;font-size: 18px;color: #BD5C5C;">
+        	你确定要删除<span ng-show="CarShow">id为：{{delItemId}}的这条车源</span>
+        				<span ng-show="!CarShow">姓名为{{delItemName}}的这条客源</span>
+        	信息吗？
+        </p>
         
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" ng-click="deleCarData()">确定</button>
+        <button type="button" class="btn btn-primary" ng-click="deleCarData($event)">确定</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 删除客源的弹窗 -->
-<div class="modal fade bs-example-modal-sm" id="myDelModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myDelModalLabelTitle">提示</h4>
-      </div>
-      <div class="modal-body">
-        <p style="text-align: center;margin-top: 13px;font-size: 18px;color: #BD5C5C;">你确定要id为：<span>{{delItemId}}</span>删除这条信息吗？</p>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" ng-click="deleCustomerData()">确定</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- 详细数据dialog(车源) -->
 <div class="modal fade bs-example-modal-sm" id="myDetailModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
@@ -582,6 +562,29 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         <button type="button" class="btn btn-primary">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 提示信息弹出框 -->
+<div class="modal fade bs-example-modal-sm" id="myMsgModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content" style="width: 210px;margin-left: 32%;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myDelModalLabelTitle">提示</h4>
+      </div>
+      <div class="modal-body">
+        <p style="text-align: center;">
+        	<span ng-show="SuccessMsgShow" style="color: rgba(6, 107, 34, 0.89);font-size: 16px;">{{returnSuccessMsg}}</span>
+        	<span ng-show="!SuccessMsgShow" style="color: #BD5C5C;font-size: 16px;">{{returnErrorMsg}}</span>
+        </p>
+        
+      </div>
+      <div class="modal-footer">
+       	<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+        <!--  <button type="button" class="btn btn-primary" ng-click="deleCarData()">确定</button> -->
       </div>
     </div>
   </div>

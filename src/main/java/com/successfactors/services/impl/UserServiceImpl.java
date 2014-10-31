@@ -82,4 +82,10 @@ public class UserServiceImpl implements UserService {
 		return returnMsg;
 	}
 
+	@Override
+	public String importUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -1,5 +1,8 @@
 package util.test;
 
+import java.util.List;
+
+import com.successfactors.bean.Users;
 import com.successfactors.util.ReadExcelUtil;
 
 public class ParseExcelTest {
@@ -7,6 +10,15 @@ public class ParseExcelTest {
 		ReadExcelUtil util = new ReadExcelUtil();
 		String filePath = System.getProperty("user.dir") + "\\resources\\test.xls";
 		util.setInputFile(filePath);
-		util.read();
+		List<Users> users = null;
+		try {
+			users = util.readUsers();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (Users users2 : users) {
+			System.out.println(users2.getName());
+		}
 	}
 }

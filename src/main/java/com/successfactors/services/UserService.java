@@ -9,4 +9,6 @@ public interface UserService {
 	public boolean pwdIsRight(String userName,String pwd);
 	
 	public String createUser(Users user);
+	
+	public String importUsers();
 }

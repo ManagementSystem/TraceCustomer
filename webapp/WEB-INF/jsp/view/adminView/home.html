@@ -5,35 +5,55 @@
  	<button type="button" ng-click="changeDataType($event)" class="btn btn-success btn-lg">车源信息/客源信息</button>
   </div>
   <div class="col-md-7">
-    <div class="row">
+    <div class="row" ng-show="CarShow">
       <div class="col-md-3">
         <div class="input-group pull-right global-search">
           <label class="input-group-addon">区域</label>
-          <input type="text" class="form-control" ng-model="filter.$"/>
+          <input type="text" class="form-control" ng-model="carSourceSearch.region"/>
         </div>
       </div>
       <div class="col-md-3">
         <div class="input-group pull-right global-search">
         <label class="input-group-addon">配置</label>
-        <input type="text" class="form-control" ng-model="filter.$"/>
+        <input type="text" class="form-control" ng-model="carSourceSearch.config"/>
       </div>
       </div>
       <div class="col-md-3">
         <div class="input-group pull-right global-search">
           <label class="input-group-addon">颜色</label>
-          <input type="text" class="form-control" ng-model="filter.$"/>
+          <input type="text" class="form-control" ng-model="carSourceSearch.carColor"/>
         </div>
       </div>
       <div class="col-md-3">
        <div class="input-group pull-right global-search">
           <label class="input-group-addon">车型</label>
-          <input type="text" class="form-control" ng-model="filter.$"/>
+          <input type="text" class="form-control" ng-model="carSourceSearch.cartype"/>
       </div>
+      </div>
+    </div>
+    <div class="row" ng-show="!CarShow">
+      <div class="col-md-3">
+        <div class="input-group pull-right global-search">
+          <label class="input-group-addon">姓名</label>
+          <input type="text" class="form-control" ng-model="customerSearch.name"/>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group pull-right global-search">
+        <label class="input-group-addon">等级</label>
+        <input type="text" class="form-control" ng-model="customerSearch.level"/>
+      </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group pull-right global-search">
+          <label class="input-group-addon">公/私客</label>
+          <input type="text" class="form-control" ng-model="customerSearch.ispublic"/>
+        </div>
       </div>
     </div>
   </div>
   <div class="col-md-2">
-    <button type="button" class="btn btn-primary">搜索</button>
+    <button type="button" class="btn btn-primary" ng-click="searchGridData($event)">搜索</button>
   </div>
 </div>
 <h4 ng-show="CarShow">车源信息</h4>
@@ -529,13 +549,12 @@
         <h4 class="modal-title" id="myDelModalLabelTitle">详细</h4>
       </div>
       <div class="modal-body">
-        <p>{{carSourceDetail}}</p>
         <p><strong>区域:</strong>  {{carSourceDetail.region}}</p>
         <p><strong>品牌:</strong>  {{carSourceDetail.dealer}}</p>
         <p><strong>类型:</strong>  {{carSourceDetail.type}}</p>
         <p><strong>价格:</strong>  {{carSourceDetail.price}}</p>
         <p><strong>配置:</strong>  {{carSourceDetail.configuration}}</p>
-        <p><strong>回访内容 :</strong>  {{carSourceDetail.configuration}}</p>
+        <p><strong>回访内容 :</strong></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -546,7 +565,7 @@
 </div>
 
 <!-- 详细数据dialog(客源) -->
-<div class="modal fade bs-example-modal-sm" id="myDetailModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
+<div class="modal fade bs-example-modal-sm" id="myCustomerDetailModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -554,10 +573,10 @@
         <h4 class="modal-title" id="myDelModalLabelTitle">提示</h4>
       </div>
       <div class="modal-body">
-        <p>{{carSourceDetail}}</p>
-        <p><strong>区域:</strong>{{carSourceDetail.region}}</p>
-        <p><strong>品牌:</strong>{{carSourceDetail.dealer}}</p>
-        <p><strong>价格:</strong>{{carSourceDetail.price}}</p>
+      	<p><strong>姓名:</strong>  {{coustomerSourceDetail.name}}</p>
+      	<p><strong>预算:</strong>  {{coustomerSourceDetail.budgetRange}}</p>
+        <p><strong>区域:</strong>  {{coustomerSourceDetail.region}}</p>
+        <p><strong>回访记录:</strong>  </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

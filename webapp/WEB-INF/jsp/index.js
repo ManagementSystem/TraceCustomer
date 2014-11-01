@@ -135,15 +135,9 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                           
                          };
 
-                         // 展示详细
+                         // 展示车源详细
                           $scope.detailItem = function(index,event){
 	                          $scope.carSourceDetail = dataStore[index];
-	                          $scope.carSourceDetail.region = $scope.carSourceDetail.region;
-	                          $scope.carSourceDetail.dealer = $scope.carSourceDetail.dealer;
-	                          $scope.carSourceDetail.price = $scope.carSourceDetail.price;
-	                          $scope.carSourceDetail.type = $scope.carSourceDetail.type;
-	                          $scope.carSourceDetail.configuration = $scope.carSourceDetail.configuration;
-	                          
 	                          event.target.setAttribute('data-toggle','modal');
 	                          event.target.setAttribute('data-target','#myDetailModal');
                          };
@@ -159,6 +153,14 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                     totalItems:30
                                 };
                           $scope.maxSize = 5;
+                          
+                          //客源详细的弹出窗
+                          $scope.detailCoustomerItem = function(index,event){
+                        	  $scope.coustomerSourceDetail = dataStoreForCustomer[index];
+	                          
+	                          event.target.setAttribute('data-toggle','modal');
+	                          event.target.setAttribute('data-target','#myCustomerDetailModal');
+                          }
 
                           //客源编辑弹窗
                           $scope.editCoustomerItem = function(index,event){
@@ -212,9 +214,29 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                             }
 
                            
-                        }
-
-                        //坚挺当前页面和每页条数来获取grid数据
+                        };
+                        
+//                        搜索方法
+                        $scope.searchGridData = function(event){
+                        	if($scope.CarShow){
+                        		var postData = $scope.carSourceSearch;
+                        		$http.get('http://localhost:8080/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                        			console.log("SearchSuccess!");
+                                 }).error(function(data){
+                                	 console.log("Faild!");
+                                 });
+                        	}else{
+                        		var postData = $scope.customerSearch;
+                        		$http.get('http://localhost:8080/employee-manage/admin/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                        			console.log("SearchSuccess!");
+                                 }).error(function(data){
+                                	 console.log("Faild!");
+                                 });
+                        	}
+                        };
+                        
+                        
+                        //监听当前页面和每页条数来获取grid数据
                         $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage + CarShow +paginationConfForCustomer.currentPage + paginationConfForCustomer.itemsPerPage', reGetDatas);
 
                     }

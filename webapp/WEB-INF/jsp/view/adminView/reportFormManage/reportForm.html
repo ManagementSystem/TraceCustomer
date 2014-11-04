@@ -1,0 +1,80 @@
+<div class="row">
+ <div class="col-md-3">
+ 	<div class="input-group pull-right global-search">
+          <label class="input-group-addon">姓名</label>
+          <input type="text" class="form-control" ng-model="search.name"/>
+     </div>
+ </div>
+ <div class="col-md-3">
+ 	<div class="input-group pull-right global-search">
+          <label class="input-group-addon">初始日期</label>
+           <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'3015-06-33'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+           <span class="input-group-btn">
+             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-th"></i></button>
+           </span>
+     </div>
+ </div>
+ <div class="col-md-3">
+ 	<div class="input-group pull-right global-search">
+          <label class="input-group-addon">结束日期</label>
+         <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt1" is-open="opened1" min-date="minDate" max-date="'3015-06-33'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open1($event)"><i class="glyphicon glyphicon-th"></i></button>
+          </span>
+     </div>
+ </div>
+ <div class="col-md-3">
+ 	<button type="button" ng-click="" class="btn btn-success">搜索</button>
+ </div>
+</div>
+<div class="row">
+ <div class="col-md-12">
+ <div class="table-responsive">
+    <table class="table table-bordered table-hover table-condensed">
+    <thead>
+    	<tr>
+    		<th>员工</th>
+    		<th>客户</th>
+    		<th>回访记录</th>
+    		<th>操作次数</th>
+        	<th style="width:174px;">操作</th>
+    	</tr>
+    </thead>
+    <tbody>
+    	<tr ng-repeat="item in formDataResult">
+    		<td>{{item.region}}</td>
+    		<td>{{item.type}}</td>
+    		<td>{{item.dealer}}</td>
+    		<td>{{item.principal}}</td>
+	        <td>
+	         <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
+	          <button type="button" ng-click="editItem($index,$event)" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i> 编辑</button>
+	          <button type="button" ng-click="delItem($index,$event)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> 删除</button>
+	        </td>
+    	</tr>
+    </tbody>
+	</table>
+<div class="row">
+  <div class="col-md-2">
+  <div class="input-group">
+      <div class="input-group-addon">每页条数</div>
+      <select ng-model="paginationConf.itemsPerPage" class="form-control" title="每页条目数"
+                  ng-options="pageSize for pageSize in [10,20,30]">
+          </select>
+    </div>
+    
+  </div>
+  <div class="col-md-7">
+    <pagination style='margin:0px;'total-items="paginationConf.totalItems" ng-model="paginationConf.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+  </div>
+  <div class="col-md-3">
+    <div class="input-group">
+      <div class="input-group-addon">GoTo</div>
+      <input class="form-control" type="number" ng-model='paginationConf.currentPage' min='1' max='{{numPages}}'>
+      <div class="input-group-addon">Page: {{paginationConf.currentPage}} / {{numPages}}</div>
+    </div>
+  </div>
+</div>
+</div>
+ </div>
+ </div>

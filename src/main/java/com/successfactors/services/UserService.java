@@ -1,5 +1,7 @@
 package com.successfactors.services;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.successfactors.bean.Users;
 
 public interface UserService {
@@ -10,5 +12,5 @@ public interface UserService {
 	
 	public String createUser(Users user);
 	
-	public String importUsers();
+	public String importUsers(MultipartFile mFile);
 }

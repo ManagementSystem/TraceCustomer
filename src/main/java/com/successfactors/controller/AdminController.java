@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.successfactors.bean.CarType;
 import com.successfactors.bean.ReturnValue;
@@ -158,5 +166,16 @@ public class AdminController extends BaseController{
 		
 		return customerRemarkService.getCustomerRemarks(id, currentPage, itemsPerPage);
 		
+	}
+	
+	@RequestMapping(value="/carupload",method=RequestMethod.POST)
+	public String uploadCarSourceExcel(HttpServletRequest request,HttpServletResponse response){
+		MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		
+		MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
+		
+		MultipartFile file = multipartRequest.getFile("data");
+		
+		return userService.importUsers(file);
 	}
 }

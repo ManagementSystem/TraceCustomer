@@ -79,7 +79,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                          $scope.saveEditCarSource = function(event){
                         	 var postData = $scope.editCarObject;
                         	
-                        	 $http.post("http://localhost:8080/employee-manage/admin/createcar",postData).success(function(data){
+                        	 $http.post("http://localhost:4321/employee-manage/admin/createcar",postData).success(function(data){
                            		if(data == "success"){
                            			console.log(data);
 //                           	    修改后刷新车源列表
@@ -105,7 +105,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 //                         确认删除
                          $scope.deleCarData = function(event){
                         	 if($scope.CarShow){
-                            	 $http.get('http://localhost:8080/employee-manage/admin/delcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:{id:$scope.delItemId}}).success(function(data){
+                            	 $http.get('http://localhost:4321/employee-manage/admin/delcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:{id:$scope.delItemId}}).success(function(data){
                                     if(data == "success"){
                                     	console.log("Del Success!");
                                     	$scope.SuccessMsgShow = true;
@@ -185,7 +185,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                          currentPage: $scope.paginationConf.currentPage,
                                          itemsPerPage: $scope.paginationConf.itemsPerPage
                                      };
-                            	 $http.get('http://localhost:8080/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                            	 $http.get('http://localhost:4321/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
                             		 $scope.ajaxMsg ="Get CarSource Data Success!";
                             		 $scope.dataStore = dataStore = data.returnData.item;
                                      $scope.formDataResult = data.returnData.item;
@@ -198,7 +198,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                          currentPage: $scope.paginationConfForCustomer.currentPage,
                                          itemsPerPage: $scope.paginationConfForCustomer.itemsPerPage
                                      };
-                            	 $http.get('http://localhost:8080/employee-manage/admin/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                            	 $http.get('http://localhost:4321/employee-manage/admin/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
                                      if(data.returnState == "success"){
                                     	 $scope.ajaxMsg ="Get CustomerSource Data Success!";
                                     	 $scope.dataStoreForCustomer = dataStoreForCustomer = data.returnData.item;
@@ -220,14 +220,14 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         $scope.searchGridData = function(event){
                         	if($scope.CarShow){
                         		var postData = $scope.carSourceSearch;
-                        		$http.get('http://localhost:8080/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                        		$http.get('http://localhost:4321/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
                         			console.log("SearchSuccess!");
                                  }).error(function(data){
                                 	 console.log("Faild!");
                                  });
                         	}else{
                         		var postData = $scope.customerSearch;
-                        		$http.get('http://localhost:8080/employee-manage/admin/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                        		$http.get('http://localhost:4321/employee-manage/admin/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
                         			console.log("SearchSuccess!");
                                  }).error(function(data){
                                 	 console.log("Faild!");
@@ -279,7 +279,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
               };
 
 //        	  车型
-        	  $http.get('http://localhost:8080/employee-manage/admin/getcartype').success(function(data){
+        	  $http.get('http://localhost:4321/employee-manage/admin/getcartype').success(function(data){
                   $scope.TypeOptions = data;
                });
         	  
@@ -431,7 +431,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                   $scope.saveCarSource = function(){
                 	  var postData = $scope.addCarObject;
                 	  
-                	  $http.post("http://localhost:8080/employee-manage/admin/createcar",postData).success(function(data){
+                	  $http.post("http://localhost:4321/employee-manage/admin/createcar",postData).success(function(data){
                   		if(data == "success"){
                   			console.log(data);
 //                  			reGetCarTypeDatas();
@@ -477,7 +477,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                     }else if($scope.addCartTypeConfig.type == ""){
                     	$scope.notNullType = false;
                     }else{
-                    	$http.post("http://localhost:8080/employee-manage/admin/createcartype",postData).success(function(data){
+                    	$http.post("http://localhost:4321/employee-manage/admin/createcartype",postData).success(function(data){
                     		if(data == "success"){
                     			reGetCarTypeDatas();
                     			$scope.addCartTypeConfig = {
@@ -495,7 +495,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 //获取Grid数据方法
                 var reGetCarTypeDatas = function(){
                 	
-                    $http.get('http://localhost:8080/employee-manage/admin/getcartype').success(function(data){
+                    $http.get('http://localhost:4321/employee-manage/admin/getcartype').success(function(data){
                     $scope.dataStore = dataStore = data;
                     $scope.carTypeResult = data;
                  });
@@ -519,7 +519,9 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                     	//车源文件上传
                         	$scope.upLoadCarSourceExcelFile = function(event){
                         		if(event.target.parentNode.childNodes[1].files.length !=0){
-                        			var inputFile = event.target.parentNode.childNodes[1].files[0];
+                        			var inputFile =  event.target.parentNode.childNodes[1].files[0];
+                        			
+                        			
                             		if(!(inputFile.name.indexOf(".xls")!=-1 || inputFile.name.indexOf(".xlsx")!=-1)){
                             			$scope.SuccessMsgShow = false;
                                      	$scope.returnErrorMsg = 'File formatter is  not Support.';
@@ -530,7 +532,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                      	showMsg(event);
                             		}else{
 //                            			提交文件
-                            			$http.post('',inputFile).success(function(data){
+                            			$http.post('http://localhost:4321/employee-manage/admin/carupload',{data:inputFile}).success(function(data){
                             				$scope.uploadSuccess = true;
                             				$scope.SuccessMsgShow = true;
                                          	$scope.returnErrorMsg = 'Nice !';

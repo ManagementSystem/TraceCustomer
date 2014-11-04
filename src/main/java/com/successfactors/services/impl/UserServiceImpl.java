@@ -1,21 +1,30 @@
 package com.successfactors.services.impl;
 
+import java.io.File;
+import java.io.InputStream;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.successfactors.bean.Users;
+import com.successfactors.constant.ReturnValueConstants;
 import com.successfactors.constant.UserConstants;
 import com.successfactors.controller.UserController;
 import com.successfactors.dao.UsersDAO;
 import com.successfactors.services.UserService;
+import com.successfactors.util.FileUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
 	
 	private static Logger logger = Logger.getLogger(UserServiceImpl.class);
 	
+	
+	private static final String USER_EXCEL_DIR = System.getProperty("user.dir") + "/excel";
 	@Autowired
 	private UsersDAO usersDao;
 
@@ -83,9 +92,29 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String importUsers() {
+	public String importUsers(MultipartFile mFile) {
 		// TODO Auto-generated method stub
-		return null;
+		String returnMsg = ReturnValueConstants.RETURN_ERROR;
+		if(!mFile.isEmpty()){
+			logger.info("upload user excel file");
+			File file = new File(USER_EXCEL_DIR);
+			if(!file.exists()){
+				file.mkdirs();
+			}
+			//File excel = new File(USER_EXCEL_DIR + "/user_import.xls");
+			String filePath = USER_EXCEL_DIR + "/user_import.xls";
+			try{
+				InputStream is = mFile.getInputStream();
+				FileUtil.saveFile(is, filePath);
+				returnMsg = ReturnValueConstants.RETURN_SUCCESS;
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+			}
+			
+		}else{
+			returnMsg = ReturnValueConstants.RETURN_ERROR;
+		}
+		return returnMsg;
 	}
 
 }

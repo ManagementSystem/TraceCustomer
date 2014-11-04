@@ -1,11 +1,10 @@
 package com.successfactors.controller;
 
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.successfactors.bean.CarType;
 import com.successfactors.bean.ReturnValue;
@@ -143,8 +139,8 @@ public class AdminController extends BaseController{
 	@RequestMapping(value="/getcarremarks",method=RequestMethod.GET)
 	@ResponseBody
 	public ReturnValue getCarRemark(@RequestParam(value="carid") Long id,
-									@RequestParam(value="currentPage") int currentPage,
-									@RequestParam(value="itemsPerPage") int itemsPerPage){
+									@RequestParam(value="currentPage",required = false) int currentPage,
+									@RequestParam(value="itemsPerPage",required = false) int itemsPerPage){
 		
 		return carRemarkService.getCarsRemarks(id, currentPage, itemsPerPage);
 		
@@ -161,21 +157,28 @@ public class AdminController extends BaseController{
 	@RequestMapping(value="/getcustomerremarks",method=RequestMethod.GET)
 	@ResponseBody
 	public ReturnValue getCustomerRemark(@RequestParam(value="customerid") Long id,
-										@RequestParam(value="currentPage") int currentPage,
-										@RequestParam(value="itemsPerPage") int itemsPerPage){
+										@RequestParam(value="currentPage",required = false) int currentPage,
+										@RequestParam(value="itemsPerPage",required = false) int itemsPerPage){
 		
 		return customerRemarkService.getCustomerRemarks(id, currentPage, itemsPerPage);
 		
 	}
 	
 	@RequestMapping(value="/carupload",method=RequestMethod.POST)
-	public String uploadCarSourceExcel(HttpServletRequest request,HttpServletResponse response){
-		MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-		
-		MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
-		
-		MultipartFile file = multipartRequest.getFile("data");
-		
-		return userService.importUsers(file);
+	@ResponseBody
+	public String uploadCarSourceExcel(MultipartHttpServletRequest  request,HttpServletResponse response){
+		Iterator<String> itr=request.getFileNames();
+	    MultipartFile file=request.getFile(itr.next());
+	    String path = request.getServletContext().getRealPath("");
+		return carService.importCars(file, path);
+	}
+	
+	@RequestMapping(value="/userupload",method=RequestMethod.POST)
+	@ResponseBody
+	public String uploadUsersExcel(MultipartHttpServletRequest  request,HttpServletResponse response){
+		Iterator<String> itr=request.getFileNames();
+	    MultipartFile file=request.getFile(itr.next());
+	    String path = request.getServletContext().getRealPath("");
+		return userService.importUsers(file, path);
 	}
 }

@@ -24,7 +24,11 @@ public class UserServiceImpl implements UserService {
 	private static Logger logger = Logger.getLogger(UserServiceImpl.class);
 	
 	
-	private static final String USER_EXCEL_DIR = System.getProperty("user.dir") + "/excel";
+	//private static final String USER_EXCEL_DIR = System.getProperty("user.dir") + "/excel";
+	
+	private static final String USER_EXCEL_FILE = "user_import.xls";
+	
+	private static final String EXCEL_DIR = "/excel/";
 	@Autowired
 	private UsersDAO usersDao;
 
@@ -92,17 +96,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String importUsers(MultipartFile mFile) {
+	@Transactional
+	public String importUsers(MultipartFile mFile,String path) {
 		// TODO Auto-generated method stub
 		String returnMsg = ReturnValueConstants.RETURN_ERROR;
 		if(!mFile.isEmpty()){
 			logger.info("upload user excel file");
-			File file = new File(USER_EXCEL_DIR);
+			File file = new File(path + EXCEL_DIR);
 			if(!file.exists()){
 				file.mkdirs();
 			}
-			//File excel = new File(USER_EXCEL_DIR + "/user_import.xls");
-			String filePath = USER_EXCEL_DIR + "/user_import.xls";
+			String filePath = path + EXCEL_DIR + USER_EXCEL_FILE;
 			try{
 				InputStream is = mFile.getInputStream();
 				FileUtil.saveFile(is, filePath);
@@ -116,5 +120,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return returnMsg;
 	}
+	
+	
 
 }

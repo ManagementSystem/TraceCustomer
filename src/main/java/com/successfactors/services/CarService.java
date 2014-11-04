@@ -2,6 +2,8 @@ package com.successfactors.services;
 
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.successfactors.bean.ReturnValue;
 import com.successfactors.vo.CarVO;
 
@@ -12,5 +14,7 @@ public interface CarService {
 	public ReturnValue getCarsData(int currentPage,int itemPerPage);
 	
 	public ReturnValue queryCarsData(Map<String, String> conditions);
+	
+	public String importCars(MultipartFile mFile,String path);
 	
 }

@@ -26,9 +26,9 @@ public class UserServiceImpl implements UserService {
 	
 	//private static final String USER_EXCEL_DIR = System.getProperty("user.dir") + "/excel";
 	
-	private static final String USER_EXCEL_FILE = "user_import.xls";
+	private static final String USER_EXCEL_FILE = "user_import";
 	
-	private static final String EXCEL_DIR = "/excel/";
+	private static final String EXCEL_DIR = "\\excel\\";
 	@Autowired
 	private UsersDAO usersDao;
 
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public String importUsers(MultipartFile mFile,String path) {
+	public String importUsers(MultipartFile mFile,String path,String suffix) {
 		// TODO Auto-generated method stub
 		String returnMsg = ReturnValueConstants.RETURN_ERROR;
 		if(!mFile.isEmpty()){
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
 			if(!file.exists()){
 				file.mkdirs();
 			}
-			String filePath = path + EXCEL_DIR + USER_EXCEL_FILE;
+			String filePath = path + EXCEL_DIR + USER_EXCEL_FILE + "." + suffix;
 			try{
 				InputStream is = mFile.getInputStream();
 				FileUtil.saveFile(is, filePath);

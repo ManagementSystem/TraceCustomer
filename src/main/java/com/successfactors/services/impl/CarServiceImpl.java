@@ -2,6 +2,7 @@ package com.successfactors.services.impl;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -20,6 +21,7 @@ import com.successfactors.dao.CarTypeDAO;
 import com.successfactors.dao.CustomerDAO;
 import com.successfactors.services.CarService;
 import com.successfactors.util.FileUtil;
+import com.successfactors.util.ReadExcelUtil;
 import com.successfactors.vo.CarVO;
 
 
@@ -36,9 +38,9 @@ public class CarServiceImpl implements CarService{
 	private static Logger logger = Logger.getLogger(CarServiceImpl.class);
 	
 	
-	private static final String EXCEL_DIR = "/excel/";
+	private static final String EXCEL_DIR = "\\excel\\";
 	
-	private static final String CAR_EXCEL_FILE = "car_import.xsl";
+	private static final String CAR_EXCEL_FILE = "car_import";
 	
 	@Override
 	@Transactional
@@ -106,22 +108,25 @@ public class CarServiceImpl implements CarService{
 
 	@Override
 	@Transactional
-	public String importCars(MultipartFile mFile, String path) {
+	public String importCars(MultipartFile mFile, String path,String suffix) {
 		// TODO Auto-generated method stub
 		String returnMsg = ReturnValueConstants.RETURN_ERROR;
 		if(!mFile.isEmpty()){
-			logger.info("upload user excel file");
+			logger.info("upload car excel file");
 			File file = new File(path + EXCEL_DIR);
 			if(!file.exists()){
 				file.mkdirs();
 			}
-			String filePath = path + EXCEL_DIR + CAR_EXCEL_FILE;
+			String filePath = path + EXCEL_DIR + CAR_EXCEL_FILE + "." + suffix;
 			try{
 				InputStream is = mFile.getInputStream();
 				FileUtil.saveFile(is, filePath);
+				List<Car> cars = ReadExcelUtil.readCars(filePath);
+				dao.add(cars);
 				returnMsg = ReturnValueConstants.RETURN_SUCCESS;
 			}catch(Exception ex){
 				logger.error(ex.getMessage());
+				returnMsg = ReturnValueConstants.RETURN_ERROR;
 			}
 			
 		}else{

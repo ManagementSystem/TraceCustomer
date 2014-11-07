@@ -168,17 +168,26 @@ public class AdminController extends BaseController{
 	@ResponseBody
 	public String uploadCarSourceExcel(MultipartHttpServletRequest  request,HttpServletResponse response){
 		Iterator<String> itr=request.getFileNames();
-	    MultipartFile file=request.getFile(itr.next());
+		String fileName = itr.next();
+	    MultipartFile file=request.getFile(fileName);
+	    
+	    String[] str = fileName.split("\\.");
+	    String suffix = str[str.length - 1];
 	    String path = request.getServletContext().getRealPath("");
-		return carService.importCars(file, path);
+		return carService.importCars(file, path,suffix);
 	}
 	
 	@RequestMapping(value="/userupload",method=RequestMethod.POST)
 	@ResponseBody
 	public String uploadUsersExcel(MultipartHttpServletRequest  request,HttpServletResponse response){
 		Iterator<String> itr=request.getFileNames();
-	    MultipartFile file=request.getFile(itr.next());
+		String fileName = itr.next();
+	    MultipartFile file=request.getFile(fileName);
+	    String[] str = fileName.split("/.");
+	    String suffix = str[str.length - 1];
 	    String path = request.getServletContext().getRealPath("");
-		return userService.importUsers(file, path);
+		return userService.importUsers(file, path,suffix);
 	}
+	
+	
 }

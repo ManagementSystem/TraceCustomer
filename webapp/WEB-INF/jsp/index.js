@@ -527,7 +527,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         			var inputFile = event.target.parentNode.childNodes[1].files[0];
                         			
                         			var formData = new FormData();
-                        			formData.append("file",inputFile);
+                        			formData.append(inputFile.name,inputFile);
                             		if(!(inputFile.name.indexOf(".xls")!=-1 || inputFile.name.indexOf(".xlsx")!=-1)){
                             			$scope.SuccessMsgShow = false;
                                      	$scope.returnErrorMsg = 'File formatter is  not Support.';

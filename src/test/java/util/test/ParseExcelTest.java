@@ -7,12 +7,12 @@ import com.successfactors.util.ReadExcelUtil;
 
 public class ParseExcelTest {
 	public static void main(String[] args) {
-		ReadExcelUtil util = new ReadExcelUtil();
+		//ReadExcelUtil util = new ReadExcelUtil();
 		String filePath = System.getProperty("user.dir") + "\\resources\\test.xls";
-		util.setInputFile(filePath);
+		//util.setInputFile(filePath);
 		List<Users> users = null;
 		try {
-			users = util.readUsers();
+			users = ReadExcelUtil.readUsers(filePath);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

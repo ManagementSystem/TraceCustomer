@@ -55,6 +55,9 @@ public class Car {
 	@ManyToOne
 	private CarType carType;
 	
+	@Column(name="cartype_record",nullable=true,unique=false,length=255)
+	private String carTypeRecord;
+	
 	@Column(name="config",nullable=true,unique=false,length=255)
 	private String configuration;
 	
@@ -227,6 +230,14 @@ public class Car {
 		this.remarks = remarks;
 	}
 	
+	public String getCarTypeRecord() {
+		return carTypeRecord;
+	}
+
+	public void setCarTypeRecord(String carTypeRecord) {
+		this.carTypeRecord = carTypeRecord;
+	}
+
 	public void setCarVO(CarVO vo){
 		this.operator = vo.getOperator();
 		this.isTop = vo.getIsTop();

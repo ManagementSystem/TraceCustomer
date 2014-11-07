@@ -12,5 +12,5 @@ public interface UserService {
 	
 	public String createUser(Users user);
 	
-	public String importUsers(MultipartFile mFile,String path);
+	public String importUsers(MultipartFile mFile,String path,String suffix);
 }

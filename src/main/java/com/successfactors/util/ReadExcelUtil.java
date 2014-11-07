@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.successfactors.bean.Car;
+import com.successfactors.bean.Customer;
 import com.successfactors.bean.Users;
 import com.successfactors.constant.UserAuthConstants;
 
@@ -157,6 +158,76 @@ public class ReadExcelUtil {
 					
 			}
 			list.add(car);
+		}
+		return list;
+	}
+	
+	public static List<Customer> readCustomer(String inputFile) throws BiffException, IOException{
+		File inputWorkbook = new File(inputFile);
+		Workbook w;
+		
+		w = Workbook.getWorkbook(inputWorkbook);
+		Sheet sheet = w.getSheet(0);
+		List<Customer> list = new ArrayList<Customer>();
+		for(int i = 1; i < sheet.getRows();i++){
+			Customer customer = new Customer();
+			customer.setImportTime(new Date());
+			for(int j = 0;j< 16;++j){
+				Cell cell = sheet.getCell(j,i);
+				switch(j){
+					case 0:
+						customer.setProperty(Integer.valueOf(cell.getContents()));
+						break;
+					case 1:
+						customer.setName(cell.getContents());
+						break;
+					case 2:
+						customer.setSex(cell.getContents());
+						break;
+					case 3:
+						customer.setPhone(cell.getContents());
+						break;
+					case 4:
+						customer.setRegion(cell.getContents());
+						break;
+					case 5:
+						customer.setCarTypeRecord(cell.getContents());
+						break;
+					case 6:
+						customer.setConfiguration(cell.getContents());
+						break;
+					case 7:
+						customer.setBudgetRange(cell.getContents());
+						break;
+					case 8:
+						customer.setCarColor(cell.getContents());
+						break;
+					case 9:
+						customer.setDecoration(cell.getContents());
+						break;
+					case 10:
+						customer.setInstallment(Integer.valueOf(cell.getContents()));
+						break;
+					case 11:
+						customer.setInsurance(Integer.valueOf(cell.getContents()));
+						break;
+					case 12:
+						customer.setLevel(cell.getContents());
+						break;
+					case 13:
+						customer.setIspublic(Integer.valueOf(cell.getContents()));
+						break;
+					case 14:
+						customer.setDealCount(Integer.valueOf(cell.getContents()));
+						break;
+					case 15:
+						customer.setIsTop(Integer.valueOf(cell.getContents()));
+						break;
+						
+				}
+				
+			}
+			list.add(customer);
 		}
 		return list;
 	}

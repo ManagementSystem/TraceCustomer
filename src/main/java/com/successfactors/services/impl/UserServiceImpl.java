@@ -2,21 +2,21 @@ package com.successfactors.services.impl;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.successfactors.bean.Users;
 import com.successfactors.constant.ReturnValueConstants;
 import com.successfactors.constant.UserConstants;
-import com.successfactors.controller.UserController;
 import com.successfactors.dao.UsersDAO;
 import com.successfactors.services.UserService;
 import com.successfactors.util.FileUtil;
+import com.successfactors.util.ReadExcelUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -110,6 +110,8 @@ public class UserServiceImpl implements UserService {
 			try{
 				InputStream is = mFile.getInputStream();
 				FileUtil.saveFile(is, filePath);
+				List<Users> users = ReadExcelUtil.readUsers(filePath);
+				usersDao.add(users);
 				returnMsg = ReturnValueConstants.RETURN_SUCCESS;
 			}catch(Exception ex){
 				logger.error(ex.getMessage());

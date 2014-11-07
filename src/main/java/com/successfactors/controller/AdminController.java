@@ -189,5 +189,16 @@ public class AdminController extends BaseController{
 		return userService.importUsers(file, path,suffix);
 	}
 	
+	@RequestMapping(value="/customerupload",method=RequestMethod.POST)
+	@ResponseBody
+	public String uploadCustomersExcel(MultipartHttpServletRequest  request,HttpServletResponse response){
+		Iterator<String> itr=request.getFileNames();
+		String fileName = itr.next();
+	    MultipartFile file=request.getFile(fileName);
+	    String[] str = fileName.split("/.");
+	    String suffix = str[str.length - 1];
+	    String path = request.getServletContext().getRealPath("");
+		return customerService.importCustomer(file, path,suffix);
+	}
 	
 }

@@ -328,7 +328,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                    		if(event.target.parentNode.childNodes[1].files.length !=0){
                    			var inputFile = event.target.parentNode.childNodes[1].files[0];
                    			var formData = new FormData();
-                			formData.append("file",inputFile);
+                			formData.append(inputFile.name,inputFile);
                        		if(!(inputFile.name.indexOf(".xls")!=-1 || inputFile.name.indexOf(".xlsx")!=-1)){
                        			$scope.SuccessMsgShow = false;
                                 	$scope.returnErrorMsg = 'File formatter is  not Support.';
@@ -339,7 +339,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                 	showMsg(event);
                        		}else{
 //                       			提交文件
-                       			$http.post('',formData,
+                       			$http.post(window.location.origin+'/employee-manage/admin/customerupload',formData,
                             	{
                     	            transformRequest: angular.identity,
                     	            headers: {'Content-Type': undefined}
@@ -587,7 +587,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                        		if(event.target.parentNode.childNodes[1].files.length !=0){
                        			var inputFile = event.target.parentNode.childNodes[1].files[0];
                        			var formData = new FormData();
-                    			formData.append("file",inputFile);
+                    			formData.append(inputFile.name,inputFile);
                            		if(!(inputFile.name.indexOf(".xls")!=-1 || inputFile.name.indexOf(".xlsx")!=-1)){
                            			$scope.SuccessMsgShow = false;
                                     $scope.returnErrorMsg = 'File formatter is not Support.';
@@ -598,7 +598,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                     	showMsg(event);
                            		}else{
 //                           			提交文件
-                           			$http.post('',formData,
+                           			$http.post(window.location.origin+'/employee-manage/admin/userupload',formData,
                                 	{
                         	            transformRequest: angular.identity,
                         	            headers: {'Content-Type': undefined}

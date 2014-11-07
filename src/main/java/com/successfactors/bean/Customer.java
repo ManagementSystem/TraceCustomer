@@ -75,6 +75,8 @@ public class Customer{
 	@ManyToOne
 	private CarType carType;
 	
+	@Column(name="cartype_record",nullable=true,unique=false,length=255)
+	private String carTypeRecord;
 	
 	//导入的人
 	@Column(name="import_name",nullable=true,unique=false)
@@ -83,9 +85,13 @@ public class Customer{
 	@Column(name="sex",nullable=true,unique=false,length=20)
 	private String sex;
 	
+	@Column(name="deal_count",nullable=true,unique=false)
+	private Integer dealCount;
 	
 	@Column(name="property",nullable=true,unique=false)
 	private Integer property; // (Derect customer or channel customer)
+	
+	private Integer isTop;
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="customer")
 	private Set<CustomerRemarks> remarks;
@@ -250,6 +256,30 @@ public class Customer{
 
 	public void setConfiguration(String configuration) {
 		this.configuration = configuration;
+	}
+
+	public String getCarTypeRecord() {
+		return carTypeRecord;
+	}
+
+	public void setCarTypeRecord(String carTypeRecord) {
+		this.carTypeRecord = carTypeRecord;
+	}
+
+	public Integer getDealCount() {
+		return dealCount;
+	}
+
+	public void setDealCount(Integer dealCount) {
+		this.dealCount = dealCount;
+	}
+
+	public Integer getIsTop() {
+		return isTop;
+	}
+
+	public void setIsTop(Integer isTop) {
+		this.isTop = isTop;
 	}
 
 	public void setCustomerVO(CustomerVO vo){

@@ -30,7 +30,22 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         }
                 },
                 'topbar@index': {
-                    templateUrl: 'jsp/view/adminView/topbar.html'
+                    templateUrl: 'jsp/view/adminView/topbar.html',
+                    controller: function($scope, $state,$http) {
+                    	$scope.oldPassWord ="";
+                    	$scope.newPassWord ="";
+                    	$scope.newPassWordAgain ="";
+                    	//修改密码方法
+                    	$scope.changPassWord = function(event){
+                    		$http.post('').
+                    		success(function(data){
+                    			
+                    		}).
+                    		error(function(data){
+                    			
+                    		});
+                    	};
+                    }
                 },
                 'main@index': {
                     templateUrl: 'jsp/view/adminView/home.html',

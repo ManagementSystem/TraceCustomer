@@ -138,6 +138,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                          // 展示车源详细
                           $scope.detailItem = function(index,event){
 	                          $scope.carSourceDetail = dataStore[index];
+	                          getCarRemarks(dataStore[index].id);
 	                          event.target.setAttribute('data-toggle','modal');
 	                          event.target.setAttribute('data-target','#myDetailModal');
                          };
@@ -153,20 +154,116 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                     totalItems:30
                                 };
                           $scope.maxSize = 5;
+                          //获取客源回访内容的数据
+                          var getCoustomerRemarks = function(id){
+                        	  var postData = {
+                        			'customerid':id  
+                        	  }
+                        	  $http.get(window.location.origin+'/employee-manage/admin/getcustomerremarks',{params:postData}).
+                        	  success(function(data){
+                        		  if(data.returnState = "success"){
+                        			  $scope.coumosterRemarkItems = data.returnData.item;
+                        		  }
+                        	  }).
+                        	  error(function(data){
+                        		  console.log('Get coustomer remarks error!');
+                        	  });
+                          };
+                        //获取车源回访内容的数据
+                          var getCarRemarks = function(id){
+                        	  var postData = {
+                        			'carid':id  
+                        	  }
+                        	  $http.get(window.location.origin+'/employee-manage/admin/getcarremarks',{params:postData}).
+                        	  success(function(data){
+                        		  if(data.returnState = "success"){
+                        			  $scope.carRemarkItems = data.returnData.item;
+                        		  }
+                        	  }).
+                        	  error(function(data){
+                        		  console.log('Get car remarks error!');
+                        	  });
+                          };
                           
                           //客源详细的弹出窗
                           $scope.detailCoustomerItem = function(index,event){
                         	  $scope.coustomerSourceDetail = dataStoreForCustomer[index];
-	                          
+                        	  getCoustomerRemarks(dataStoreForCustomer[index].id);
 	                          event.target.setAttribute('data-toggle','modal');
 	                          event.target.setAttribute('data-target','#myCustomerDetailModal');
-                          }
+                          };
                           
                           //客源新增回访记录
-                         $scope.addReportRow = function(event){
+                         $scope.addCoustomerReMarksRow = function(event){
                         	 $scope.addReMarks = !$scope.addReMarks;
-                         } 
+                         };
+                         //车源新增回访记录
+                         $scope.addCarReMarksRow = function(event){
+                        	 $scope.addCarReMarks = !$scope.addCarReMarks;
+                         };
+//                         新增客源回访记录提交
+                         $scope.addRemarks = function(event){
+                        	 var postData = {
+                        			 'content':$scope.addreMarksObj.content,
+                        			 'customerId':$scope.coustomerSourceDetail.id,
+                        			 'type':$scope.addreMarksObj.type
+                        	 };
+                        	 var showMsg = function(event){
+                           		 event.target.setAttribute('data-toggle','modal');
+                                 	 event.target.setAttribute('data-target','#myMsgModal');
+                           	 };
+                        	 $http.post(window.location.origin+'/employee-manage/admin/addcustomerremark',postData).success(function(data){
+                        		if(data == 'success'){
+                        			//提示成功信息
+                        			$scope.SuccessMsgShow = true;
+                                 	$scope.returnSuccessMsg = 'add ReMarks Success!';
+                                 	showMsg(event);
+                                 	$scope.addReMarks = !$scope.addReMarks;
+                                 	$scope.addreMarksObj = {};
+                                 	getCoustomerRemarks($scope.coustomerSourceDetail.id);
+                        		}else{
+                        			$scope.SuccessMsgShow = false;
+                                  	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                                  	showMsg(event);
+                        		}
+                        	 }).error(function(data){
+                        		$scope.SuccessMsgShow = false;
+                              	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                              	showMsg(event);
+                        	 });
+                         };
 
+                         //新增车源回访记录
+                         $scope.addCarRemarks = function(event){
+                        	 var postData = {
+                        			 'content':$scope.addCarReMarksObj.content,
+                        			 'carId':$scope.carSourceDetail.id,
+                        			 'type':$scope.addCarReMarksObj.type
+                        	 };
+                        	 var showMsg = function(event){
+                           		 event.target.setAttribute('data-toggle','modal');
+                                 event.target.setAttribute('data-target','#myMsgModal');
+                           	 };
+                        	 $http.post(window.location.origin+'/employee-manage/admin/addcarremark',postData).success(function(data){
+                        		if(data == 'success'){
+                        			//提示成功信息
+                        			$scope.SuccessMsgShow = true;
+                                 	$scope.returnSuccessMsg = 'add ReMarks Success!';
+                                 	showMsg(event);
+                                 	$scope.addCarReMarks = !$scope.addCarReMarks;
+                                 	$scope.addCarReMarksObj = {};
+                                 	getCarRemarks($scope.carSourceDetail.id);
+                        		}else{
+                        			$scope.SuccessMsgShow = false;
+                                  	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                                  	showMsg(event);
+                        		}
+                        	 }).error(function(data){
+                        		$scope.SuccessMsgShow = false;
+                              	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                              	showMsg(event);
+                        	 });
+                         };
                           //客源编辑弹窗
                           $scope.editCoustomerItem = function(index,event){
                         	  console.log(dataStoreForCustomer[index]);
@@ -328,18 +425,18 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                    		if(event.target.parentNode.childNodes[1].files.length !=0){
                    			var inputFile = event.target.parentNode.childNodes[1].files[0];
                    			var formData = new FormData();
-                			formData.append(inputFile.name,inputFile);
-                       		if(!(inputFile.name.indexOf(".xls")!=-1 || inputFile.name.indexOf(".xlsx")!=-1)){
+                			formData.append("file",inputFile);
+                       		if(!(inputFile.name.indexOf(".xls")!=-1)){
                        			$scope.SuccessMsgShow = false;
-                                	$scope.returnErrorMsg = 'File formatter is  not Support.';
+                                $scope.returnErrorMsg = 'File formatter is  not Support.(.xls)';
                        			showMsg(event);
                        		}else if(inputFile.size>=4194304){//文件不超过4M
                        			$scope.SuccessMsgShow = false;
-                                	$scope.returnErrorMsg = 'File bigger than 4M is not Support.';
-                                	showMsg(event);
+                            	$scope.returnErrorMsg = 'File bigger than 4M is not Support.';
+                            	showMsg(event);
                        		}else{
 //                       			提交文件
-                       			$http.post(window.location.origin+'/employee-manage/admin/customerupload',formData,
+                       			$http.post('',formData,
                             	{
                     	            transformRequest: angular.identity,
                     	            headers: {'Content-Type': undefined}
@@ -533,10 +630,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         			var inputFile = event.target.parentNode.childNodes[1].files[0];
                         			
                         			var formData = new FormData();
-                        			formData.append(inputFile.name,inputFile);
-                            		if(!(inputFile.name.indexOf(".xls")!=-1 || inputFile.name.indexOf(".xlsx")!=-1)){
+                        			formData.append("file",inputFile);
+                            		if(!(inputFile.name.indexOf(".xls")!=-1)){
                             			$scope.SuccessMsgShow = false;
-                                     	$scope.returnErrorMsg = 'File formatter is  not Support.';
+                                     	$scope.returnErrorMsg = 'File formatter is  not Support.(.xls)';
                             			showMsg(event);
                             		}else if(inputFile.size>=4194304){//文件不超过4M
                             			$scope.SuccessMsgShow = false;
@@ -587,8 +684,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                        		if(event.target.parentNode.childNodes[1].files.length !=0){
                        			var inputFile = event.target.parentNode.childNodes[1].files[0];
                        			var formData = new FormData();
-                    			formData.append(inputFile.name,inputFile);
-                           		if(!(inputFile.name.indexOf(".xls")!=-1 || inputFile.name.indexOf(".xlsx")!=-1)){
+                    			formData.append("file",inputFile);
+                           		if(!(inputFile.name.indexOf(".xls")!=-1)){
                            			$scope.SuccessMsgShow = false;
                                     $scope.returnErrorMsg = 'File formatter is not Support.';
                            			showMsg(event);
@@ -598,7 +695,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                     	showMsg(event);
                            		}else{
 //                           			提交文件
-                           			$http.post(window.location.origin+'/employee-manage/admin/userupload',formData,
+                           			$http.post('',formData,
                                 	{
                         	            transformRequest: angular.identity,
                         	            headers: {'Content-Type': undefined}

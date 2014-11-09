@@ -356,6 +356,45 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         //监听当前页面和每页条数来获取grid数据
                         $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage + CarShow +paginationConfForCustomer.currentPage + paginationConfForCustomer.itemsPerPage', reGetDatas);
 
+                        //搜索功能
+                        $scope.searchGridData = function(event){
+                        	if($scope.CarShow){
+                        		//搜索车源
+                        		$http.post(window.location.origin+'/employee-manage/admin/querycar',$scope.carSourceSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
+                        		success(function(data){
+                        			if(data.returnState == "success"){
+                        				$scope.dataStore = dataStore = data.returnData.item;
+                                        $scope.formDataResult = data.returnData.item;
+                                        $scope.paginationConf.currentPage = data.returnData.currentPage;
+                                        $scope.paginationConf.totalItems = data.returnData.totalItems;
+                                        $scope.paginationConf.itemsPerPage = data.returnData.itemsPerPage;
+                        			}else{
+                        				$scope.ajaxMsg ="Query carSource Data Error!";
+                        			}
+                        		}).
+                        		error(function(data){
+                        			console.log(000);
+                        		});
+                        	}else{
+                        		//搜索客源
+                        		$http.post(window.location.origin+'/employee-manage/admin/querycustomer',$scope.customerSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
+                        		success(function(data){
+                        			if(data.returnState == "success"){
+                        				 $scope.dataStoreForCustomer = dataStoreForCustomer = data.returnData.item;
+                                         $scope.formDataResultForCustomer = data.returnData.item;
+                                         $scope.paginationConfForCustomer.currentPage = data.returnData.currentPage;
+                                         $scope.paginationConfForCustomer.totalItems = data.returnData.totalItems;
+                                         $scope.paginationConfForCustomer.itemsPerPage = data.returnData.itemsPerPage;
+                        			}else{
+                        				$scope.ajaxMsg ="Query customer Data Error!";
+                        			}
+                        		}).
+                        		error(function(data){
+                        			console.log(000);
+                        		});
+                        	}
+                        };
+                        
                     }
                 },
                 'footer@index':{

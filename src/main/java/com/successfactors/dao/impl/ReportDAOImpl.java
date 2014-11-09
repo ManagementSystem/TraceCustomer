@@ -9,5 +9,6 @@ import com.successfactors.dao.ReportDAO;
 
 @Repository
 public class ReportDAOImpl extends BaseDAO<Report, Long> implements ReportDAO{
-
+	
+	
 }

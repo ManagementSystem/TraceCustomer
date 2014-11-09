@@ -91,6 +91,7 @@ public class Customer{
 	@Column(name="property",nullable=true,unique=false)
 	private Integer property; // (Derect customer or channel customer)
 	
+	@Column(name="istop",nullable=true,unique=false)
 	private Integer isTop;
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="customer")

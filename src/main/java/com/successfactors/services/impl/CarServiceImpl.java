@@ -2,6 +2,7 @@ package com.successfactors.services.impl;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class CarServiceImpl implements CarService{
 			Car car = new Car();
 			car.setCarVO(carVO);
 			car.setCarType(carType);
-			
+			car.setImportTime(new Date());
 			dao.save(car);
 			return ReturnValueConstants.RETURN_SUCCESS;
 		}catch(Exception ex){

@@ -4,6 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:task="http://www.springframework.org/schema/task"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
@@ -11,7 +12,9 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
   		http://www.springframework.org/schema/tx 
-      	http://www.springframework.org/schema/tx/spring-tx.xsd">
+      	http://www.springframework.org/schema/tx/spring-tx.xsd
+      	http://www.springframework.org/schema/task 
+      	http://www.springframework.org/schema/task/spring-task.xsd">
         
 	
 	<import resource="classpath:context/spring-security.xml"/>
@@ -71,20 +74,25 @@
         <property name="maxUploadSize" value="10000000" /><!-- 10M -->  
    </bean>    
  
-<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />  
-<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
-    <property name="messageConverters">  
-        <list>  
-            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
-                <property name="supportedMediaTypes">  
-                    <list>  
-                        <value>text/html;charset=UTF-8</value>  
-                        <value>application/json;charset=UTF-8</value>  
-                    </list>  
-                </property>  
-            </bean>  
-        </list>  
-    </property>  
-</bean>  
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />  
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
+	    <property name="messageConverters">  
+	        <list>  
+	            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+	                <property name="supportedMediaTypes">  
+	                    <list>  
+	                        <value>text/html;charset=UTF-8</value>  
+	                        <value>application/json;charset=UTF-8</value>  
+	                    </list>  
+	                </property>  
+	            </bean>  
+	        </list>  
+	    </property>  
+	</bean> 
+	<task:scheduler id="taskScheduler"/>
+    <task:executor id="taskExecutor" pool-size="1"/>
+    <task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
+	
+	 
     
 </beans>

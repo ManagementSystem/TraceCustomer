@@ -86,6 +86,9 @@ public class Car {
 	@OneToMany(mappedBy="car",fetch=FetchType.LAZY)
 	private Set<CarsRemarks> remarks;
 	
+	@Column(name="import_time",nullable=true,unique=false)
+	private Date importTime;
+	
 	public Long getId() {
 		return id;
 	}
@@ -236,6 +239,14 @@ public class Car {
 
 	public void setCarTypeRecord(String carTypeRecord) {
 		this.carTypeRecord = carTypeRecord;
+	}
+
+	public Date getImportTime() {
+		return importTime;
+	}
+
+	public void setImportTime(Date importTime) {
+		this.importTime = importTime;
 	}
 
 	public void setCarVO(CarVO vo){

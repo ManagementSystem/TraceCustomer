@@ -22,6 +22,9 @@ public class Report {
 	@Column(name="r_name",nullable=false,unique=false)
 	private String name;
 	
+	@Column(name="r_group",nullable=false,unique= false)
+	private String group;
+
 	@Column(name="remark_count")
 	private Integer remarkCount;
 	
@@ -91,6 +94,14 @@ public class Report {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
 	}
 	
 	

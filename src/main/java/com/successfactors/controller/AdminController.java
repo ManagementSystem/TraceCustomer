@@ -139,8 +139,8 @@ public class AdminController extends BaseController{
 	@RequestMapping(value="/getcarremarks",method=RequestMethod.GET)
 	@ResponseBody
 	public ReturnValue getCarRemark(@RequestParam(value="carid") Long id,
-									@RequestParam(value="currentPage",required = false) int currentPage,
-									@RequestParam(value="itemsPerPage",required = false) int itemsPerPage){
+									@RequestParam(value="currentPage",required = false,defaultValue="1") int currentPage,
+									@RequestParam(value="itemsPerPage",required = false,defaultValue="20") int itemsPerPage){
 		
 		return carRemarkService.getCarsRemarks(id, currentPage, itemsPerPage);
 		
@@ -157,8 +157,8 @@ public class AdminController extends BaseController{
 	@RequestMapping(value="/getcustomerremarks",method=RequestMethod.GET)
 	@ResponseBody
 	public ReturnValue getCustomerRemark(@RequestParam(value="customerid") Long id,
-										@RequestParam(value="currentPage",required = false) int currentPage,
-										@RequestParam(value="itemsPerPage",required = false) int itemsPerPage){
+										@RequestParam(value="currentPage",required = false,defaultValue="1") int currentPage,
+										@RequestParam(value="itemsPerPage",required = false,defaultValue="20") int itemsPerPage){
 		
 		return customerRemarkService.getCustomerRemarks(id, currentPage, itemsPerPage);
 		

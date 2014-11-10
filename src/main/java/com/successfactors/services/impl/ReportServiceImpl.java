@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.successfactors.bean.Page;
 import com.successfactors.bean.Report;
 import com.successfactors.bean.Users;
 import com.successfactors.constant.UserAuthConstants;
@@ -48,13 +49,15 @@ public class ReportServiceImpl implements ReportService{
 	private UsersDAO userDao;
 	
 	@Override
-	public List<Report> getReport(Date startDate, Date endDate) {
+	@Transactional
+	public Page<Report> getReport(Date startDate, Date endDate,int currentPage,int itemsPerPage) {
 		// TODO Auto-generated method stub
-		return null;
+		return reportDao.getReports(startDate, endDate, currentPage, itemsPerPage);
+	
 	}
 	
 	@Transactional
-	@Scheduled(cron="0 0/30 1 * * ?")
+	@Scheduled(cron="0 0 1 * * ?")
 	public void generateReport(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
 		
@@ -69,7 +72,7 @@ public class ReportServiceImpl implements ReportService{
 			int remarkCount = carsRemarksDao.getCount(null,Restrictions.eq("remarkMan", users.getUsername()),Restrictions.between("updateTime", startTime, nowTime));
 			int dealCount = carsRemarksDao.getCount(null, Restrictions.eq("remarkMan", users.getUsername()),
 														  Restrictions.between("updateTime", startTime, nowTime),
-														  Restrictions.eq("type", "2"));
+														  Restrictions.eq("type", "成交记录"));
 			int addCount = carDao.getCount(null, Restrictions.eq("operator", users.getUsername()),Restrictions.between("importTime", startTime, nowTime));
 			int topCount =  carDao.getCount(null, Restrictions.eq("operator", users.getUsername()),Restrictions.between("importTime", startTime, nowTime),Restrictions.eq("isTop", 1));
 			report.setAddCount(addCount);
@@ -89,7 +92,7 @@ public class ReportServiceImpl implements ReportService{
 			int remarkCount = customerRemarkDao.getCount(null,Restrictions.eq("remarkMan", users.getUsername()),Restrictions.between("updateTime", startTime, nowTime));
 			int dealCount = customerRemarkDao.getCount(null, Restrictions.eq("remarkMan", users.getUsername()),
 														  Restrictions.between("updateTime", startTime, nowTime),
-														  Restrictions.eq("type", "2"));
+														  Restrictions.eq("type", "成交记录"));
 			int addCount = customerDAO.getCount(null, Restrictions.eq("importName", users.getUsername()),Restrictions.between("importTime", startTime, nowTime));
 			int topCount =  customerDAO.getCount(null, Restrictions.eq("importName", users.getUsername()),Restrictions.between("importTime", startTime, nowTime),Restrictions.eq("isTop", 1));
 			report.setAddCount(addCount);

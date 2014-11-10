@@ -102,8 +102,8 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 		return findByCriteria(null, criterion);
 	}
 	
-	@SuppressWarnings("unchecked")
-	protected List<T> findByCriteria(List<Order> orders,Criterion... criterion){
+	
+	public List<T> findByCriteria(List<Order> orders,Criterion... criterion){
 		Criteria criteria = createCriteria(orders,criterion);
 		return criteria.list();
 	}

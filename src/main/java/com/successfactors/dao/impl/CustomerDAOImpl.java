@@ -53,8 +53,10 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 			}else if(key.equals("itemsPerPage")){
 				itemPerPage = Integer.parseInt(val);
 			}else{
-				c.add(Restrictions.like(key, "%"+val+"%"));
-				countC.add(Restrictions.like(key, "%"+val+"%"));
+				if(val != null && !"".equals(val)){
+					c.add(Restrictions.like(key, "%"+val+"%"));
+					countC.add(Restrictions.like(key, "%"+val+"%"));
+				}
 			}
 		}
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();

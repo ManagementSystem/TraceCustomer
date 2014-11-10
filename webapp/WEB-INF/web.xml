@@ -7,7 +7,7 @@
 	 <context-param>  
 	    <param-name>contextConfigLocation</param-name>  
 	   <!-- <param-value>/WEB-INF/classes/context/applicationContext.xml</param-value> -->
-	   <param-value>classpath:context/application-context.xml</param-value>
+	   <param-value>classpath:context/application-context.xml,classpath:context/application-task.xml</param-value>
 	</context-param>  
 	<filter>  
         <filter-name>springSecurityFilterChain</filter-name>  

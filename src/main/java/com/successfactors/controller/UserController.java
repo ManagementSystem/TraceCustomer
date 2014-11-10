@@ -39,4 +39,10 @@ public class UserController extends BaseController{
 		}
 		return returnValue;
 	}
+	
+	@RequestMapping(value="/getusername")
+	@ResponseBody
+	public String getName(){
+		return getUserName();
+	}
 }

@@ -1,15 +1,15 @@
 package com.successfactors.services;
 
 import java.util.Date;
-import java.util.List;
 
+import com.successfactors.bean.Page;
 import com.successfactors.bean.Report;
 
 
 
 public interface ReportService {
 	
-	public List<Report> getReport(Date startDate,Date endDate);
+	public Page<Report> getReport(Date startDate,Date endDate,int currentPage,int itemsPerPage);
 	
 	public void generateReport();
 	

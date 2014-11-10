@@ -3,6 +3,8 @@ package com.successfactors.dao.impl;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.jsp.jstl.core.Config;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -56,8 +58,10 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 			}else if(key.equals("itemsPerPage")){
 				itemPerPage = Integer.parseInt(val);
 			}else{
-				c.add(Restrictions.like(key, "%"+val+"%"));
-				countC.add(Restrictions.like(key, "%"+val+"%"));
+				if(val != null && !"".equals(val)){
+					c.add(Restrictions.like(key, "%"+val+"%"));
+					countC.add(Restrictions.like(key, "%"+val+"%"));
+				}
 			}
 		}
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();

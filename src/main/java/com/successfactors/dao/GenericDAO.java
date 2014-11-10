@@ -14,6 +14,8 @@ public interface GenericDAO<T,ID extends Serializable> {
 	
 	T findById(ID id,boolean lock);
 	
+	List<T> findByCriteria(List<Order> orders,Criterion... criterion);
+	
 	T getById(ID id);
 	
 	List<T> findAll();

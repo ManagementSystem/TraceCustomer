@@ -56,6 +56,18 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         $scope.changeDataType = function(event){
                         	$scope.CarShow = !($scope.CarShow);
                         };
+//                        初始化车源搜索
+                        $scope.carSourceSearch = {
+                        		'region':'',
+                        		'config':'',
+                        		'carColor':'',
+                        		'cartype':''
+                        };
+                        $scope.customerSearch = {
+                        		'name':'',
+                        		'level':'',
+                        		'ispublic':''
+                        }
                         
 //                        车源的数据缓存和pageBar设置
                         var dataStore;
@@ -370,6 +382,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                         $scope.paginationConf.itemsPerPage = data.returnData.itemsPerPage;
                         			}else{
                         				$scope.ajaxMsg ="Query carSource Data Error!";
+                        				$scope.dataStore = dataStore = {};
+                                        $scope.formDataResult = {};
                         			}
                         		}).
                         		error(function(data){
@@ -387,6 +401,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                          $scope.paginationConfForCustomer.itemsPerPage = data.returnData.itemsPerPage;
                         			}else{
                         				$scope.ajaxMsg ="Query customer Data Error!";
+                        				$scope.dataStoreForCustomer = dataStoreForCustomer = {};
+                                        $scope.formDataResultForCustomer = {};
                         			}
                         		}).
                         		error(function(data){

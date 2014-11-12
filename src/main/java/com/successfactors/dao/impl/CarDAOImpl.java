@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -29,7 +30,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 	@Override
 	public Page<Car> getCar(int currentPage, int itemPerPage) {
 		// TODO Auto-generated method stub
-		String hql = "from Car";
+		String hql = "from Car c order by c.price asc";
 		Query query = getSession().createQuery(hql);
 		query.setFirstResult((currentPage - 1) * itemPerPage);
 		query.setMaxResults(itemPerPage);
@@ -67,6 +68,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);
+		c.addOrder(Order.asc("price"));
 		List<Car> list = c.list();
 		page.setItem(list);
 		page.setItemsPerPage(itemPerPage);

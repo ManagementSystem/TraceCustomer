@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +29,14 @@ public class ReportDAOImpl extends BaseDAO<Report, Long> implements ReportDAO{
 		Integer totalResult = getCount(null, Restrictions.between("date", startDate, endDate));
 		c.setFirstResult((currentPage - 1) * itemsPerPage);
 		c.setMaxResults(itemsPerPage);
+		ProjectionList proList = Projections.projectionList();
+		proList.add(Projections.property("id"));
+		proList.add(Projections.groupProperty("name"));
+		proList.add(Projections.sum("dealCount"), "sumDealCount");
+		proList.add(Projections.sum("addCount"), "sumAddCount");
+		proList.add(Projections.sum("remarkCount"), "sumRemarkCount");
+		proList.add(Projections.sum("topCount"), "sumTopCount");
+		c.setProjection(proList);
 		List<Report> list = c.list();
 		page.setItem(list);
 		page.setItemsPerPage(itemsPerPage);

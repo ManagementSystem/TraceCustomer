@@ -40,6 +40,14 @@ public class Report {
 	@Column(name="r_date")
 	private Date date;
 
+	private Integer sumDealCount;
+	
+	private Integer sumAddCount;
+	
+	private Integer sumRemarkCount;
+	
+	private Integer sumTopCount;
+	
 	public Long getId() {
 		return id;
 	}
@@ -102,6 +110,38 @@ public class Report {
 
 	public void setGroup(String group) {
 		this.group = group;
+	}
+
+	public Integer getSumDealCount() {
+		return sumDealCount;
+	}
+
+	public void setSumDealCount(Integer sumDealCount) {
+		this.sumDealCount = sumDealCount;
+	}
+
+	public Integer getSumAddCount() {
+		return sumAddCount;
+	}
+
+	public void setSumAddCount(Integer sumAddCount) {
+		this.sumAddCount = sumAddCount;
+	}
+
+	public Integer getSumRemarkCount() {
+		return sumRemarkCount;
+	}
+
+	public void setSumRemarkCount(Integer sumRemarkCount) {
+		this.sumRemarkCount = sumRemarkCount;
+	}
+
+	public Integer getSumTopCount() {
+		return sumTopCount;
+	}
+
+	public void setSumTopCount(Integer sumTopCount) {
+		this.sumTopCount = sumTopCount;
 	}
 	
 	

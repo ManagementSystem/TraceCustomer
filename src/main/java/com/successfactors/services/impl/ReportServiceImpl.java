@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.successfactors.bean.Page;
 import com.successfactors.bean.Report;
+import com.successfactors.bean.ReturnValue;
 import com.successfactors.bean.Users;
 import com.successfactors.constant.UserAuthConstants;
 import com.successfactors.dao.CarDAO;
@@ -50,14 +51,24 @@ public class ReportServiceImpl implements ReportService{
 	
 	@Override
 	@Transactional
-	public Page<Report> getReport(Date startDate, Date endDate,int currentPage,int itemsPerPage) {
+	public ReturnValue getReport(Date startDate, Date endDate,int currentPage,int itemsPerPage) {
 		// TODO Auto-generated method stub
-		return reportDao.getReports(startDate, endDate, currentPage, itemsPerPage);
+		ReturnValue returnValue = new ReturnValue();
+		try{
+			Page<Report> page = reportDao.getReports(startDate, endDate, currentPage, itemsPerPage);
+			returnValue.setSuccess();
+			returnValue.setReturnData(page);
+		}catch(Exception ex){
+			logger.error(ex.getMessage());
+			returnValue.setError();
+		}
+		
+		return returnValue;
 	
 	}
 	
 	@Transactional
-	@Scheduled(cron="0 0 1 * * ?")
+	@Scheduled(cron="0 0 0/6 * * ?")
 	public void generateReport(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
 		

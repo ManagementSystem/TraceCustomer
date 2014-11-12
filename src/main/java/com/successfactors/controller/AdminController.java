@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.successfactors.bean.CarType;
+import com.successfactors.bean.Page;
+import com.successfactors.bean.Report;
 import com.successfactors.bean.ReturnValue;
 import com.successfactors.bean.Users;
 import com.successfactors.services.CarService;
@@ -25,11 +27,13 @@ import com.successfactors.services.CarTypeService;
 import com.successfactors.services.CarsRemarkService;
 import com.successfactors.services.CustomerRemarkService;
 import com.successfactors.services.CustomerService;
+import com.successfactors.services.ReportService;
 import com.successfactors.services.UserService;
 import com.successfactors.vo.CarRemarkVO;
 import com.successfactors.vo.CarVO;
 import com.successfactors.vo.CustomerRemarkVO;
 import com.successfactors.vo.CustomerVO;
+import com.successfactors.vo.ReportVO;
 
 
 @Controller
@@ -53,6 +57,9 @@ public class AdminController extends BaseController{
 	
 	@Autowired
 	private CustomerRemarkService customerRemarkService;
+	
+	@Autowired
+	private ReportService reportService;
 	
 	
 	@RequestMapping(value="/createuser",method=RequestMethod.POST)
@@ -201,4 +208,9 @@ public class AdminController extends BaseController{
 		return customerService.importCustomer(file, path,suffix);
 	}
 	
+	@RequestMapping(value="/getreport",method=RequestMethod.POST)
+	@ResponseBody
+	public ReturnValue getReport(@RequestBody ReportVO vo){
+		return reportService.getReport(vo.getStartTime(), vo.getEndTime(), vo.getCurrentPage(), vo.getItemsPerPage());
+	}
 }

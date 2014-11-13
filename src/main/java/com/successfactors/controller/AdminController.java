@@ -83,7 +83,7 @@ public class AdminController extends BaseController{
 	@ResponseBody
 	public String createCar(@RequestBody CarVO car){
 		//car.setOperator(getUserName());
-		car.setOperator("zjw");
+		car.setOperator(getUserName());
 		return carService.addCar(car);
 	}
 	
@@ -130,7 +130,7 @@ public class AdminController extends BaseController{
 	@RequestMapping(value="/createcustomer",method=RequestMethod.POST)
 	@ResponseBody
 	public String createCustomer(@RequestBody CustomerVO vo){
-		vo.setImportName("zjw");
+		vo.setImportName(getUserName());
 		vo.setImportTime(new Date());
 		return customerService.addCustomer(vo);
 	}

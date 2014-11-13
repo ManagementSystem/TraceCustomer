@@ -3,6 +3,8 @@ package com.successfactors.vo;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class CarVO {
 	private Long id;
 	
@@ -29,6 +31,7 @@ public class CarVO {
 	private String carDecoration;
 	
 	//记得在前天加上
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date productDate;
 
 	private String saleRegion;

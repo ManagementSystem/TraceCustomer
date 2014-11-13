@@ -136,6 +136,22 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		return returnMsg;
 	}
+
+
+	@Override
+	public ReturnValue getCustomerDataToCGroup(Map<String, String> conditions) {
+		// TODO Auto-generated method stub
+		ReturnValue returnValue = new ReturnValue();
+		try{
+			Page<Customer> page = customerDao.getCustomers(conditions);
+			returnValue.setSuccess();
+			returnValue.setReturnData(page);
+		}catch(Exception ex){
+			returnValue.setError();
+		}
+		
+		return returnValue;
+	}
 	
 	
 	

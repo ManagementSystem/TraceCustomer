@@ -36,6 +36,7 @@
 		                invalidate-session="true"   
 		                logout-success-url="/login"   
 		                logout-url="/logout"/> 
+		        <security:session-management invalid-session-url="/login"></security:session-management>
 		  </security:http>
 		  
 		  <security:authentication-manager>  

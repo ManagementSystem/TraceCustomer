@@ -441,13 +441,12 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
            		installment:"",
            		insurance:"",
            		level:"",
-           		ispublice:"",
-           		deadline:"",
+           		ispublic:"",
+           		deadline:"24",
            		customerType:"",
-           		carType:"",
+           		carTypeId:"",
            		sex:"",
-           		property:"",
-           		remarks:""
+           		configuration:''
               };
 
 //        	  车型
@@ -465,6 +464,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         	  $scope.customerObjects.level = $scope.levelOptions[0];
 //        	  新增客源
         	  $scope.addCustomer = function(){
+        		 
         		  var postData = $scope.customerObjects;
         		  $http.post(window.location.origin+"/employee-manage/admin/createcustomer",postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
         			  if(data == "success"){
@@ -578,6 +578,12 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                   $scope.initDate = new Date('2016-15-20');
                   $scope.formats = ['yyyy/MM/dd'];
                   $scope.format = $scope.formats[0];
+                  
+                  
+//                  车型
+            	  $http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
+                      $scope.TypeOptions = data;
+                   });
 
                   //新增车源
                   $scope.addCarObject = {
@@ -607,6 +613,36 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                   $scope.addCarObject.saleRegion=$scope.saleRegionOptions[0];
                   
                   $scope.saveCarSource = function(){
+                	  //时间formatter
+                	  Date.prototype.format = function (format) {  
+                		    /*  
+                		     * eg:format="YYYY-MM-dd hh:mm:ss";  
+                		     */   
+                		    var  o = {  
+                		        "M+"  : this .getMonth() + 1,  // month   
+                		        "d+"  : this .getDate(),  // day   
+                		        "h+"  : this .getHours(),  // hour   
+                		        "m+"  : this .getMinutes(),  // minute   
+                		        "s+"  : this .getSeconds(),  // second   
+                		        "q+"  :Math.floor(( this .getMonth() + 3) / 3),  // quarter   
+                		        "S"  : this .getMilliseconds()  
+                		    // millisecond   
+                		    }  
+                		  
+                		    if  (/(y+)/.test(format)) {  
+                		        format = format.replace(RegExp.$1, (this .getFullYear() +  "" )  
+                		                .substr(4 - RegExp.$1.length));  
+                		    }  
+                		  
+                		    for  (  var  k  in  o) {  
+                		        if  ( new  RegExp( "("  + k +  ")" ).test(format)) {  
+                		            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]  
+                		                    : ("00"  + o[k]).substr(( ""  + o[k]).length));  
+                		        }  
+                		    }  
+                		    return  format;  
+                		};
+                	  $scope.addCarObject.productDate = $scope.dt.format( "yyyy-MM-dd" );
                 	  var postData = $scope.addCarObject;
                 	  
                 	  $http.post(window.location.origin+"/employee-manage/admin/createcar",postData).success(function(data){

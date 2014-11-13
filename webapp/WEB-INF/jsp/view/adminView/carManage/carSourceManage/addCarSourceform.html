@@ -39,6 +39,17 @@
                     <select ng-model="addCarObject.type" class="form-control" ng-options="opt for opt in typeOptions"></select>
                 </div>
             </div>
+             <div class="form-group">
+                <label class="col-md-3 control-label">
+                    车型要求：
+                </label>
+                <div class="col-md-9">
+                    <select class="form-control" ng-model="addCarObject.carTypeId">
+                    	<option value="">==其他==</option>
+                    	<option ng-repeat="item in TypeOptions" value={{item.id}}>{{item.brand}} {{item.type}}</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-md-3 control-label">
                     生产日期：

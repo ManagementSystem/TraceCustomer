@@ -3,6 +3,7 @@ package com.successfactors.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -32,6 +33,7 @@ public class CustomerRemarkDAOImpl extends BaseDAO<CustomerRemarks, Long> implem
 		Criteria cri = getSession().createCriteria(CustomerRemarks.class,
 				"customerRemarks");
 		cri.add(Restrictions.eq("customerRemarks.customer.id", customerId));
+		cri.addOrder(Order.desc("updateTime"));
 		cri.setFirstResult((currentPage - 1) * itemPerPage);
 		cri.setMaxResults(itemPerPage);
 		List<CustomerRemarks> list = cri.list();

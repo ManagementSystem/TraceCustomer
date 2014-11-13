@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -35,6 +36,7 @@ public class CarsRemarksDAOImpl extends BaseDAO<CarsRemarks, Long> implements
 		Criteria cri = getSession().createCriteria(CarsRemarks.class,
 				"carRemark");
 		cri.add(Restrictions.eq("carRemark.car.id", carId));
+		cri.addOrder(Order.desc("updateTime"));
 		cri.setFirstResult((currentPage - 1) * itemPerPage);
 		cri.setMaxResults(itemPerPage);
 		List<CarsRemarks> list = cri.list();

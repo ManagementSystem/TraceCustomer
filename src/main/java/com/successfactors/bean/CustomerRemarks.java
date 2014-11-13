@@ -85,6 +85,14 @@ public class CustomerRemarks {
 		this.customer = customer;
 	}
 	
+	public String getRemarkMan() {
+		return remarkMan;
+	}
+
+	public void setRemarkMan(String remarkMan) {
+		this.remarkMan = remarkMan;
+	}
+
 	public void setVO(CustomerRemarkVO vo){
 		this.content = vo.getContent();
 		this.remarkMan = vo.getRemarkMan();

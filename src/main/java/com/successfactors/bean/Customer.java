@@ -88,9 +88,6 @@ public class Customer{
 	@Column(name="deal_count",nullable=true,unique=false)
 	private Integer dealCount;
 	
-	@Column(name="property",nullable=true,unique=false)
-	private Integer property; // (Derect customer or channel customer)
-	
 	@Column(name="istop",nullable=true,unique=false)
 	private Integer isTop;
 	
@@ -234,14 +231,6 @@ public class Customer{
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-
-	public Integer getProperty() {
-		return property;
-	}
-
-	public void setProperty(Integer property) {
-		this.property = property;
-	}
 	
 	public String getImportName() {
 		return importName;
@@ -296,10 +285,10 @@ public class Customer{
 		this.level = vo.getLevel();
 		this.name = vo.getName();
 		this.phone = vo.getPhone();
-		this.property = vo.getProperty();
 		this.region = vo.getRegion();
 		this.importName = vo.getImportName();
 		this.sex = vo.getSex();
 		this.configuration = vo.getConfiguration();
+		this.isTop = vo.getIsTop();
 	}
 }

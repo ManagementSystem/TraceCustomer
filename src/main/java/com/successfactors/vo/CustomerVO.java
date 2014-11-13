@@ -35,13 +35,13 @@ public class CustomerVO {
 	
 	private String sex;
 	
-	private Integer property;
-	
 	private String importName;
 	
 	private List<Long> remarkids;
 
 	private String configuration;
+	
+	private Integer isTop;
 	
 	public String getName() {
 		return name;
@@ -164,14 +164,6 @@ public class CustomerVO {
 		this.sex = sex;
 	}
 
-	public Integer getProperty() {
-		return property;
-	}
-
-	public void setProperty(Integer property) {
-		this.property = property;
-	}
-
 	public List<Long> getRemarkids() {
 		return remarkids;
 	}
@@ -194,6 +186,14 @@ public class CustomerVO {
 
 	public void setConfiguration(String configuration) {
 		this.configuration = configuration;
+	}
+
+	public Integer getIsTop() {
+		return isTop;
+	}
+
+	public void setIsTop(Integer isTop) {
+		this.isTop = isTop;
 	}
 	
 	

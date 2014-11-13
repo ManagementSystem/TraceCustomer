@@ -176,7 +176,7 @@ public class ReadExcelUtil {
 				Cell cell = sheet.getCell(j,i);
 				switch(j){
 					case 0:
-						customer.setProperty(Integer.valueOf(cell.getContents()));
+						customer.setCustomerType(Integer.valueOf(cell.getContents()));
 						break;
 					case 1:
 						customer.setName(cell.getContents());

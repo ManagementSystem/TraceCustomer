@@ -156,7 +156,7 @@ public class AdminController extends BaseController{
 	@RequestMapping(value="/addcustomerremark",method=RequestMethod.POST)
 	@ResponseBody
 	public String addCustomerRemark(@RequestBody CustomerRemarkVO vo){
-		vo.setRemarkMan("zjw");
+		vo.setRemarkMan(getUserName());
 		return customerRemarkService.addCustomerRemark(vo);
 	}
 	

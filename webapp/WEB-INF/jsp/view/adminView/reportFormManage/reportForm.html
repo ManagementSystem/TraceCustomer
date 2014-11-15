@@ -1,9 +1,6 @@
 <div class="row">
  <div class="col-md-3">
- 	<div class="input-group pull-right global-search">
-          <label class="input-group-addon">姓名</label>
-          <input type="text" class="form-control" ng-model="search.name"/>
-     </div>
+ 	
  </div>
  <div class="col-md-3">
  	<div class="input-group pull-right global-search">
@@ -24,7 +21,7 @@
      </div>
  </div>
  <div class="col-md-3">
- 	<button type="button" ng-click="" class="btn btn-success">搜索</button>
+ 	<button type="button" ng-click="searchReport($event)" class="btn btn-success">搜索</button>
  </div>
 </div>
 <div class="row">
@@ -34,23 +31,22 @@
     <thead>
     	<tr>
     		<th>员工</th>
-    		<th>客户</th>
-    		<th>回访记录</th>
-    		<th>操作次数</th>
-        	<th style="width:174px;">操作</th>
+    		<th>分组</th>
+    		<th>成交次数</th>
+    		<th>新增次数</th>
+    		<th>回访条数</th>
+    		<th>置顶条数</th>
+    		<th>最后操作时间</th>
     	</tr>
     </thead>
     <tbody>
     	<tr ng-repeat="item in formDataResult">
-    		<td>{{item.region}}</td>
-    		<td>{{item.type}}</td>
-    		<td>{{item.dealer}}</td>
-    		<td>{{item.principal}}</td>
-	        <td>
-	         <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
-	          <button type="button" ng-click="editItem($index,$event)" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i> 编辑</button>
-	          <button type="button" ng-click="delItem($index,$event)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> 删除</button>
-	        </td>
+    		<td>{{item[0]}}</td>
+    		<td>{{item[1]}}</td>
+    		<td>{{item[2]}}</td>
+    		<td>{{item[3]}}</td>
+    		<td>{{item[4]}}</td>
+    		<td>{{item[5]}}</td>
     	</tr>
     </tbody>
 	</table>

@@ -834,14 +834,30 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 'main@index': {
                     templateUrl:'jsp/view/adminView/reportFormManage/reportForm.html',
                     controller: function($scope,$state,$http){
-                      //日期组件
+                  	  
+                  	  
+//                  pageBar组件
+                  	$scope.paginationConf = {
+                 		   currentPage:1,
+                            itemsPerPage: 10,
+                            totalItems:10
+                        };
+                  $scope.maxSize = 5;
+
+                  $scope.setPage = function (pageNo) {
+                    $scope.currentPage = pageNo;
+                  };
+                  	  
+                  	//日期组件
                       $scope.today = function() {
                             $scope.dt = new Date();
+                            $scope.dt1 = new Date();
                       };
                       $scope.today();
 
                       $scope.clear = function () {
                         $scope.dt = null;
+                        $scope.dt1 = null;
                       };
 
                       // Disable weekend selection
@@ -870,9 +886,67 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                       $scope.initDate = new Date('2016-15-20');
                       $scope.formats = ['yyyy/MM/dd'];
                       $scope.format = $scope.formats[0];
-               	
-               
-                    	}
+                      
+                      $scope.searchReport = function(){
+                    	  getRePort();
+                      };
+                      
+                      //时间formatter
+                	  Date.prototype.format = function (format) {  
+                		    /*  
+                		     * eg:format="YYYY-MM-dd hh:mm:ss";  
+                		     */   
+                		    var  o = {  
+                		        "M+"  : this .getMonth() + 1,  // month   
+                		        "d+"  : this .getDate(),  // day   
+                		        "h+"  : this .getHours(),  // hour   
+                		        "m+"  : this .getMinutes(),  // minute   
+                		        "s+"  : this .getSeconds(),  // second   
+                		        "q+"  :Math.floor(( this .getMonth() + 3) / 3),  // quarter   
+                		        "S"  : this .getMilliseconds()  
+                		    // millisecond   
+                		    }  
+                		  
+                		    if  (/(y+)/.test(format)) {  
+                		        format = format.replace(RegExp.$1, (this .getFullYear() +  "" )  
+                		                .substr(4 - RegExp.$1.length));  
+                		    }  
+                		  
+                		    for  (  var  k  in  o) {  
+                		        if  ( new  RegExp( "("  + k +  ")" ).test(format)) {  
+                		            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]  
+                		                    : ("00"  + o[k]).substr(( ""  + o[k]).length));  
+                		        }  
+                		    }  
+                		    return  format;  
+                		};
+                		$scope.report={
+                				startTime:'',
+                				endTime:'',
+                				currentPage:'',
+                				itemsPerPage:''
+                		};
+                	  $scope.report.startTime = $scope.dt.format( "yyyy-MM-dd" );
+                	  $scope.report.currentPage=$scope.paginationConf.currentPage;
+                  	  $scope.report.itemsPerPage=$scope.paginationConf.itemsPerPage;
+                      
+                  	  var getRePort = function(){
+                  		 $http.post(window.location.origin+'/employee-manage/admin/getreport',$scope.report).
+		                   	  success(function(data){
+		                         if(data == "success"){
+		                       	  $scope.formDataResult = data.returnData.item;
+		                         }else{
+		                         	
+		                         }
+		                       }).
+		                       error(function(data){
+		                       	
+		                       });
+                  	  	};
+                  	  getRePort();
+                  	  $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', getRePort);
+                  	  	
+                    }
                     }
                 }
            

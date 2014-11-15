@@ -137,4 +137,20 @@ public class CarServiceImpl implements CarService{
 	}
 
 
+	@Override
+	public ReturnValue getCarsDataToCustomer(int currentPage, int itemPerPage) {
+		// TODO Auto-generated method stub
+		ReturnValue returnValue = new ReturnValue();
+		try {
+			Page<Car> page = dao.getCarToCustomer(currentPage, itemPerPage);
+			returnValue.setSuccess();
+			returnValue.setReturnData(page);
+		} catch (Exception e) {
+			// TODO: handle exception
+			returnValue.setError();
+		}
+		return returnValue;
+	}
+
+
 }

@@ -139,6 +139,7 @@ public class CustomerServiceImpl implements CustomerService{
 
 
 	@Override
+	@Transactional
 	public ReturnValue getCustomerDataToCGroup(Map<String, String> conditions) {
 		// TODO Auto-generated method stub
 		ReturnValue returnValue = new ReturnValue();

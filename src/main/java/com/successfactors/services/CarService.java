@@ -17,4 +17,6 @@ public interface CarService {
 	
 	public String importCars(MultipartFile mFile,String path,String suffix);
 	
+	public ReturnValue getCarsDataToCustomer(int currentPage, int itemPerPage);
+	
 }

@@ -56,7 +56,7 @@ public class Customer{
 	private String level;
 	
 	@Column(name="ispublic",nullable=true,unique=false)
-	private Integer ispublic;
+	private String ispublic;
 	
 	@Column(name="import_time",nullable=true,unique=false)
 	private Date importTime;
@@ -192,11 +192,11 @@ public class Customer{
 		this.level = level;
 	}
 
-	public Integer getIspublic() {
+	public String getIspublic() {
 		return ispublic;
 	}
 
-	public void setIspublic(Integer ispublic) {
+	public void setIspublic(String ispublic) {
 		this.ispublic = ispublic;
 	}
 

@@ -23,7 +23,7 @@ public class CustomerVO {
 	
 	private String level;
 	
-	private Integer ispublic;
+	private String ispublic;
 	
 	private Date importTime;
 	
@@ -115,11 +115,11 @@ public class CustomerVO {
 		this.level = level;
 	}
 
-	public Integer getIspublic() {
+	public String getIspublic() {
 		return ispublic;
 	}
 
-	public void setIspublic(Integer ispublic) {
+	public void setIspublic(String ispublic) {
 		this.ispublic = ispublic;
 	}
 

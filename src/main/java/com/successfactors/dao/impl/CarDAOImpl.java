@@ -76,6 +76,24 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		page.setTotalItems(totalResult);
 		return page;
 	}
+	
+	
+	public Page<Car> getCarToCustomer(int currentPage,int itemPerPage){
+		String hql = "from Car c order by c.price asc";
+		Query query = getSession().createQuery(hql);
+		query.setFirstResult((currentPage - 1) * itemPerPage);
+		query.setMaxResults(itemPerPage);
+		List<Car> list = query.list();
+		for (Car car : list) {
+			car.setCarToCustomer();
+		}
+		Page<Car> page = new Page<Car>();
+		page.setItem(list);
+		page.setItemsPerPage(itemPerPage);
+		page.setCurrentPage(currentPage);
+		page.setTotalItems(getCount(null));
+		return page;
+	}
 
 	
 	

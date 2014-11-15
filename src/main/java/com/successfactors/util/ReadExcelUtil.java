@@ -215,7 +215,7 @@ public class ReadExcelUtil {
 						customer.setLevel(cell.getContents());
 						break;
 					case 13:
-						customer.setIspublic(Integer.valueOf(cell.getContents()));
+						customer.setIspublic(cell.getContents());
 						break;
 					case 14:
 						customer.setDealCount(Integer.valueOf(cell.getContents()));

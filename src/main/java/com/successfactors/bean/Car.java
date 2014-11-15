@@ -266,4 +266,12 @@ public class Car {
 		this.type = vo.getType();
 		this.saleManager = vo.getSaleManager();
 	}
+	
+	public void setCarToCustomer(){
+		this.dealer = "";
+		this.telphone = "";
+		this.principal = "";
+		this.saleManager = "";
+		this.customerManager = "";
+	}
 }

@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="customerApp">
+<html ng-app="routercustomerApp">
 
 <head>
     <meta charset="utf-8">

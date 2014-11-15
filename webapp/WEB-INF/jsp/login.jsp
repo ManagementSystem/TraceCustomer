@@ -10,20 +10,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/signin.css" rel="stylesheet">
-<title>Insert title here</title>  
+<title>登陆</title>  
 </head>  
 <body>  
   	<div class="container">
       <form class="form-signin" role="form" action="./j_spring_security_check" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" name="j_username" class="form-control" placeholder="User Name" required autofocus>
-        <input type="password" name="j_password" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <h2 class="form-signin-heading">请登陆</h2>
+        <input type="text" name="j_username" class="form-control" placeholder="用户名" required autofocus>
+        <input type="password" name="j_password" class="form-control" placeholder="密码" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登陆</button>
       </form>
 
     </div> <!-- /container -->

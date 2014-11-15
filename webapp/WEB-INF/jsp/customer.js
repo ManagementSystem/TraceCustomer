@@ -1,4 +1,4 @@
-var routerApp = angular.module('routerApp', ['ui.router','ui.bootstrap']);
+var routerApp = angular.module('customerApp', ['ui.router','ui.bootstrap']);
 routerApp.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/customer');
     $stateProvider
@@ -883,7 +883,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 routerApp.factory('authService', function($http){
   var userRole = [];
   var userRoleRouteMap = {
-    'ROLE_ADMIN':['/admin/**'],
+    'ROLE_ADMIN':['/customer/**'],
     'ROLE_USER':['/user']
   }
   return {

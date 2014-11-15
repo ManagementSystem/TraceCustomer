@@ -927,6 +927,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 				itemsPerPage:''
                 		};
                 	  $scope.report.startTime = $scope.dt.format( "yyyy-MM-dd" );
+                	  $scope.report.endTime = $scope.dt1.format( "yyyy-MM-dd" );
                 	  $scope.report.currentPage=$scope.paginationConf.currentPage;
                   	  $scope.report.itemsPerPage=$scope.paginationConf.itemsPerPage;
                       

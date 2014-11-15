@@ -25,6 +25,7 @@ import com.successfactors.dao.CustomerRemarkDAO;
 import com.successfactors.dao.ReportDAO;
 import com.successfactors.dao.UsersDAO;
 import com.successfactors.services.ReportService;
+import com.successfactors.vo.ReportReturnVO;
 
 @Service
 public class ReportServiceImpl implements ReportService{
@@ -55,7 +56,7 @@ public class ReportServiceImpl implements ReportService{
 		// TODO Auto-generated method stub
 		ReturnValue returnValue = new ReturnValue();
 		try{
-			Page<Report> page = reportDao.getReports(startDate, endDate, currentPage, itemsPerPage);
+			Page<ReportReturnVO> page = reportDao.getReports(startDate, endDate, currentPage, itemsPerPage);
 			returnValue.setSuccess();
 			returnValue.setReturnData(page);
 		}catch(Exception ex){
@@ -68,7 +69,7 @@ public class ReportServiceImpl implements ReportService{
 	}
 	
 	@Transactional
-	@Scheduled(cron="0 0 0/6 * * ?")
+	@Scheduled(cron="0 0 8 * * ?")
 	public void generateReport(){
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
 		

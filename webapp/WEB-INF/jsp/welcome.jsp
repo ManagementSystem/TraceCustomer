@@ -29,7 +29,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="login" id="login-button">Log In</a>
+                        <a href="login" id="login-button">登陆</a>
                         
                     </li>
                 </ul>

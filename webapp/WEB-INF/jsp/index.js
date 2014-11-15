@@ -934,7 +934,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                   	  var getRePort = function(){
                   		 $http.post(window.location.origin+'/employee-manage/admin/getreport',$scope.report).
 		                   	  success(function(data){
-		                         if(data == "success"){
+		                         if(data.returnState == "success"){
 		                       	  $scope.formDataResult = data.returnData.item;
 		                         }else{
 		                         	

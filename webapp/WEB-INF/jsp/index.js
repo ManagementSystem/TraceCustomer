@@ -32,18 +32,61 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 'topbar@index': {
                     templateUrl: 'jsp/view/adminView/topbar.html',
                     controller: function($scope, $state,$http) {
+                    	$http.get(window.location.origin+"/employee-manage/user/getusername").success(function(data){
+                    		$scope.uerName = data;
+                    	});
                     	$scope.oldPassWord ="";
                     	$scope.newPassWord ="";
                     	$scope.newPassWordAgain ="";
+                    	
+                    	var samePSW = function(){
+                			if($scope.newPassWordAgain != $scope.newPassWord){
+                				$scope.newPassAgainMsg = "确认密码必须和新密码一致";
+                			}
+                		};
+                    	
+                    	var notNullandSame = function(){
+                    		if($scope.oldPassWord ==""){
+                    			$scope.oldPassMsg = true;
+                    			return false;
+                    		}else if($scope.newPassWord ==""){
+                    			$scope.newPassMsg = true;
+                    			return false;
+                    		}else if($scope.newPassWordAgain ==""){
+                    			$scope.newPassAgainMsgNotnull = true;
+                    			return false;
+                    		}else if($scope.newPassWordAgain != $scope.newPassWord){
+                    			$scope.newPassAgainMsg = true;
+                    			return false;
+                    		}
+                    		return true;
+                    	};
+                    	
                     	//修改密码方法
                     	$scope.changPassWord = function(event){
-                    		$http.post('').
-                    		success(function(data){
-                    			
-                    		}).
-                    		error(function(data){
-                    			
-                    		});
+                    		if(notNullandSame()){
+                    			$scope.oldPassMsg =$scope.newPassMsg =$scope.newPassAgainMsgNotnull =$scope.newPassAgainMsg = false;
+                    			$http.post(window.location.origin+"/employee-manage/user/modifypwd",{
+                    				oldPwd:$scope.oldPassWord,
+                    				pwd:$scope.newPassWord,
+                    				againPwd:$scope.newPassWordAgain
+                    			}).
+                        		success(function(data){
+                        			if(data.returnState = "success"){
+                        				$scope.oldPassWord ="";
+                                    	$scope.newPassWord ="";
+                                    	$scope.newPassWordAgain ="";
+                                    	$scope.changePSWSuccess = true;
+                                    	setTimeout($scope.changePSWSuccess =false,2000);
+                        			}else{
+                        				
+                        			}
+                        		}).
+                        		error(function(data){
+                        			
+                        		});
+                    		};
+                    		
                     	};
                     }
                 },

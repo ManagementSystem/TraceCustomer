@@ -35,7 +35,9 @@ public class CustomerController extends BaseController {
 	@ResponseBody
 	public ReturnValue getCustomers(@RequestBody Map<String, String> conditions) {
 		conditions.put("importName", getUserName());
-		conditions.put("ispublic", "1");
+		//条件or
+		//conditions.put("ispublic", "1");
+		
 		return service.getCustomerDataToCGroup(conditions);
 	}
 

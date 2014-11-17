@@ -89,6 +89,24 @@ public class Car {
 	@Column(name="import_time",nullable=true,unique=false)
 	private Date importTime;
 	
+	
+	//new add field
+	@Column(name="city",nullable=true,length=255)
+	private String city;
+	
+	@Column(name="shopname",nullable=true,length=255)
+	private String shopName;
+	
+	@Column(name="customer_mgr_tel",nullable=true,length=255)
+	private String customerManagerTel;
+	
+	
+	@Column(name="wechat",nullable=true,length=255)
+	private String wechat;
+	
+	@Column(name="sale_mgr_tel",nullable=true,length=255)
+	private String saleManagerTel;
+	
 	public Long getId() {
 		return id;
 	}
@@ -249,6 +267,46 @@ public class Car {
 		this.importTime = importTime;
 	}
 
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
+
+	public String getCustomerManagerTel() {
+		return customerManagerTel;
+	}
+
+	public void setCustomerManagerTel(String customerManagerTel) {
+		this.customerManagerTel = customerManagerTel;
+	}
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+
+	public String getSaleManagerTel() {
+		return saleManagerTel;
+	}
+
+	public void setSaleManagerTel(String saleManagerTel) {
+		this.saleManagerTel = saleManagerTel;
+	}
+
 	public void setCarVO(CarVO vo){
 		this.operator = vo.getOperator();
 		this.isTop = vo.getIsTop();
@@ -265,6 +323,11 @@ public class Car {
 		this.telphone = vo.getTelphone();
 		this.type = vo.getType();
 		this.saleManager = vo.getSaleManager();
+		this.shopName = vo.getShopName();
+		this.customerManagerTel = vo.getCustomerManagerTel();
+		this.wechat = vo.getWechat();
+		this.city = vo.getCity();
+		this.saleManagerTel = vo.getSaleManagerTel();
 	}
 	
 	public void setCarToCustomer(){
@@ -273,5 +336,11 @@ public class Car {
 		this.principal = "";
 		this.saleManager = "";
 		this.customerManager = "";
+		this.customerManagerTel = "";
+		this.saleManagerTel = "";
+		this.wechat = "";
+		
 	}
+	
+	
 }

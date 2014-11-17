@@ -3,6 +3,8 @@ package com.successfactors.vo;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class CarVO {
@@ -43,6 +45,17 @@ public class CarVO {
 	private String operator;
 	
 	private List<Long> remarkids;
+	
+	private String city;
+	
+	private String shopName;
+	
+	private String customerManagerTel;
+	
+	private String wechat;
+	
+	private String saleManagerTel;
+	
 	
 	public Long getId() {
 		return id;
@@ -187,6 +200,46 @@ public class CarVO {
 
 	public void setCarDecoration(String carDecoration) {
 		this.carDecoration = carDecoration;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
+
+	public String getCustomerManagerTel() {
+		return customerManagerTel;
+	}
+
+	public void setCustomerManagerTel(String customerManagerTel) {
+		this.customerManagerTel = customerManagerTel;
+	}
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+
+	public String getSaleManagerTel() {
+		return saleManagerTel;
+	}
+
+	public void setSaleManagerTel(String saleManagerTel) {
+		this.saleManagerTel = saleManagerTel;
 	}
 	
 	

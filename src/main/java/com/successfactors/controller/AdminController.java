@@ -181,7 +181,7 @@ public class AdminController extends BaseController{
 	    String[] str = fileName.split("\\.");
 	    String suffix = str[str.length - 1];
 	    String path = request.getServletContext().getRealPath("");
-		return carService.importCars(file, path,suffix);
+		return carService.importCars(file, path,suffix,getUserName());
 	}
 	
 	@RequestMapping(value="/userupload",method=RequestMethod.POST)

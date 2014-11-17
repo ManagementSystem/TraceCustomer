@@ -102,7 +102,7 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 		page.setItemsPerPage(itemPerPage);
 		page.setCurrentPage(currentPage);
 		page.setTotalItems(totalResult);
-		return null;
+		return page;
 	}
 
 	

@@ -94,7 +94,7 @@ public class ReadExcelUtil {
 		return userList;
 	}
 	
-	public static List<Car> readCars(String inputFile) throws BiffException, IOException, ParseException{
+	public static List<Car> readCars(String inputFile,String operator) throws BiffException, IOException, ParseException{
 		File inputWorkbook = new File(inputFile);
 		Workbook w;
 		
@@ -102,8 +102,12 @@ public class ReadExcelUtil {
 		Sheet sheet = w.getSheet(0);
 		List<Car> list = new ArrayList<Car>();
 		for(int i = 1; i < sheet.getRows();i++){
+			Cell checkCell = sheet.getCell(0,i);
+			if(checkCell == null || "".equals(checkCell.getContents().trim())){
+				break;
+			}
 			Car car = new Car();
-			for(int j = 0;j< 15;++j){
+			for(int j = 0;j< 18; ++j){
 				Cell cell = sheet.getCell(j,i);
 				//CellType type = cell.getType();
 				switch (j){
@@ -111,47 +115,56 @@ public class ReadExcelUtil {
 						car.setRegion(cell.getContents());
 						break;
 					case 1:
-						car.setType(cell.getContents());
+						car.setCity(cell.getContents());
 						break;
 					case 2:
-						car.setDealer(cell.getContents());
+						car.setShopName(cell.getContents());
 						break;
 					case 3:
-						car.setPrincipal(cell.getContents());
-						break;
-					case 4:
-						car.setSaleManager(cell.getContents());
-						break;
-					case 5:
 						car.setCustomerManager(cell.getContents());
 						break;
+					case 4:
+						car.setCustomerManagerTel(cell.getContents());
+						break;
+					case 5:
+						car.setWechat(cell.getContents());
+						break;
 					case 6:
-						car.setTelphone(cell.getContents());
+						car.setSaleManager(cell.getContents());
 						break;
 					case 7:
-						car.setCarTypeRecord(cell.getContents());
+						car.setSaleManagerTel(cell.getContents());
 						break;
 					case 8:
-						car.setConfiguration(cell.getContents());
+						car.setType(cell.getContents());
 						break;
 					case 9:
-						car.setCarColor(cell.getContents());
+						car.setPrincipal(cell.getContents());
 						break;
 					case 10:
-						car.setCarDecoration(cell.getContents());
+						car.setCarTypeRecord(cell.getContents());
 						break;
 					case 11:
+						car.setConfiguration(cell.getContents());
+						break;
+					case 12:
+						car.setCarColor(cell.getContents());
+						break;
+					case 13:
+						car.setCarDecoration(cell.getContents());
+						break;
+					case 14:
 						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
 						Date date = sdf.parse(cell.getContents());
 						car.setProductDate(date);
 						break;
-					case 12:
+					case 15:
 						car.setSealRegion(cell.getContents());
 						break;
-					case 13:
+					case 16:
 						car.setPrice(Double.parseDouble(cell.getContents()));
 						break;
-					case 14:
+					case 17:
 						car.setIsTop(Integer.valueOf(cell.getContents()));
 						break;
 				}

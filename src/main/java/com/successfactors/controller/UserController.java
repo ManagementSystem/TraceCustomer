@@ -1,21 +1,27 @@
 package com.successfactors.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.successfactors.bean.CarType;
 import com.successfactors.bean.ReturnValue;
-import com.successfactors.bean.Users;
+import com.successfactors.services.CarTypeService;
 import com.successfactors.services.UserService;
-import com.successfactors.services.impl.UserServiceImpl;
 
 
 @Controller
 @RequestMapping(value="/user")
 public class UserController extends BaseController{
 	
+	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private CarTypeService carTypeService;
 	
 	@RequestMapping(value="/modifypwd")
 	@ResponseBody
@@ -44,5 +50,11 @@ public class UserController extends BaseController{
 	@ResponseBody
 	public String getName(){
 		return getUserName();
+	}
+	
+	@RequestMapping(value="/getcartype")
+	@ResponseBody
+	public List<CarType> getCarType(){
+		return carTypeService.getAllType();
 	}
 }

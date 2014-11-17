@@ -109,7 +109,7 @@ public class CarServiceImpl implements CarService{
 
 	@Override
 	@Transactional
-	public String importCars(MultipartFile mFile, String path,String suffix) {
+	public String importCars(MultipartFile mFile, String path,String suffix,String operator) {
 		// TODO Auto-generated method stub
 		String returnMsg = ReturnValueConstants.RETURN_ERROR;
 		if(!mFile.isEmpty()){
@@ -118,11 +118,11 @@ public class CarServiceImpl implements CarService{
 			if(!file.exists()){
 				file.mkdirs();
 			}
-			String filePath = path + EXCEL_DIR + CAR_EXCEL_FILE + "." + suffix;
+			String filePath = path + EXCEL_DIR + CAR_EXCEL_FILE + ".xls";
 			try{
 				InputStream is = mFile.getInputStream();
 				FileUtil.saveFile(is, filePath);
-				List<Car> cars = ReadExcelUtil.readCars(filePath);
+				List<Car> cars = ReadExcelUtil.readCars(filePath,operator);
 				dao.add(cars);
 				returnMsg = ReturnValueConstants.RETURN_SUCCESS;
 			}catch(Exception ex){

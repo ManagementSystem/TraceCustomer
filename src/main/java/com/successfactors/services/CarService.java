@@ -15,7 +15,7 @@ public interface CarService {
 	
 	public ReturnValue queryCarsData(Map<String, String> conditions);
 	
-	public String importCars(MultipartFile mFile,String path,String suffix);
+	public String importCars(MultipartFile mFile,String path,String suffix,String operator);
 	
 	public ReturnValue getCarsDataToCustomer(int currentPage, int itemPerPage);
 	

@@ -34,7 +34,7 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Admin</a></li>
+        <li><a>{{uerName}}</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -73,34 +73,39 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">提醒</h4>
+        <h4 class="modal-title" id="myModalLabel">修改密码</h4>
       </div>
       <div class="modal-body">
       	<div class="row">
       	<div class="col-md-12">
+      	<div ng-show="changePSWSuccess">修改密码成功</div>
 	        <div class="form-group">
 	                <label class="col-md-3 control-label">
 	                    旧密码：
 	                </label>
 	                <div class="col-md-9">
-	                    <input ng-model="oldPassWord" type="text" class="form-control" placeholder="请填入旧密码">
+	                    <input ng-model="oldPassWord" type="password" class="form-control" placeholder="请填入旧密码">
 	                </div>
+	                <div ng-show = oldPassMsg style="color: #DD5665;margin-left: 79%;">旧密码不能为空</div>
 	        </div>
 	         <div class="form-group">
 	                <label class="col-md-3 control-label">
 	                    新密码：
 	                </label>
 	                <div class="col-md-9">
-	                    <input ng-model="newPassWord" type="text" class="form-control" placeholder="请填入新密码">
+	                    <input ng-model="newPassWord" type="password" class="form-control" placeholder="请填入新密码">
 	                </div>
+	                <div ng-show = newPassMsg style="color: #DD5665;margin-left: 79%;">新密码不能为空</div>
 	        </div>
 	         <div class="form-group">
 	                <label class="col-md-3 control-label">
 	                    确认密码：
 	                </label>
 	                <div class="col-md-9">
-	                    <input ng-model="newPassWordAgain" type="text" class="form-control" placeholder="请再次确认新密码">
+	                    <input ng-model="newPassWordAgain" type="password" class="form-control" placeholder="请再次确认新密码">
 	                </div>
+	                <div ng-show = newPassAgainMsgNotnull style="color: #DD5665;margin-left: 76%;">确认密码不能为空</div>
+	                <div ng-show = newPassAgainMsg style="color: #DD5665;margin-left: 66%;">确认密码必须与新密码一致</div>
 	        </div>
 	       </div>
 	      </div>

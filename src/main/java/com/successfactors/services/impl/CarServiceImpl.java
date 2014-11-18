@@ -138,6 +138,7 @@ public class CarServiceImpl implements CarService{
 
 
 	@Override
+	@Transactional
 	public ReturnValue getCarsDataToCustomer(int currentPage, int itemPerPage) {
 		// TODO Auto-generated method stub
 		ReturnValue returnValue = new ReturnValue();
@@ -147,6 +148,22 @@ public class CarServiceImpl implements CarService{
 			returnValue.setReturnData(page);
 		} catch (Exception e) {
 			// TODO: handle exception
+			returnValue.setError();
+		}
+		return returnValue;
+	}
+
+
+	@Override
+	@Transactional
+	public ReturnValue getCars(Map<String, String> conditions) {
+		// TODO Auto-generated method stub
+		ReturnValue returnValue = new ReturnValue();
+		try{
+			Page<Car> page = dao.getCars(conditions);
+			returnValue.setSuccess();
+			returnValue.setReturnData(page);
+		}catch(Exception ex){
 			returnValue.setError();
 		}
 		return returnValue;

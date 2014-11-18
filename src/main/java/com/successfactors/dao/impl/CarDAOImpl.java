@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.successfactors.bean.Car;
 import com.successfactors.bean.CarsRemarks;
+import com.successfactors.bean.Customer;
 import com.successfactors.bean.Page;
 import com.successfactors.dao.BaseDAO;
 import com.successfactors.dao.CarDAO;
@@ -92,6 +93,39 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		page.setItemsPerPage(itemPerPage);
 		page.setCurrentPage(currentPage);
 		page.setTotalItems(getCount(null));
+		return page;
+	}
+
+	@Override
+	public Page<Car> getCars(Map<String, String> conditions) {
+		// TODO Auto-generated method stub
+		Page<Car> page = new Page<>();
+		int currentPage = 0;
+		int itemPerPage = 0;
+		Criteria c = getSession().createCriteria(Car.class);
+		Criteria countC = getSession().createCriteria(Car.class);
+		for (String key : conditions.keySet()) {
+			String val = conditions.get(key);
+			if(key.equals("currentPage")){
+				currentPage = Integer.parseInt(val);
+			}else if(key.equals("itemsPerPage")){
+				itemPerPage = Integer.parseInt(val);
+			}else{
+				if(val != null && !"".equals(val)){
+					c.add(Restrictions.eq(key, val));
+					countC.add(Restrictions.eq(key, val));
+					
+				}
+			}
+		}
+		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+		c.setFirstResult((currentPage - 1) * itemPerPage);
+		c.setMaxResults(itemPerPage);
+		List<Car> list = c.list();
+		page.setItem(list);
+		page.setItemsPerPage(itemPerPage);
+		page.setCurrentPage(currentPage);
+		page.setTotalItems(totalResult);
 		return page;
 	}
 

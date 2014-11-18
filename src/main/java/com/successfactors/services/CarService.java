@@ -13,10 +13,14 @@ public interface CarService {
 	
 	public ReturnValue getCarsData(int currentPage,int itemPerPage);
 	
+	public ReturnValue getCars(Map<String, String> conditions);
+	
+	
 	public ReturnValue queryCarsData(Map<String, String> conditions);
 	
 	public String importCars(MultipartFile mFile,String path,String suffix,String operator);
 	
 	public ReturnValue getCarsDataToCustomer(int currentPage, int itemPerPage);
+	
 	
 }

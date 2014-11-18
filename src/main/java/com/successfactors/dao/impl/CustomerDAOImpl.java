@@ -73,7 +73,7 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 	}
 
 	@Override
-	public Page<Customer> getCustomers(Map<String, String> conditions) {
+	public Page<Customer> getCustomers(Map<String, String> conditions,boolean publicFlag) {
 		// TODO Auto-generated method stub
 		Page<Customer> page = new Page<Customer>();
 		int currentPage = 0;
@@ -93,6 +93,10 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 					
 				}
 			}
+		}
+		if(publicFlag){
+			c.add(Restrictions.or(Restrictions.eq("ispublic", "1")));
+			countC.add(Restrictions.or(Restrictions.eq("ispublic", "1")));
 		}
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);

@@ -84,7 +84,7 @@
     	</tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResult">
+    	<tr ng-repeat="item in formDataResultForSupply">
     		<td>{{item.region}}</td>
     		<td>{{item.type}}</td>
     		<td>{{item.dealer}}</td>
@@ -151,7 +151,7 @@
     	</tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResultForCustomer">
+    	<tr ng-repeat="item in formDataResultForSupply">
     		<td>{{item.customerType}}</td>
     		<td>{{item.name}}</td>
     		<td>{{item.sex}}</td>
@@ -165,10 +165,8 @@
     		<td>{{item.ispublic}}</td>
     		<td>{{item.isTop}}</td>
         <td>
-         <button type="button" ng-click="detailCoustomerItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
-          <button type="button" ng-click="editCoustomerItem($index,$event)" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i> 编辑</button>
-          <button type="button" ng-click="delCoustomerItem($index,$event)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> 删除</button>
-         
+         <button type="button" ng-click="detailCarItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
+       
         </td>
     	</tr>
     </tbody>
@@ -177,14 +175,14 @@
   <div class="col-md-2">
   <div class="input-group">
       <div class="input-group-addon">每页条数</div>
-      <select ng-model="paginationConfForCustomer.itemsPerPage" class="form-control" title="每页条目数"
+      <select ng-model="paginationConfForSupply.itemsPerPage" class="form-control" title="每页条目数"
                   ng-options="pageSize for pageSize in [5,10,20,30]">
           </select>
     </div>
     
   </div>
   <div class="col-md-7">
-    <pagination style='margin:0px;'total-items="paginationConfForCustomer.totalItems" ng-model="paginationConfForCustomer.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+    <pagination style='margin:0px;'total-items="paginationConfForSupply.totalItems" ng-model="paginationConfForSupply.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
   </div>
   <div class="col-md-3">
     <div class="input-group">

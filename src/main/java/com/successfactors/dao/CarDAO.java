@@ -14,5 +14,5 @@ public interface CarDAO extends GenericDAO<Car, Long>{
 	
 	public Page<Car> getCarToCustomer(int currentPage,int itemPerPage);
 //	
-
+	public Page<Car> getCars(Map<String,String> conditions);
 }

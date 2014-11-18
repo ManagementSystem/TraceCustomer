@@ -140,11 +140,11 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	@Transactional
-	public ReturnValue getCustomerDataToCGroup(Map<String, String> conditions) {
+	public ReturnValue getCustomerDataToCGroup(Map<String, String> conditions,boolean publicFlag) {
 		// TODO Auto-generated method stub
 		ReturnValue returnValue = new ReturnValue();
 		try{
-			Page<Customer> page = customerDao.getCustomers(conditions);
+			Page<Customer> page = customerDao.getCustomers(conditions,publicFlag);
 			returnValue.setSuccess();
 			returnValue.setReturnData(page);
 		}catch(Exception ex){

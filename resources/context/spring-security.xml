@@ -26,7 +26,7 @@
 		  		 <security:intercept-url pattern="/" access="permitAll"/>    
 		       <!--  <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>   -->
 		       <!-- <security:intercept-url pattern="/customer/**" access="hasRole('ROLE_CUSTOMER')"/>   -->
-		        <security:intercept-url pattern="/supply/**" access="hasRole('ROLE_SUPPLY')"/>    
+		       <!--  <security:intercept-url pattern="/supply/**" access="hasRole('ROLE_SUPPLY')"/>   -->  
 		        <security:form-login  
 		                login-page="/login" 
 		                authentication-failure-url="/login?error=true"   

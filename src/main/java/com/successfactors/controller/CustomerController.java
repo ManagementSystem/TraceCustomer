@@ -38,7 +38,7 @@ public class CustomerController extends BaseController {
 		//条件or
 		//conditions.put("ispublic", "1");
 		
-		return service.getCustomerDataToCGroup(conditions);
+		return service.getCustomerDataToCGroup(conditions,true);
 	}
 
 	@RequestMapping(value = "/createcustomer", method = RequestMethod.POST)

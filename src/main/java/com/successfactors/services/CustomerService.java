@@ -18,6 +18,6 @@ public interface CustomerService {
 	
 	public String importCustomer(MultipartFile mFile,String path,String suffix);
 	
-	public ReturnValue getCustomerDataToCGroup(Map<String, String> conditions);
+	public ReturnValue getCustomerDataToCGroup(Map<String, String> conditions,boolean publicFlag);
 	
 }

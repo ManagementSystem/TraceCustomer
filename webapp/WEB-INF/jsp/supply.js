@@ -1,15 +1,15 @@
-var routercustomerApp = angular.module('routercustomerApp', ['ui.router','ui.bootstrap']);
-routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/customer');
+var routerSupplyApp = angular.module('routerSupplyApp', ['ui.router','ui.bootstrap']);
+routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/supply');
     $stateProvider
-        .state('customer', {
-            url: '/customer',
+        .state('supply', {
+            url: '/supply',
             views: {
                 '': {
-                    templateUrl: 'jsp/view/customerView/index.html'
+                    templateUrl: 'jsp/view/carView/index.html'
                 },
-                'topbar@customer': {
-                    templateUrl: 'jsp/view/customerView/topbar.html',
+                'topbar@supply': {
+                    templateUrl: 'jsp/view/carView/topbar.html',
                     controller: function($scope, $state,$http) {
                     	$scope.oldPassWord ="";
                     	$scope.newPassWord ="";
@@ -26,38 +26,38 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                     	};
                     }
                 },
-                'main@customer': {
-                    templateUrl: 'jsp/view/customerView/home.html',
+                'main@supply': {
+                    templateUrl: 'jsp/view/carView/home.html',
                     controller: function($scope, $state,$http) {
                        $scope.ReturnMsg = false;
                         
 //                         客源的数据缓存和pageBar设置
-                         var dataStoreForCustomer;
-                         var dataEditItemForCustomer;
-                         $scope.paginationConfForCustomer = {
+                         var dataStoreForSupply;
+                         var dataEditItemForSupply;
+                         $scope.paginationConfForSupply = {
                          		   	currentPage:1,
                                     itemsPerPage: 5,
                                     totalItems:30
                                 };
                           $scope.maxSize = 5;
                           //获取客源回访内容的数据
-                          var getCoustomerRemarks = function(id){
+                          var getCarRemarks = function(id){
                         	  var postData = {
-                        			'customerid':id  
+                        			'supplyid':id  
                         	  }
-                        	  $http.get(window.location.origin+'/employee-manage/customer/getremarks',{params:postData}).
+                        	  $http.get(window.location.origin+'/employee-manage/supply/getremarks',{params:postData}).
                         	  success(function(data){
                         		  if(data.returnState = "success"){
                         			  $scope.coumosterRemarkItems = data.returnData.item;
                         		  }
                         	  }).
                         	  error(function(data){
-                        		  console.log('Get coustomer remarks error!');
+                        		  console.log('Get supply remarks error!');
                         	  });
                           };
                           
                           //客源详细的弹出窗
-                          $scope.detailCoustomerItem = function(index,event){
+                          $scope.detailCarItem = function(index,event){
                         	  $scope.coustomerSourceDetail = dataStoreForCustomer[index];
                         	  getCoustomerRemarks(dataStoreForCustomer[index].id);
 	                          event.target.setAttribute('data-toggle','modal');
@@ -65,7 +65,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                           };
                           
                           //客源新增回访记录
-                         $scope.addCoustomerReMarksRow = function(event){
+                         $scope.addSupplyReMarksRow = function(event){
                         	 $scope.addReMarks = !$scope.addReMarks;
                          };
                        
@@ -73,14 +73,14 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                          $scope.addRemarks = function(event){
                         	 var postData = {
                         			 'content':$scope.addreMarksObj.content,
-                        			 'customerId':$scope.coustomerSourceDetail.id,
+                        			 'supplyId':$scope.SupplySourceDetail.id,
                         			 'type':$scope.addreMarksObj.type
                         	 };
                         	 var showMsg = function(event){
                            		 event.target.setAttribute('data-toggle','modal');
                                  	 event.target.setAttribute('data-target','#myMsgModal');
                            	 };
-                        	 $http.post(window.location.origin+'/employee-manage/customer/addremark',postData).success(function(data){
+                        	 $http.post(window.location.origin+'/employee-manage/supply/addremark',postData).success(function(data){
                         		if(data == 'success'){
                         			//提示成功信息
                         			$scope.SuccessMsgShow = true;
@@ -105,19 +105,19 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                         //获取Grid数据方法
                         var reGetDatas = function(){
                     	 var postData = {
-                                 currentPage: $scope.paginationConfForCustomer.currentPage,
-                                 itemsPerPage: $scope.paginationConfForCustomer.itemsPerPage
+                                 currentPage: $scope.paginationConfForSupply.currentPage,
+                                 itemsPerPage: $scope.paginationConfForSupply.itemsPerPage
                              };
-                    	 $http.post(window.location.origin+'/employee-manage/customer/getcustomer',postData).success(function(data){
+                    	 $http.post(window.location.origin+'/employee-manage/supply/getcar',postData).success(function(data){
                              if(data.returnState == "success"){
-                            	 $scope.ajaxMsg ="Get CustomerSource Data Success!";
-                            	 $scope.dataStoreForCustomer = dataStoreForCustomer = data.returnData.item;
-                                 $scope.formDataResultForCustomer = data.returnData.item;
-                                 $scope.paginationConfForCustomer.currentPage = data.returnData.currentPage;
-                                 $scope.paginationConfForCustomer.totalItems = data.returnData.totalItems;
-                                 $scope.paginationConfForCustomer.itemsPerPage = data.returnData.itemsPerPage;
+                            	 $scope.ajaxMsg ="Get supplySource Data Success!";
+                            	 $scope.dataStoreForSupply = dataStoreForSupply = data.returnData.item;
+                                 $scope.formDataResultForSupply = data.returnData.item;
+                                 $scope.paginationConfForSupply.currentPage = data.returnData.currentPage;
+                                 $scope.paginationConfForSupply.totalItems = data.returnData.totalItems;
+                                 $scope.paginationConfForSupply.itemsPerPage = data.returnData.itemsPerPage;
                              }else{
-                            	 $scope.ajaxMsg = "Get CustomerSource Data Error!";
+                            	 $scope.ajaxMsg = "Get SupplySource Data Error!";
                             }
                           });
                            
@@ -125,8 +125,8 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                         
 //                        搜索方法
                         $scope.searchGridData = function(event){
-	                		var postData = $scope.customerSearch;
-	                		$http.get(window.location.origin+'/employee-manage/customer/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+	                		var postData = $scope.SupplySearch;
+	                		$http.get(window.location.origin+'/employee-manage/supply/getsupply',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
 	                			console.log("SearchSuccess!");
 	                         }).error(function(data){
 	                        	 console.log("Faild!");
@@ -135,23 +135,23 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                         
                         
                         //监听当前页面和每页条数来获取grid数据
-                        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage + CarShow +paginationConfForCustomer.currentPage + paginationConfForCustomer.itemsPerPage', reGetDatas);
+                        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage + CarShow +paginationConfForSupply.currentPage + paginationConfForSupply.itemsPerPage', reGetDatas);
 
                         //搜索功能
                         $scope.searchGridData = function(event){
                     		//搜索客源
-                    		$http.post(window.location.origin+'/employee-manage/customer/querycustomer',$scope.customerSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
+                    		$http.post(window.location.origin+'/employee-manage/supply/querysupply',$scope.supplySearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
                     		success(function(data){
                     			if(data.returnState == "success"){
-                    				 $scope.dataStoreForCustomer = dataStoreForCustomer = data.returnData.item;
-                                     $scope.formDataResultForCustomer = data.returnData.item;
-                                     $scope.paginationConfForCustomer.currentPage = data.returnData.currentPage;
-                                     $scope.paginationConfForCustomer.totalItems = data.returnData.totalItems;
-                                     $scope.paginationConfForCustomer.itemsPerPage = data.returnData.itemsPerPage;
+                    				 $scope.dataStoreForSupply = dataStoreForSupply = data.returnData.item;
+                                     $scope.formDataResultForSupply = data.returnData.item;
+                                     $scope.paginationConfForSupply.currentPage = data.returnData.currentPage;
+                                     $scope.paginationConfForSupply.totalItems = data.returnData.totalItems;
+                                     $scope.paginationConfForSupply.itemsPerPage = data.returnData.itemsPerPage;
                     			}else{
-                    				$scope.ajaxMsg ="Query customer Data Error!";
-                    				$scope.dataStoreForCustomer = dataStoreForCustomer = {};
-                                    $scope.formDataResultForCustomer = {};
+                    				$scope.ajaxMsg ="Query Supply Data Error!";
+                    				$scope.dataStoreForSupply = dataStoreForSupply = {};
+                                    $scope.formDataResultForSupply = {};
                     			}
                     		}).
                     		error(function(data){
@@ -161,25 +161,25 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                         
                     }
                 },
-                'footer@customer':{
-                    templateUrl:'jsp/view/customerView/footer.html'
+                'footer@supply':{
+                    templateUrl:'jsp/view/carView/footer.html'
                 }
             }
         })
-        .state('customer.customer', {
-            url: '/customer',
+        .state('supply.supply', {
+            url: '/supply',
             views: {
-                'main@customer': {
-                    templateUrl: 'jsp/view/customerView/customerManage/customer.html',
+                'main@supply': {
+                    templateUrl: 'jsp/view/carView/supplyManage/supply.html',
                 }
             }
         })
-        .state('customer.customer.addCustomer',{
-          url:'/addCustomer',
-          templateUrl:'jsp/view/customerView/customerManage/addCustomerform.html',
+        .state('supply.supply.addSupply',{
+          url:'/addSupply',
+          templateUrl:'jsp/view/carView/supplyManage/addSupplyform.html',
           controller:function($scope,$state,$http){
 //        	  客户类
-              $scope.customerObjects = {
+              $scope.supplyObjects = {
            		name:"",
            		phone:"",
            		region:"",
@@ -191,7 +191,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
            		level:"",
            		ispublic:"",
            		deadline:"24",
-           		customerType:"",
+           		supplyType:"",
            		carTypeId:"",
            		sex:"",
            		configuration:''
@@ -205,18 +205,18 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
         	  
 //        	  预算区间
         	  $scope.budgetRangeOptions = ["5万-10万","10万-15万","15万-20万","20万-30万","30万-40万","40万-60万","60万-80万","80万-100万"];
-        	  $scope.customerObjects.budgetRange = $scope.budgetRangeOptions[0];
+        	  $scope.supplyObjects.budgetRange = $scope.budgetRangeOptions[0];
            
 //        	  等级
         	  $scope.levelOptions = ["1","2","3","4"];
-        	  $scope.customerObjects.level = $scope.levelOptions[0];
+        	  $scope.supplyObjects.level = $scope.levelOptions[0];
 //        	  新增客源
         	  $scope.addCustomer = function(){
         		 
-        		  var postData = $scope.customerObjects;
-        		  $http.post(window.location.origin+"/employee-manage/customer/createcustomer",postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
+        		  var postData = $scope.supplyObjects;
+        		  $http.post(window.location.origin+"/employee-manage/supply/createsupply",postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
         			  if(data == "success"){
-        				  $scope.customerObjects = {};
+        				  $scope.supplyObjects = {};
         			  }else{
         				  console.log("Save Faild!");
         			  }
@@ -227,18 +227,18 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
            
           }
         })
-        .state('customer.customer.sourcedata', {
+        .state('supply.supply.sourcedata', {
             url: '/sourcedata',
             views: {
-                'main@customer': {
-                    templateUrl:'jsp/view/customerView/sourceDataManage/customerDataImport.html',
+                'main@supply': {
+                    templateUrl:'jsp/view/supplyView/sourceDataManage/supplyDataImport.html',
                     controller: function($scope,$state,$http){
                    	 var showMsg = function(event){
                    		 event.target.setAttribute('data-toggle','modal');
                          event.target.setAttribute('data-target','#myMsgModal');
                    	 }
                	
-               	//客户资料上传
+               	//车源文件上传
                    	$scope.upLoadCustomerSourceExcelFile = function(event){
                    		if(event.target.parentNode.childNodes[1].files.length !=0){
                    			var inputFile = event.target.parentNode.childNodes[1].files[0];

@@ -80,7 +80,7 @@
     		<th>价格</th>
     		<th>可售区域</th>
     		<th>置顶</th>
-        <th style="width:174px;">操作</th>
+        <th style="width:63px;">操作</th>
     	</tr>
     </thead>
     <tbody>
@@ -100,9 +100,6 @@
     		<td>{{item.isTop}}</td>
         <td>
          <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
-          <button type="button" ng-click="editItem($index,$event)" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i> 编辑</button>
-          <button type="button" ng-click="delItem($index,$event)" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> 删除</button>
-         
         </td>
     	</tr>
     </tbody>
@@ -147,11 +144,11 @@
     		<th>公/私客</th>
     		<th>置顶</th>
     		
-        <th style="width:174px;">操作</th>
+        <th style="width:63px;">操作</th>
     	</tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResultForSupply">
+    	<tr ng-repeat="item in formDataResultForSupplyForCustomer">
     		<td>{{item.customerType}}</td>
     		<td>{{item.name}}</td>
     		<td>{{item.sex}}</td>
@@ -165,7 +162,7 @@
     		<td>{{item.ispublic}}</td>
     		<td>{{item.isTop}}</td>
         <td>
-         <button type="button" ng-click="detailCarItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
+         <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
        
         </td>
     	</tr>
@@ -195,351 +192,6 @@
 </div>
 
 
-<!-- 车源修改的弹出框 -->
-<div class="modal fade bs-example-modal-sm" id="myEditModal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content" style="width:984px;margin-left: -33%;">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myEditModalLabel">编辑</h4>
-      </div>
-      <div class="modal-body">
-      	<div class="row">
-	            <div class="col-md-6">
-	            	  <div class="form-group">
-                <label class="col-md-3 control-label">
-                    区域：
-                </label>
-                <div class="col-md-9" ng-init="area=['东区','南区','西区','北区']">
-                <!-- 东南西北 -->
-                    <select ng-model="editCarObject.region" class="form-control">
-                    	<option value="">==不限==</option>
-                    	<option ng-repeat="item in area">{{item}}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    类型：
-                </label>
-                <div class="col-md-9" ng-init="typeOptions=['进口','国产']">
-                <!-- 进口、国产、综合 -->
-                    <select ng-model="editCarObject.type" class="form-control">
-                    	<option value="">==不限==</option>
-                    	<option ng-repeat="item in typeOptions">{{item}}</option>
-                    </select>
-                </div>
-            </div>
-          <!--   <div class="form-group">
-                <label class="col-md-3 control-label">
-                    生产日期：
-                </label>
-                <div class="col-md-9">
-                    <p class="input-group">
-                      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'3015-06-33'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-th"></i></button>
-                      </span>
-                    </p>
-                </div>
-            </div> -->
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    负责人：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.principal" type="text" class="form-control" placeholder="请填入负责人名字">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    销售经理：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.customerManager" type="text" class="form-control" placeholder="请填入销售经理名字">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    大客户经理：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.customerManager" type="text" class="form-control" placeholder="请填入大客户经理的名字">
-                </div>
-            </div>
-           
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    颜色：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.carColor" type="text" class="form-control" placeholder="请填入颜色">
-                </div>
-            </div>
-	            </div>
-	            <div class="col-md-6">
-	            	   <div class="form-group">
-                <label class="col-md-3 control-label">
-                    内饰：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.carDecoration" type="text" class="form-control" placeholder="请填入内饰">
-                </div>
-            </div>
-              <div class="form-group">
-                <label class="col-md-3 control-label">
-                    品牌：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.dealer" type="text" class="form-control" placeholder="请填入配置要求">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    配置：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.configuration" type="text" class="form-control" placeholder="请填入配置要求">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    联系方式：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.telphone" type="text" class="form-control" placeholder="请填入联系方式">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    售价：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.price" type="text" class="form-control" placeholder="请填入销售价">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    置顶：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.isTop" type="radio" name="toTop" value="1"><label>是</label>
-                    <input ng-model="editCarObject.isTop" type="radio" name="toTop" value="0"><label>否</label>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    可售区域：
-                </label>
-                 <div class="col-md-9" ng-init="saleArea=['全国','省内','小区域']">
-                <!-- 全国、省内、小区域 -->
-                    <select ng-model="editCarObject.saleRegion" class="form-control">
-                    	<option value="">==不限==</option>
-                    	<option ng-repeat="item in saleArea">{{item}}</option>
-                    </select>
-                	
-                </div>
-            </div>
-	            </div>
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" ng-click="saveEditCarSource($event)">确定</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- 客源修改的弹出框 -->
-<div class="modal fade bs-example-modal-sm" id="myeditCoustomerModal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content" style="width:812px;margin-left: -18%;">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myEditModalLabel">编辑</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" role="form">
-       <div class="row">
-		  <div class="col-md-6">
-		  	<div class="form-group">
-                <label class="col-md-3 control-label">
-                    客户类型：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCustomerObject.customerType" type="radio" name="customerType"><label>直接客户</label>
-                    <input ng-model="editCustomerObject.customerType" type="radio" name="customerType"><label>渠道客户</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    姓名：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCustomerObject.name" type="text" class="form-control input-sm" placeholder="请填入姓名">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    性别：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCustomerObject.sex" type="radio" name="gender" value="male"><label>男</label>
-                    <input ng-model="editCustomerObject.sex" type="radio" name="gender" value="female"><label>女</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    电话：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCustomerObject.phone" type="text" class="form-control input-sm" placeholder="请填入电话">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    地区：
-                </label>
-                <div class="col-md-9">
-                    <select ng-model="editCustomerObject.region" class="form-control input-sm" ng-options="opt for opt in customerArea.area"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    车型要求：
-                </label>
-                <div class="col-md-9">
-                    <select class="form-control input-sm" ng-model="budget" ng-options="opt for opt in carType.type"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    配置：
-                </label>
-                <div class="col-md-9">
-                    <select class="form-control" ng-model="editCustomerObject.decoration" ng-options="opt for opt in carType.type"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    预算区间：
-                </label>
-                <div class="col-md-9">
-                    <select class="form-control" ng-model="editCustomerObject.budgetRange" ng-options="opt for opt in budgerOptions.budget"></select>
-                </div>
-            </div>
-             <div class="form-group">
-                <label class="col-md-3 control-label">
-                    客户等级：
-                </label>
-                <div class="col-md-9">
-                    <select class="form-control" ng-model="editCustomerObject.level" ng-options="opt for opt in budgerOptions.budget"></select>
-                </div>
-            </div>
-		  </div>
-		  <div class="col-md-6">
-		  	 <div class="form-group">
-                <label class="col-md-3 control-label">
-                    公/私：
-                </label>
-                <div class="col-md-9">
-                    <input type="radio" name="ispublice" ng-model="editCustomerObject.ispublice" value="1"><label>公客</label>
-                    <input type="radio" name="ispublice" ng-model="editCustomerObject.ispublice" value="0"><label>私客</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    有效性：
-                </label>
-                <div class="col-md-9">
-                    <input type="radio" name="userful" value="true"><label>有效</label>
-                    <input type="radio" name="userful" value="false"><label>失效</label>
-                </div>
-            </div>
-             <div class="form-group">
-                <label class="col-md-3 control-label">
-                    按揭：
-                </label>
-                <div class="col-md-9">
-                    <input type="radio" ng-model="editCustomerObject.installment" name="mortgage" value="true"><label>是</label>
-                    <input type="radio" ng-model="editCustomerObject.installment" name="mortgage" value="false"><label>否</label>
-                </div>
-            </div>
-             <div class="form-group">
-                <label class="col-md-3 control-label">
-                    保险：
-                </label>
-                <div class="col-md-9">
-                   <input type="radio" ng-model="editCustomerObject.insurance" name="safe" value="true"><label>是</label>
-                   <input type="radio" ng-model="editCustomerObject.insurance" name="safe" value="false"><label>否</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    颜色要求：
-                </label>
-                <div class="col-md-9">
-                    <input type="text" ng-model="editCustomerObject.carColor" class="form-control input-sm" placeholder="请填入颜色要求">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    内饰要求：
-                </label>
-                <div class="col-md-9">
-                    <input type="text" ng-model="editCustomerObject.decoration" class="form-control input-sm" placeholder="请填入内饰要求">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    回访内容：
-                </label>
-                <div class="col-md-9">
-                    <input type="text" ng-model="editCustomerObject.remarks" class="form-control input-sm" placeholder="请填入回访内容">
-                </div>
-            </div>
-		  </div>
-		  </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">确定</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- 删除的弹出框 -->
-<div class="modal fade bs-example-modal-sm" id="myDelModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myDelModalLabelTitle">提示</h4>
-      </div>
-      <div class="modal-body">
-        <p style="text-align: center;margin-top: 13px;font-size: 18px;color: #BD5C5C;">
-        	你确定要删除<span ng-show="CarShow">id为：{{delItemId}}的这条车源</span>
-        				<span ng-show="!CarShow">姓名为{{delItemName}}的这条客源</span>
-        	信息吗？
-        </p>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" ng-click="deleCarData($event)">确定</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <!-- 详细数据dialog(车源) -->

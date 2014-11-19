@@ -2,9 +2,36 @@
 <div class="row" style="margin-bottom: 19px;">
 
   <div class="col-md-3">
+ 	<button type="button" ng-click="changeDataType($event)" class="btn btn-success btn-lg">车源信息/客源信息</button>
   </div>
   <div class="col-md-7">
-    <div class="row">
+    <div class="row" ng-show="CarShow">
+      <div class="col-md-3">
+        <div class="input-group pull-right global-search">
+          <label class="input-group-addon">区域</label>
+          <input type="text" class="form-control" ng-model="carSourceSearch.region"/>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group pull-right global-search">
+        <label class="input-group-addon">配置</label>
+        <input type="text" class="form-control" ng-model="carSourceSearch.config"/>
+      </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group pull-right global-search">
+          <label class="input-group-addon">颜色</label>
+          <input type="text" class="form-control" ng-model="carSourceSearch.carColor"/>
+        </div>
+      </div>
+      <div class="col-md-3">
+       <div class="input-group pull-right global-search">
+          <label class="input-group-addon">车型</label>
+          <input type="text" class="form-control" ng-model="carSourceSearch.cartype"/>
+      </div>
+      </div>
+    </div>
+    <div class="row" ng-show="!CarShow">
       <div class="col-md-3">
         <div class="input-group pull-right global-search">
           <label class="input-group-addon">姓名</label>
@@ -36,8 +63,71 @@
   <strong>提示：{{ajaxMsg}}</strong>
 </div>
 
+<div class="table-responsive" ng-show="CarShow">
+    <table class="table table-bordered table-hover table-condensed">
+    <thead>
+    	<tr>
+    		<th>区域</th>
+    		<th>类型</th>
+    		<th>品牌</th>
+    		<th>负责人</th>
+    		<th>客户经理</th>
+    		<th>联系方式</th>
+    		<th>配置</th>
+    		<th>颜色</th>
+    		<th>装饰</th>
+    		<th>生成日期</th>
+    		<th>价格</th>
+    		<th>可售区域</th>
+    		<th>置顶</th>
+        <th style="width:63px;">操作</th>
+    	</tr>
+    </thead>
+    <tbody>
+    	<tr ng-repeat="item in formDataResult">
+    		<td>{{item.region}}</td>
+    		<td>{{item.type}}</td>
+    		<td>{{item.dealer}}</td>
+    		<td>{{item.principal}}</td>
+    		<td>{{item.saleManager}}</td>
+    		<td>{{item.telphone}}</td>
+    		<td>{{item.configuration}}</td>
+    		<td>{{item.carColor}}</td>
+    		<td>{{item.carDecoration}}</td>
+    		<td>{{item.productDate | date:"yyyy/MM/dd HH:mm:ss"}}</td>
+    		<td>{{item.price}}</td>
+    		<td>{{item.sealRegion}}</td>
+    		<td>{{item.isTop}}</td>
+        <td>
+         <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
+        </td>
+    	</tr>
+    </tbody>
+	</table>
+<div class="row">
+  <div class="col-md-2">
+  <div class="input-group">
+      <div class="input-group-addon">每页条数</div>
+      <select ng-model="paginationConf.itemsPerPage" class="form-control" title="每页条目数"
+                  ng-options="pageSize for pageSize in [10,20,30]">
+          </select>
+    </div>
+    
+  </div>
+  <div class="col-md-7">
+    <pagination style='margin:0px;'total-items="paginationConf.totalItems" ng-model="paginationConf.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+  </div>
+  <div class="col-md-3">
+    <div class="input-group">
+      <div class="input-group-addon">GoTo</div>
+      <input class="form-control" type="number" ng-model='paginationConf.currentPage' min='1' max='{{numPages}}'>
+      <div class="input-group-addon">Page: {{paginationConf.currentPage}} / {{numPages}}</div>
+    </div>
+  </div>
+</div>
+</div>
 
-<div class="table-responsive">
+<div class="table-responsive" ng-show="!CarShow">
     <table class="table table-bordered table-hover table-condensed">
     <thead>
     	<tr>
@@ -102,6 +192,98 @@
 
 
 
+
+
+
+<!-- 详细数据dialog(车源) -->
+<div class="modal fade bs-example-modal-sm" id="myDetailModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myDelModalLabelTitle">详细</h4>
+      </div>
+      <div class="modal-body">
+        <div><strong>区域:</strong>  {{carSourceDetail.region}}</div>
+        <div><strong>品牌:</strong>  {{carSourceDetail.dealer}}</div>
+        <div><strong>类型:</strong>  {{carSourceDetail.type}}</div>
+        <div><strong>价格:</strong>  {{carSourceDetail.price}}</div>
+        <div><strong>配置:</strong>  {{carSourceDetail.configuration}}</div>
+        <div id="remarks"><strong>回访记录:</strong>
+        	<button type="button" ng-click="addCarReMarksRow($event)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+        </div>
+<div ng-show="addCarReMarks">
+        <div class="row">
+        	<div class="col-md-12">
+        		<!-- <div class="form-group">
+	                <label class="col-md-3 control-label">
+	                   车型：
+	                </label>
+	                <div class="col-md-9">
+	                    <p>{{carSourceDetail.dealer}}{{carSourceDetail.type}}</p>
+	                </div>
+	            </div> -->
+        		<div class="form-group">
+	                <label class="col-md-3 control-label">
+	                    类型：
+	                </label>
+	                <div class="col-md-9">
+	                    <select ng-model="addCarReMarksObj.type" class="form-control">
+	                    	<option value="普通记录"  selected="selected">普通记录</option>
+	                    	<option value="成交记录">成交记录</option>
+	                    	<option value="特殊记录">特殊记录</option>
+	                    </select>
+	                 </div>
+	            </div>
+        	<div class="form-group">
+                <label class="col-md-3 control-label">
+                    回访内容：
+                </label>
+                <div class="col-md-9">
+                    <input ng-model="addCarReMarksObj.content" type="text" class="form-control" placeholder="请填入回访内容">
+                </div>
+            </div>
+        	<div class="form-group">
+                <label class="col-md-3 control-label">
+                </label>
+                <div class="col-md-9 col-md-offset-3">
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="addCarRemarks($event)">新增回访记录</button>
+                </div>
+        	</div>
+         </div>
+        </div>
+ </div>
+ <br>
+ <div class="table-responsive">
+    <table class="table table-bordered table-hover table-condensed">
+    <thead>
+    	<tr>
+    		
+    		<th>类型</th>
+    		<th>回访内容</th>
+    		<th>日期</th>
+    		<th>记录人</th>
+    	</tr>
+    </thead>
+    <tbody>
+    	<tr ng-repeat="item in carRemarkItems">
+    		
+    		<td>{{item.type}}</td>
+    		<td>{{item.content}}</td>
+    		<td>{{item.updateTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
+    		<td>{{item.remarkMan}}</td>
+    	</tr>
+    </tbody>
+	</table>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- 详细数据dialog(客源) -->
 <div class="modal fade bs-example-modal-sm" id="myCustomerDetailModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">

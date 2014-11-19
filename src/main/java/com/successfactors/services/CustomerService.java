@@ -20,4 +20,8 @@ public interface CustomerService {
 	
 	public ReturnValue getCustomerDataToCGroup(Map<String, String> conditions,boolean publicFlag);
 	
+	public String delCustomerById(Long id);
+	
+	public String updateCustomer(CustomerVO vo);
+	
 }

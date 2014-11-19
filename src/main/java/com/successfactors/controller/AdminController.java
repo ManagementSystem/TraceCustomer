@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -212,5 +213,34 @@ public class AdminController extends BaseController{
 	@ResponseBody
 	public ReturnValue getReport(@RequestBody ReportVO vo){
 		return reportService.getReport(vo.getStartTime(), vo.getEndTime(), vo.getCurrentPage(), vo.getItemsPerPage());
+	}
+	
+	@RequestMapping(value="/delcustomer",method=RequestMethod.GET)
+	@ResponseBody
+	public String delCustomer(@RequestParam(value="id",required=true)Long id){
+		
+		return customerService.delCustomerById(id);
+		
+	}
+	
+	@RequestMapping(value="/delcar",method=RequestMethod.GET)
+	@ResponseBody
+	public String delCar(@RequestParam(value="id",required=true)Long id){
+		
+		return carService.delCar(id);
+		
+	}
+	
+	@RequestMapping(value="/updatecustomer",method=RequestMethod.POST)
+	@ResponseBody
+	public String updateCustomer(@RequestBody CustomerVO vo){
+		
+		return customerService.updateCustomer(vo);
+	}
+	
+	@RequestMapping(value="/updatecar",method=RequestMethod.POST)
+	@ResponseBody
+	public String updateCar(@RequestBody CarVO vo){
+		return carService.updateCar(vo);
 	}
 }

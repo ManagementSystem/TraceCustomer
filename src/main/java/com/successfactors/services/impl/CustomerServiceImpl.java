@@ -153,6 +153,40 @@ public class CustomerServiceImpl implements CustomerService{
 		
 		return returnValue;
 	}
+
+
+	@Override
+	@Transactional
+	public String delCustomerById(Long id) {
+		// TODO Auto-generated method stub
+		try{
+			Customer customer = customerDao.getById(id);
+		if(customer != null){
+			customerDao.remove(customer);
+		}
+		}catch(Exception ex){
+			return ReturnValueConstants.RETURN_ERROR;
+		}
+			return ReturnValueConstants.RETURN_SUCCESS;
+	}
+
+
+	@Override
+	@Transactional
+	public String updateCustomer(CustomerVO vo) {
+		// TODO Auto-generated method stub
+		Customer customer = new Customer();
+		customer.setCustomerVO(vo);
+		if(customer.getId() == null){
+			return ReturnValueConstants.RETURN_ERROR;
+		}
+		try{
+			customerDao.save(customer);
+		}catch(Exception ex){
+			return ReturnValueConstants.RETURN_ERROR;
+		}
+		return ReturnValueConstants.RETURN_SUCCESS;
+	}
 	
 	
 	

@@ -22,5 +22,8 @@ public interface CarService {
 	
 	public ReturnValue getCarsDataToCustomer(int currentPage, int itemPerPage);
 	
+	public String delCar(Long id);
+	
+	public String updateCar(CarVO vo);
 	
 }

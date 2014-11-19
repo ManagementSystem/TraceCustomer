@@ -170,4 +170,39 @@ public class CarServiceImpl implements CarService{
 	}
 
 
+	@Override
+	@Transactional
+	public String delCar(Long id) {
+		// TODO Auto-generated method stub
+		try{
+			Car car = dao.getById(id);
+			if(car != null){
+				dao.remove(car);
+			}
+		}catch(Exception ex){
+			return ReturnValueConstants.RETURN_ERROR;
+		}
+		return ReturnValueConstants.RETURN_SUCCESS;
+	}
+
+
+	@Override
+	@Transactional
+	public String updateCar(CarVO vo) {
+		// TODO Auto-generated method stub
+		Car car = new Car();
+		car.setCarVO(vo);
+		if(car.getId() == null){
+			return ReturnValueConstants.RETURN_ERROR;
+		}
+		try {
+			dao.save(car);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ReturnValueConstants.RETURN_ERROR;
+		}
+		return ReturnValueConstants.RETURN_SUCCESS;
+	}
+
+
 }

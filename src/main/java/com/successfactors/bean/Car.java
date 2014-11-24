@@ -107,6 +107,9 @@ public class Car {
 	@Column(name="sale_mgr_tel",nullable=true,length=255)
 	private String saleManagerTel;
 	
+	@Column(name="del_flag",nullable=false)
+	private Integer delFlag;
+	
 	public Long getId() {
 		return id;
 	}
@@ -305,6 +308,14 @@ public class Car {
 
 	public void setSaleManagerTel(String saleManagerTel) {
 		this.saleManagerTel = saleManagerTel;
+	}
+
+	public Integer getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Integer delFlag) {
+		this.delFlag = delFlag;
 	}
 
 	public void setCarVO(CarVO vo){

@@ -357,7 +357,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                                          currentPage: $scope.paginationConf.currentPage,
                                          itemsPerPage: $scope.paginationConf.itemsPerPage
                                      };
-                            	 $http.get(window.location.origin+'/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                            	 $http.post(window.location.origin+'/employee-manage/supply/getcar',postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
                             		 $scope.ajaxMsg ="Get CarSource Data Success!";
                             		 $scope.dataStore = dataStore = data.returnData.item;
                                      $scope.formDataResultForSupply = data.returnData.item;
@@ -370,7 +370,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                                          currentPage: $scope.paginationConfForCustomer.currentPage,
                                          itemsPerPage: $scope.paginationConfForCustomer.itemsPerPage
                                      };
-                            	 $http.get(window.location.origin+'/employee-manage/admin/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                            	 $http.post(window.location.origin+'/employee-manage/supply/getcustomer',postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
                                      if(data.returnState == "success"){
                                     	 $scope.ajaxMsg ="Get CustomerSource Data Success!";
                                     	 $scope.dataStoreForCustomer = dataStoreForCustomer = data.returnData.item;

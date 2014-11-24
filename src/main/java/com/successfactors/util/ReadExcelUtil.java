@@ -107,6 +107,8 @@ public class ReadExcelUtil {
 				break;
 			}
 			Car car = new Car();
+			car.setImportTime(new Date());
+			car.setDelFlag(0);
 			for(int j = 0;j< 18; ++j){
 				Cell cell = sheet.getCell(j,i);
 				//CellType type = cell.getType();

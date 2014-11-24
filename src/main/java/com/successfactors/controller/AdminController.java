@@ -101,10 +101,10 @@ public class AdminController extends BaseController{
 		return carTypeService.deleteCarType(id);
 	}
 	
-	@RequestMapping(value="/getcar",method=RequestMethod.GET)
+	@RequestMapping(value="/getcar",method=RequestMethod.POST)
 	@ResponseBody
-	public ReturnValue getCars(@RequestParam("currentPage") int currentPage,@RequestParam("itemsPerPage") int itemsPerPage){
-		return carService.getCarsData(currentPage, itemsPerPage);
+	public ReturnValue getCars(@RequestBody Map<String, String> conditions){
+		return carService.getCars(conditions);
 	}
 	
 	

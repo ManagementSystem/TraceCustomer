@@ -28,6 +28,7 @@ public class SupplyController extends BaseController{
 	@Autowired
 	private CustomerService customerService;
 	
+	
 
 	@RequestMapping(value="/getcar",method = RequestMethod.POST)
 	@ResponseBody
@@ -35,6 +36,13 @@ public class SupplyController extends BaseController{
 		
 		return carService.getCars(conditions);
 		
+	}
+	
+	
+	@RequestMapping(value="/getcustomer",method = RequestMethod.POST)
+	@ResponseBody
+	public ReturnValue getCustomers(@RequestBody Map<String, String> conditions){
+		return customerService.getCustomerDataToCGroup(conditions, true); 
 	}
 	
 }

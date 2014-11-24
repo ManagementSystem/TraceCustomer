@@ -69,6 +69,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);
+		c.addOrder(Order.desc("isTop"));
 		c.addOrder(Order.asc("price"));
 		List<Car> list = c.list();
 		page.setItem(list);
@@ -118,9 +119,13 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 				}
 			}
 		}
+		c.add(Restrictions.eq("delFlag", 0));
+		countC.add(Restrictions.eq("delFlag", 0));
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);
+		c.addOrder(Order.desc("isTop"));
+		c.addOrder(Order.asc("price"));
 		List<Car> list = c.list();
 		page.setItem(list);
 		page.setItemsPerPage(itemPerPage);

@@ -52,7 +52,9 @@ public class CarServiceImpl implements CarService{
 			Car car = new Car();
 			car.setCarVO(carVO);
 			car.setCarType(carType);
+			car.setCarTypeRecord(carType.getBrand() + carType.getType());
 			car.setImportTime(new Date());
+			car.setDelFlag(0);
 			dao.save(car);
 			return ReturnValueConstants.RETURN_SUCCESS;
 		}catch(Exception ex){
@@ -177,7 +179,8 @@ public class CarServiceImpl implements CarService{
 		try{
 			Car car = dao.getById(id);
 			if(car != null){
-				dao.remove(car);
+				car.setDelFlag(1);
+				dao.save(car);
 			}
 		}catch(Exception ex){
 			return ReturnValueConstants.RETURN_ERROR;

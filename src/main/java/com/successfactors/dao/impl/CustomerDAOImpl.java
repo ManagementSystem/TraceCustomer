@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -61,6 +62,7 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 				}
 			}
 		}
+		
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);
@@ -98,9 +100,13 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 			c.add(Restrictions.or(Restrictions.eq("ispublic", "1")));
 			countC.add(Restrictions.or(Restrictions.eq("ispublic", "1")));
 		}
+		countC.add(Restrictions.eq("delFlag", 0));
+		c.add(Restrictions.eq("delFlag",0));
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);
+		c.addOrder(Order.desc("isTop"));
+		c.addOrder(Order.desc("importTime"));
 		List<Customer> list = c.list();
 		page.setItem(list);
 		page.setItemsPerPage(itemPerPage);

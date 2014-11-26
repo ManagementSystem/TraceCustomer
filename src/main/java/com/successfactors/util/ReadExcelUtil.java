@@ -187,11 +187,12 @@ public class ReadExcelUtil {
 		for(int i = 1; i < sheet.getRows();i++){
 			Customer customer = new Customer();
 			customer.setImportTime(new Date());
+			customer.setDelFlag(0);
 			for(int j = 0;j< 16;++j){
 				Cell cell = sheet.getCell(j,i);
 				switch(j){
 					case 0:
-						customer.setCustomerType(Integer.valueOf(cell.getContents()));
+						customer.setCustomerType(cell.getContents());
 						break;
 					case 1:
 						customer.setName(cell.getContents());

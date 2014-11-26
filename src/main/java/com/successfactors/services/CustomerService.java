@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.successfactors.bean.Customer;
 import com.successfactors.bean.ReturnValue;
 import com.successfactors.vo.CarVO;
 import com.successfactors.vo.CustomerVO;
@@ -24,6 +25,6 @@ public interface CustomerService {
 	
 	public String delCustomerById(Long id);
 	
-	public String updateCustomer(CustomerVO vo);
+	public String updateCustomer(Customer customer);
 	
 }

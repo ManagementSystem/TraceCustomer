@@ -131,36 +131,33 @@
     <table class="table table-bordered table-hover table-condensed">
     <thead>
     	<tr>
+    		<th>置顶</th>
     		<th>客户类型</th>
     		<th>姓名</th>
     		<th>性别</th>
     		<th>联系方式</th>
-    		<th>区域</th>
+    		<th>地区</th>
     		<th>购车预算</th>
+    		<th>车型要求</th>
     		<th>客户等级</th>
-    		<th>颜色要求</th>
-    		<th>装饰要求</th>
-    		<th>配置</th>
     		<th>公/私客</th>
-    		<th>置顶</th>
+    		
     		
         <th style="width:63px;">操作</th>
     	</tr>
     </thead>
     <tbody>
     	<tr ng-repeat="item in formDataResultForCustomer">
+    		<td>{{item.isTop}}</td>
     		<td>{{item.customerType}}</td>
     		<td>{{item.name}}</td>
     		<td>{{item.sex}}</td>
     		<td>{{item.phone}}</td>
     		<td>{{item.region}}</td>
     		<td>{{item.budgetRange}}</td>
+    		<td>{{item.carTypeRecord}}</td>
     		<td>{{item.level}}</td>
-    		<td>{{item.carColor}}</td>
-    		<td>{{item.decoration}}</td>
-    		<td>{{item.configuration}}</td>
     		<td>{{item.ispublic}}</td>
-    		<td>{{item.isTop}}</td>
         <td>
          <button type="button" ng-click="detailCoustomerItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
         </td>
@@ -294,9 +291,22 @@
         <h4 class="modal-title" id="myDelModalLabelTitle">提示</h4>
       </div>
       <div class="modal-body">
+      	<div><strong>属性:</strong>  {{coustomerSourceDetail.customerType}}</div>
       	<div><strong>姓名:</strong>  {{coustomerSourceDetail.name}}</div>
-      	<div><strong>预算:</strong>  {{coustomerSourceDetail.budgetRange}}</div>
-        <div><strong>区域:</strong>  {{coustomerSourceDetail.region}}</div>
+      	<div><strong>性别:</strong>  {{coustomerSourceDetail.sex}}</div>
+        <div><strong>联系电话:</strong>  {{coustomerSourceDetail.phone}}</div>
+        <div><strong>地区:</strong>  {{coustomerSourceDetail.region}}</div>
+      	<div><strong>车型要求:</strong>  {{coustomerSourceDetail.carTypeRecord}}</div>
+        <div><strong>配置:</strong>  {{coustomerSourceDetail.configuration}}</div>
+        <div><strong>购车款区间:</strong>  {{coustomerSourceDetail.budgetRange}}</div>
+      	<div><strong>颜色:</strong>  {{coustomerSourceDetail.carColor}}</div>
+        <div><strong>内饰:</strong>  {{coustomerSourceDetail.decoration}}</div>
+        <div><strong>按揭:</strong>  {{coustomerSourceDetail.installment}}</div>
+      	<div><strong>保险:</strong>  {{coustomerSourceDetail.insurance}}</div>
+        <div><strong>客户登记:</strong>  {{coustomerSourceDetail.level}}</div>
+        <div><strong>公客/私客:</strong>  {{coustomerSourceDetail.ispublic}}</div>
+        <div><strong>导入时间:</strong>  {{coustomerSourceDetail.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</div>
+        <div><strong>置顶:</strong>  {{coustomerSourceDetail.isTop}}</div>
         <div id="remarks"><strong>回访记录:</strong>
         	<button type="button" ng-click="addCoustomerReMarksRow($event)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-plus"></i> 新增</button>
         </div>

@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.successfactors.bean.Car;
 import com.successfactors.bean.CarType;
+import com.successfactors.bean.Customer;
 import com.successfactors.bean.Page;
 import com.successfactors.bean.Report;
 import com.successfactors.bean.ReturnValue;
@@ -133,14 +134,13 @@ public class AdminController extends BaseController{
 	@ResponseBody
 	public String createCustomer(@RequestBody CustomerVO vo){
 		vo.setImportName(getUserName());
-		vo.setImportTime(new Date());
 		return customerService.addCustomer(vo);
 	}
 	
 	@RequestMapping(value="/addcarremark",method=RequestMethod.POST)
 	@ResponseBody
 	public String addCarRemark(@RequestBody CarRemarkVO vo){		
-		vo.setRemarkMan("zjw");
+		vo.setRemarkMan(getUserName());
 		return carRemarkService.addCarsRemark(vo);
 		
 	}
@@ -234,9 +234,9 @@ public class AdminController extends BaseController{
 	
 	@RequestMapping(value="/updatecustomer",method=RequestMethod.POST)
 	@ResponseBody
-	public String updateCustomer(@RequestBody CustomerVO vo){
+	public String updateCustomer(@RequestBody Customer customer){
 		
-		return customerService.updateCustomer(vo);
+		return customerService.updateCustomer(customer);
 	}
 	
 	@RequestMapping(value="/updatecar",method=RequestMethod.POST)

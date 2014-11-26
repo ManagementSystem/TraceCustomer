@@ -65,7 +65,7 @@ public class Customer{
 	private Integer deadline;
 	
 	@Column(name="customer_type",nullable=true,unique=false)
-	private Integer customerType;
+	private String customerType;
 	
 	@Column(name="config",nullable=true,unique=false,length=255)
 	private String configuration;
@@ -93,6 +93,9 @@ public class Customer{
 	
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="customer")
 	private Set<CustomerRemarks> remarks;
+	
+	@Column(name="del_flag",nullable=false)
+	private Integer delFlag;
 	
 	
 	public Set<CustomerRemarks> getRemarks() {
@@ -216,11 +219,11 @@ public class Customer{
 		this.deadline = deadline;
 	}
 
-	public Integer getCustomerType() {
+	public String getCustomerType() {
 		return customerType;
 	}
 
-	public void setCustomerType(Integer customerType) {
+	public void setCustomerType(String customerType) {
 		this.customerType = customerType;
 	}
 
@@ -270,6 +273,14 @@ public class Customer{
 
 	public void setIsTop(Integer isTop) {
 		this.isTop = isTop;
+	}
+	
+	public Integer getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Integer delFlag) {
+		this.delFlag = delFlag;
 	}
 
 	public void setCustomerVO(CustomerVO vo){

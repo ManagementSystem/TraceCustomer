@@ -29,7 +29,7 @@ public class CustomerVO {
 	
 	private Integer deadline;
 	
-	private Integer customerType;
+	private String customerType;
 	
 	private Long carTypeId;
 	
@@ -139,15 +139,14 @@ public class CustomerVO {
 		this.deadline = deadline;
 	}
 
-	public Integer getCustomerType() {
+	public String getCustomerType() {
 		return customerType;
 	}
 
-	public void setCustomerType(Integer customerType) {
+	public void setCustomerType(String customerType) {
 		this.customerType = customerType;
 	}
 	
-
 	public Long getCarTypeId() {
 		return carTypeId;
 	}

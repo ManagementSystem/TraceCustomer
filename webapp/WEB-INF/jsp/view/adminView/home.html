@@ -202,144 +202,165 @@
         <h4 class="modal-title" id="myEditModalLabel">编辑</h4>
       </div>
       <div class="modal-body">
+      	<form>
       	<div class="row">
 	            <div class="col-md-6">
-	            	  <div class="form-group">
-		                <label class="col-md-3 control-label">
+	            	<div class="form-group">
+		                <label class="col-md-4 control-label">
 		                   	 区域：
 		                </label>
-		                <div class="col-md-9" ng-init="area=['东区','南区','西区','北区']">
+		                <div class="col-md-8" ng-init="area=['东区','南区','西区','北区']">
 		                <!-- 东南西北 -->
 		                    <select ng-model="editCarObject.region" class="form-control">
 		                    	<option ng-repeat="item in area">{{item}}</option>
 		                    </select>
 		                </div>
             		</div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    类型：
-                </label>
-                <div class="col-md-9" ng-init="typeOptions=['进口','国产']">
-                <!-- 进口、国产、综合 -->
-                    <select ng-model="editCarObject.type" class="form-control">
-                    	<option value="">==不限==</option>
-                    	<option ng-repeat="item in typeOptions">{{item}}</option>
-                    </select>
-                </div>
-            </div>
-          <!--   <div class="form-group">
-                <label class="col-md-3 control-label">
-                    生产日期：
-                </label>
-                <div class="col-md-9">
-                    <p class="input-group">
-                      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'3015-06-33'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-th"></i></button>
-                      </span>
-                    </p>
-                </div>
-            </div> -->
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    负责人：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.principal" type="text" class="form-control" placeholder="请填入负责人名字">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    销售经理：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.customerManager" type="text" class="form-control" placeholder="请填入销售经理名字">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    大客户经理：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.customerManager" type="text" class="form-control" placeholder="请填入大客户经理的名字">
-                </div>
-            </div>
-           
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    颜色：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.carColor" type="text" class="form-control" placeholder="请填入颜色">
-                </div>
-            </div>
-	            </div>
+            		<div class="form-group">
+		                <label class="col-md-4 control-label">
+		                    	城市：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.city" type="text" class="form-control" placeholder="请填入城市名字">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                    	店名：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.shopName" type="text" class="form-control" placeholder="请填入店名">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                    	大客户经理：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.customerManager" type="text" class="form-control" placeholder="请填入大客户经理姓名">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                    	大客户经理电话：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.customerManagerTel" type="text" class="form-control" placeholder="请填入大客户经理电话">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                    	微信：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.wechat" type="text" class="form-control" placeholder="请填入微信">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                  	  类型：
+		                </label>
+		                <div class="col-md-8" ng-init="typeOptions=['进口','国产']">
+		                <!-- 进口、国产、综合 -->
+		                    <select ng-model="editCarObject.type" class="form-control">
+		                    	<option value="">==不限==</option>
+		                    	<option ng-repeat="item in typeOptions">{{item}}</option>
+		                    </select>
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                    	负责人：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.principal" type="text" class="form-control" placeholder="请填入负责人名字">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                   	 颜色：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.carColor" type="text" class="form-control" placeholder="请填入颜色">
+		                </div>
+		            </div>
+		        </div>
 	            <div class="col-md-6">
-	            	   <div class="form-group">
-                <label class="col-md-3 control-label">
-                    内饰：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.carDecoration" type="text" class="form-control" placeholder="请填入内饰">
-                </div>
-            </div>
-              <div class="form-group">
-                <label class="col-md-3 control-label">
-                    品牌：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.dealer" type="text" class="form-control" placeholder="请填入配置要求">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    配置：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.configuration" type="text" class="form-control" placeholder="请填入配置要求">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    联系方式：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.telphone" type="text" class="form-control" placeholder="请填入联系方式">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    售价：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.price" type="text" class="form-control" placeholder="请填入销售价">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    置顶：
-                </label>
-                <div class="col-md-9">
-                    <input ng-model="editCarObject.isTop" type="radio" name="toTop" value="1"><label>是</label>
-                    <input ng-model="editCarObject.isTop" type="radio" name="toTop" value="0"><label>否</label>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label class="col-md-3 control-label">
-                    可售区域：
-                </label>
-                 <div class="col-md-9" ng-init="saleArea=['全国','省内','小区域']">
-                <!-- 全国、省内、小区域 -->
-                    <select ng-model="editCarObject.saleRegion" class="form-control">
-                    	<option value="">==不限==</option>
-                    	<option ng-repeat="item in saleArea">{{item}}</option>
-                    </select>
-                	
-                </div>
-            </div>
+	            	
+		           
+	            	<div class="form-group">
+		                <label class="col-md-4 control-label">
+		                    	销售经理：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.saleManager" type="text" class="form-control" placeholder="请填入销售经理姓名">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                    	销售经理电话：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.saleManagerTel" type="text" class="form-control" placeholder="请填入销售经理电话">
+		                </div>
+		            </div>
+	            	<div class="form-group">
+		                <label class="col-md-4 control-label">
+		                   	 内饰：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.carDecoration" type="text" class="form-control" placeholder="请填入内饰">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                                              具体车型：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.carTypeRecord" type="text" class="form-control" placeholder="请填入配置要求">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                   	 配置：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.configuration" type="text" class="form-control" placeholder="请填入配置要求">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                    	售价：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.price" type="text" class="form-control" placeholder="请填入销售价">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                   	 置顶：
+		                </label>
+		                <div class="col-md-8">
+		                    <input ng-model="editCarObject.isTop" type="radio" name="toTop" value="1"><label>是</label>
+		                    <input ng-model="editCarObject.isTop" type="radio" name="toTop" value="0"><label>否</label>
+		                </div>
+		            </div>
+		            
+		            <div class="form-group">
+		                <label class="col-md-4 control-label">
+		                   	 可售区域：
+		                </label>
+		                 <div class="col-md-8" ng-init="saleArea=['全国','省内','小区域']">
+		                <!-- 全国、省内、小区域 -->
+		                    <select ng-model="editCarObject.saleRegion" class="form-control">
+		                    	<option value="">==不限==</option>
+		                    	<option ng-repeat="item in saleArea">{{item}}</option>
+		                    </select>
+		                	
+		                </div>
+		            </div>
 	            </div>
-            </div>
+        </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -563,7 +584,7 @@
         <div><strong>颜色:</strong>  {{carSourceDetail.carColor}}</div>
         <div><strong>内饰:</strong>  {{carSourceDetail.carDecoration}}</div>
         <div><strong>生产日期:</strong>  {{carSourceDetail.productDate | date:"yyyy/MM/dd"}}</div>
-        <div><strong>可售区域:</strong>  {{carSourceDetail.sealRegion}}</div>
+        <div><strong>可售区域:</strong>  {{carSourceDetail.saleRegion}}</div>
         <div><strong>价格:</strong>  {{carSourceDetail.price}}</div>
         <div><strong>置顶:</strong>  {{carSourceDetail.isTop}}</div>
         <div id="remarks"><strong>回访记录:</strong>

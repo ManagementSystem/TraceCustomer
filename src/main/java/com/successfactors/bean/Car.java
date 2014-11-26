@@ -71,7 +71,7 @@ public class Car {
 	private Date productDate;
 
 	@Column(name="sale_region",nullable=true,unique=false,length=255)
-	private String sealRegion;
+	private String saleRegion;
 	
 	@Column(name="price",nullable=true,unique=false)
 	private double price;
@@ -222,12 +222,12 @@ public class Car {
 		this.configuration = configuration;
 	}
 
-	public String getSealRegion() {
-		return sealRegion;
+	public String getSaleRegion() {
+		return saleRegion;
 	}
 
-	public void setSealRegion(String sealRegion) {
-		this.sealRegion = sealRegion;
+	public void setSaleRegion(String saleRegion) {
+		this.saleRegion = saleRegion;
 	}
 
 	public Integer getIsTop() {
@@ -321,7 +321,7 @@ public class Car {
 	public void setCarVO(CarVO vo){
 		this.operator = vo.getOperator();
 		this.isTop = vo.getIsTop();
-		this.sealRegion = vo.getSaleRegion();
+		this.saleRegion = vo.getSaleRegion();
 		this.configuration = vo.getConfiguration();
 		this.customerManager = vo.getCustomerManager();
 		this.carColor = vo.getCarColor();
@@ -339,6 +339,7 @@ public class Car {
 		this.wechat = vo.getWechat();
 		this.city = vo.getCity();
 		this.saleManagerTel = vo.getSaleManagerTel();
+		this.carTypeRecord = vo.getCarTypeRecord();
 	}
 	
 	public void setCarToCustomer(){

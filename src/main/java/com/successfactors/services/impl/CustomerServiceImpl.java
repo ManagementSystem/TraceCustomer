@@ -187,6 +187,22 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		return ReturnValueConstants.RETURN_SUCCESS;
 	}
+
+
+	@Override
+	public ReturnValue getCustomerData(Map<String, String> conditions) {
+		// TODO Auto-generated method stub
+		ReturnValue returnValue = new ReturnValue();
+		try {
+			Page<Customer> page = customerDao.getCustomers(conditions, false);
+			returnValue.setSuccess();
+			returnValue.setReturnData(page);
+		} catch (Exception e) {
+			// TODO: handle exception
+			returnValue.setError();
+		}
+		return returnValue;
+	}
 	
 	
 	

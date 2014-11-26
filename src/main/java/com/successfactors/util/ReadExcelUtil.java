@@ -161,7 +161,7 @@ public class ReadExcelUtil {
 						car.setProductDate(date);
 						break;
 					case 15:
-						car.setSealRegion(cell.getContents());
+						car.setSaleRegion(cell.getContents());
 						break;
 					case 16:
 						car.setPrice(Double.parseDouble(cell.getContents()));

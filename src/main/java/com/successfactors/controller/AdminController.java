@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.successfactors.bean.Car;
 import com.successfactors.bean.CarType;
 import com.successfactors.bean.Page;
 import com.successfactors.bean.Report;
@@ -116,10 +117,10 @@ public class AdminController extends BaseController{
 	}
 	
 	
-	@RequestMapping(value="/getcustomer",method=RequestMethod.GET)
+	@RequestMapping(value="/getcustomer",method=RequestMethod.POST)
 	@ResponseBody
-	public ReturnValue getCustomerData(@RequestParam("currentPage") int currentPage,@RequestParam("itemsPerPage") int itemsPerPage){
-		return customerService.getCustomerData(currentPage, itemsPerPage);
+	public ReturnValue getCustomerData(Map<String, String> conditions){
+		return customerService.getCustomerData(conditions);
 	}
 	
 	@RequestMapping(value="/querycustomer",method=RequestMethod.POST)
@@ -240,7 +241,7 @@ public class AdminController extends BaseController{
 	
 	@RequestMapping(value="/updatecar",method=RequestMethod.POST)
 	@ResponseBody
-	public String updateCar(@RequestBody CarVO vo){
-		return carService.updateCar(vo);
+	public String updateCar(@RequestBody Car car){
+		return carService.updateCar(car);
 	}
 }

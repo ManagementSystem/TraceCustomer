@@ -7,6 +7,8 @@ import javax.persistence.Column;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.successfactors.bean.CarType;
+
 public class CarVO {
 	private Long id;
 	
@@ -56,7 +58,9 @@ public class CarVO {
 	
 	private String saleManagerTel;
 	
+	private String carTypeRecord;
 	
+	private CarType carType;
 	public Long getId() {
 		return id;
 	}
@@ -240,6 +244,22 @@ public class CarVO {
 
 	public void setSaleManagerTel(String saleManagerTel) {
 		this.saleManagerTel = saleManagerTel;
+	}
+
+	public String getCarTypeRecord() {
+		return carTypeRecord;
+	}
+
+	public void setCarTypeRecord(String carTypeRecord) {
+		this.carTypeRecord = carTypeRecord;
+	}
+
+	public CarType getCarType() {
+		return carType;
+	}
+
+	public void setCarType(CarType carType) {
+		this.carType = carType;
 	}
 	
 	

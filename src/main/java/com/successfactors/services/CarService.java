@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.successfactors.bean.Car;
 import com.successfactors.bean.ReturnValue;
 import com.successfactors.vo.CarVO;
 
@@ -24,6 +25,6 @@ public interface CarService {
 	
 	public String delCar(Long id);
 	
-	public String updateCar(CarVO vo);
+	public String updateCar(Car car);
 	
 }

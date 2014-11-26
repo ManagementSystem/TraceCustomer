@@ -12,6 +12,8 @@ public interface CustomerService {
 	
 	public ReturnValue getCustomerData(int currentPage,int itemsPerPage);
 	
+	public ReturnValue getCustomerData(Map<String, String> conditions);
+	
 	public ReturnValue queryCustomerData(Map<String, String> conditions);
 	
 	public String addCustomer(CustomerVO vo);

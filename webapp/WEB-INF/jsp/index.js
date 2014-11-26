@@ -149,15 +149,15 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                          $scope.saveEditCarSource = function(event){
                         	 var postData = $scope.editCarObject;
                         	
-                        	 $http.post(window.location.origin+"/employee-manage/admin/createcar",postData).success(function(data){
+                        	 $http.post(window.location.origin+"/employee-manage/admin/updatecar",postData).success(function(data){
                            		if(data == "success"){
                            			console.log(data);
-//                           	    修改后刷新车源列表
-//                           	  reGetDatas();
-//                           	     关闭模态框
-                           			
+                           	    //修改后刷新车源列表
+                           	  reGetDatas();
+                           	    //关闭模态框
+                           	  $('#myEditModal').modal('hide');
 //                           	     置空修改项
-//                           	  $scope.editCarObject = {};
+                           	  $scope.editCarObject = {};
                            			
                            		}else{
                            			console.log("Save Faild!");
@@ -182,6 +182,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                      	$scope.returnSuccessMsg = 'Good job,Well done.';
                                      	event.target.setAttribute('data-toggle','modal');
                                         event.target.setAttribute('data-target','#myMsgModal');
+                                        reGetDatas();
+                                        $('#myDelModal').modal('hide');
                                     }else{
                                     	console.log("Del Faild");
                                     	$scope.SuccessMsgShow = false;

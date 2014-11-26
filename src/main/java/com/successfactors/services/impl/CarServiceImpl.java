@@ -183,6 +183,7 @@ public class CarServiceImpl implements CarService{
 				dao.save(car);
 			}
 		}catch(Exception ex){
+			logger.error(ex.getMessage());
 			return ReturnValueConstants.RETURN_ERROR;
 		}
 		return ReturnValueConstants.RETURN_SUCCESS;
@@ -191,17 +192,17 @@ public class CarServiceImpl implements CarService{
 
 	@Override
 	@Transactional
-	public String updateCar(CarVO vo) {
+	public String updateCar(Car car) {
 		// TODO Auto-generated method stub
-		Car car = new Car();
-		car.setCarVO(vo);
+		
 		if(car.getId() == null){
 			return ReturnValueConstants.RETURN_ERROR;
 		}
 		try {
-			dao.save(car);
+			dao.update(car);
 		} catch (Exception e) {
 			// TODO: handle exception
+			logger.error(e.getMessage());
 			return ReturnValueConstants.RETURN_ERROR;
 		}
 		return ReturnValueConstants.RETURN_SUCCESS;

@@ -349,7 +349,15 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                               event.target.setAttribute('data-toggle','modal');
                               event.target.setAttribute('data-target','#myeditCoustomerModal');
                               $scope.editCustomerObject = dataStoreForCustomer[index];
+                              
+                              //获取车型
+                              
+                              $http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
+                                  $scope.editTypeOptions = data;
+                               });
                             };
+                            
+                            
                             
                             //客源编辑保存
                             $scope.saveCoustomerModify = function(event){

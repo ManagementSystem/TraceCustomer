@@ -423,7 +423,9 @@
 								车型要求：
 							</label>
 							<div class="col-md-9">
-							<select class="form-control input-sm" ng-model="budget" ng-options="opt for opt in carType.type"></select>
+							<select class="form-control" ng-model="editCustomerObject.carTypeId">
+		                    	<option ng-repeat="item in editTypeOptions" value={{item.id}}>{{item.brand}} {{item.type}}</option>
+		                    </select>
 						</div>
 					</div>
 					<div class="form-group">

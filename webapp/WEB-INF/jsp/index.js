@@ -460,7 +460,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         
                         
                         //监听当前页面和每页条数来获取grid数据
-                        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage + CarShow +paginationConfForCustomer.currentPage + paginationConfForCustomer.itemsPerPage', reGetDatas);
+                        $scope.$watch('CarShow', reGetDatas);
+                        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage +paginationConfForCustomer.currentPage + paginationConfForCustomer.itemsPerPage', reGetDatas);
 
                         //搜索功能
                         $scope.searchGridData = function(event){

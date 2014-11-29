@@ -997,3 +997,32 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
         })
 });
 
+routerSupplyApp.filter('publicOrNot',function(){
+    return function(field){
+       if(field == "1"){
+    	   return "公客";
+       }else{
+           return "私客";
+       }
+    }
+});
+
+routerSupplyApp.filter('topOrNot',function(){
+    return function(field){
+       if(field == "1"){
+    	   return "置顶";
+       }else{
+           return "不置顶";
+       }
+    }
+});
+
+routerSupplyApp.filter('customerType',function(){
+    return function(field){
+       if(field == "1"){
+    	   return "直接客户";
+       }else{
+           return "渠道客户";
+       }
+    }
+});

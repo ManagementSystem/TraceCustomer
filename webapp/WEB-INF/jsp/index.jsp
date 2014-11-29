@@ -14,7 +14,7 @@
 
 	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 	<script src="js/bootstrap-3.2.0.min.js"></script>
-    <script src="jsp/index.js"></script>
+    <script src="jsp/index.js" charset="utf-8"></script>
 </head>
 
 <body>

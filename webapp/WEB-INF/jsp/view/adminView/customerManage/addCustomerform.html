@@ -48,7 +48,7 @@
 							地区：
 						</label>
 						
-					<div class="col-md-9" ng-init="reg=['东区','南区','西区','北区']">
+					<div class="col-md-9" ng-init="reg=['东','南','西','北']">
 						<select ng-model="customerObjects.region" class="form-control">
 							<option ng-repeat="item in reg">{{item}}</option>
 						</select>
@@ -70,7 +70,6 @@
 					</label>
 					<div class="col-md-9" ng-init="a=['标准','舒适','高配','豪华']">
 						<select ng-model="customerObjects.configuration" class="form-control">
-							<option value="">==不限==</option>
 							<option ng-repeat="item in a">{{item}}</option>
 						</select>
 					</div>

@@ -57,7 +57,7 @@
 <h4 ng-show="CarShow">车源信息</h4>
 <h4 ng-show="!CarShow">客源信息</h4>
 <div class="alert alert-danger alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	<!-- <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
 	<strong>提示：{{ajaxMsg}}</strong>
 </div>
 <div class="table-responsive" ng-show="CarShow">
@@ -253,7 +253,6 @@
 								<div class="col-md-8" ng-init="typeOptions=['进口','国产']">
 									<!-- 进口、国产、综合 -->
 									<select ng-model="editCarObject.type" class="form-control">
-										<option value="">==不限==</option>
 										<option ng-repeat="item in typeOptions">{{item}}</option>
 									</select>
 								</div>
@@ -343,10 +342,8 @@
 								<div class="col-md-8" ng-init="saleArea=['全国','省内','小区域']">
 									<!-- 全国、省内、小区域 -->
 									<select ng-model="editCarObject.saleRegion" class="form-control">
-										<option value="">==不限==</option>
 										<option ng-repeat="item in saleArea">{{item}}</option>
 									</select>
-									
 								</div>
 							</div>
 						</div>
@@ -377,8 +374,8 @@
 									客户类型：
 								</label>
 								<div class="col-md-9">
-									<input ng-model="editCustomerObject.customerType" type="radio" name="customerType"><label>直接客户</label>
-									<input ng-model="editCustomerObject.customerType" type="radio" name="customerType"><label>渠道客户</label>
+									<input ng-model="editCustomerObject.customerType" type="radio" name="customerType" value="1"><label>直接客户</label>
+									<input ng-model="editCustomerObject.customerType" type="radio" name="customerType" value="2"><label>渠道客户</label>
 								</div>
 							</div>
 							<div class="form-group">
@@ -410,8 +407,15 @@
 								<label class="col-md-3 control-label">
 									地区：
 								</label>
-								<div class="col-md-9">
-								<select ng-model="editCustomerObject.region" class="form-control input-sm" ng-options="opt for opt in customerArea.area"></select>
+								<div class="col-md-9" ng-init="Region=['东','南','西','北']">
+								<!-- <div class="col-md-9" ng-init="reg=['东区','南区','西区','北区']">
+									<select ng-model="customerObjects.region" class="form-control">
+										<option ng-repeat="item in reg">{{item}}</option>
+									</select>
+								</div> -->
+								<select ng-model="editCustomerObject.region" class="form-control input-sm">
+									<option ng-repeat="item in Region">{{item}}</option>
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
@@ -419,15 +423,19 @@
 								车型要求：
 							</label>
 							<div class="col-md-9">
-							<select class="form-control input-sm" ng-model="budget" ng-options="opt for opt in carType.type"></select>
+							<select class="form-control" ng-model="editCustomerObject.carTypeId">
+		                    	<option ng-repeat="item in editTypeOptions" value={{item.id}}>{{item.brand}} {{item.type}}</option>
+		                    </select>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">
 							配置：
 						</label>
-						<div class="col-md-9">
-						<select class="form-control" ng-model="editCustomerObject.decoration" ng-options="opt for opt in carType.type"></select>
+						<div class="col-md-9" ng-init="Config=['标准','舒适','高配','豪华']">
+						<select class="form-control" ng-model="editCustomerObject.configuration">
+							<option ng-repeat="item in Config">{{item}}</option>
+						</select>
 					</div>
 				</div>
 				
@@ -437,16 +445,20 @@
 				<label class="col-md-3 control-label">
 					预算区间：
 				</label>
-				<div class="col-md-9">
-				<select class="form-control" ng-model="editCustomerObject.budgetRange" ng-options="opt for opt in budgerOptions.budget"></select>
+				<div class="col-md-9" ng-init="BudgetRange=['5W-10W','10W-15W','15W-20W','20W-30W','30W-40W','40W-60W','60W-80W','80W-100W']">
+				<select class="form-control" ng-model="editCustomerObject.budgetRange">
+					<option ng-repeat="item in BudgetRange">{{item}}</option>
+				</select>
 			</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label">
 					客户等级：
 				</label>
-				<div class="col-md-9">
-				<select class="form-control" ng-model="editCustomerObject.level" ng-options="opt for opt in budgerOptions.budget"></select>
+				<div class="col-md-9" ng-init="userLevel=['1','2','3','4']">
+				<select class="form-control" ng-model="editCustomerObject.level">
+					<option ng-repeat="item in userLevel">{{item}}</option>
+				</select>
 			</div>
 		</div>
 		<div class="form-group">
@@ -454,8 +466,8 @@
 				公/私：
 			</label>
 			<div class="col-md-9">
-				<input type="radio" name="ispublice" ng-model="editCustomerObject.ispublice" value="1"><label>公客</label>
-				<input type="radio" name="ispublice" ng-model="editCustomerObject.ispublice" value="0"><label>私客</label>
+				<input type="radio" name="ispublice" ng-model="editCustomerObject.ispublic" value="1"><label>公客</label>
+				<input type="radio" name="ispublice" ng-model="editCustomerObject.ispublic" value="0"><label>私客</label>
 			</div>
 		</div>
 		<div class="form-group">
@@ -463,8 +475,8 @@
 				按揭：
 			</label>
 			<div class="col-md-9">
-				<input type="radio" ng-model="editCustomerObject.installment" name="mortgage" value="true"><label>是</label>
-				<input type="radio" ng-model="editCustomerObject.installment" name="mortgage" value="false"><label>否</label>
+				<input type="radio" ng-model="editCustomerObject.installment" name="mortgage" value="1"><label>是</label>
+				<input type="radio" ng-model="editCustomerObject.installment" name="mortgage" value="0"><label>否</label>
 			</div>
 		</div>
 		<div class="form-group">
@@ -472,8 +484,8 @@
 				保险：
 			</label>
 			<div class="col-md-9">
-				<input type="radio" ng-model="editCustomerObject.insurance" name="safe" value="true"><label>是</label>
-				<input type="radio" ng-model="editCustomerObject.insurance" name="safe" value="false"><label>否</label>
+				<input type="radio" ng-model="editCustomerObject.insurance" name="safe" value="1"><label>是</label>
+				<input type="radio" ng-model="editCustomerObject.insurance" name="safe" value="2"><label>否</label>
 			</div>
 		</div>
 		<div class="form-group">
@@ -498,7 +510,7 @@
 </div>
 <div class="modal-footer">
 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-<button type="button" class="btn btn-primary">确定</button>
+<button type="button" class="btn btn-primary" ng-click="saveCoustomerModify($event)">确定</button>
 </div>
 </div>
 </div>

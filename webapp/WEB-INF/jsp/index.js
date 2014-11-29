@@ -160,7 +160,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                               $scope.editCarObject = {};
                                     
                                 }else{
-                                    console.log("Save Faild!");
+                                    console.log("修改保存失败");
                                 }
                             });
                          };
@@ -177,17 +177,17 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                              if($scope.CarShow){
                                  $http.get(window.location.origin+'/employee-manage/admin/delcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:{id:$scope.delItemId}}).success(function(data){
                                     if(data == "success"){
-                                        console.log("Del Success!");
+                                        console.log("删除成功");
                                         $scope.SuccessMsgShow = true;
-                                        $scope.returnSuccessMsg = 'Good job,Well done.';
+                                        $scope.returnSuccessMsg = '删除成功';
                                         event.target.setAttribute('data-toggle','modal');
                                         event.target.setAttribute('data-target','#myMsgModal');
                                         reGetDatas();
                                         $('#myDelModal').modal('hide');
                                     }else{
-                                        console.log("Del Faild");
+                                        console.log("删除失败");
                                         $scope.SuccessMsgShow = false;
-                                        $scope.returnErrorMsg = 'Sorry,Error happend.';
+                                        $scope.returnErrorMsg = '对不起，发生了错误，删除失败';
                                         event.target.setAttribute('data-toggle','modal');
                                         event.target.setAttribute('data-target','#myMsgModal');
                                         
@@ -204,10 +204,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                             	 //客源删除
                             	 $http.get(window.location.origin+'/employee-manage/admin/delcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:{id:$scope.delCoustomerId}}).
                             	 	success(function(data){
-                            	 		console.log("Del customer Success!");
+                            	 		console.log("删除客源成功");
                             	 	}).
                             	 	error(function(data){
-                            	 		console.log("Del customer Fail!");
+                            	 		console.log("删除客源失败");
                             	 	})
                              }
                             
@@ -245,7 +245,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         		  }
                         	  }).
                         	  error(function(data){
-                        		  console.log('Get coustomer remarks error!');
+                        		  console.log('获取客源回访失败');
                         	  });
                           };
                         //获取车源回访内容的数据
@@ -260,7 +260,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         		  }
                         	  }).
                         	  error(function(data){
-                        		  console.log('Get car remarks error!');
+                        		  console.log('获取车源回访失败');
                         	  });
                           };
                           
@@ -295,19 +295,19 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         		if(data == 'success'){
                         			//提示成功信息
                         			$scope.SuccessMsgShow = true;
-                                 	$scope.returnSuccessMsg = 'add ReMarks Success!';
+                                 	$scope.returnSuccessMsg = '添加客源回访信息成功';
                                  	showMsg(event);
                                  	$scope.addReMarks = !$scope.addReMarks;
                                  	$scope.addreMarksObj = {};
                                  	getCoustomerRemarks($scope.coustomerSourceDetail.id);
                         		}else{
                         			$scope.SuccessMsgShow = false;
-                                  	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                                  	$scope.returnErrorMsg = '添加客源回访信息失败';
                                   	showMsg(event);
                         		}
                         	 }).error(function(data){
                         		$scope.SuccessMsgShow = false;
-                              	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                              	$scope.returnErrorMsg = '添加客源回访信息失败';
                               	showMsg(event);
                         	 });
                          };
@@ -327,19 +327,19 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         		if(data == 'success'){
                         			//提示成功信息
                         			$scope.SuccessMsgShow = true;
-                                 	$scope.returnSuccessMsg = 'add ReMarks Success!';
+                                 	$scope.returnSuccessMsg = '添加车源回访信息成功';
                                  	showMsg(event);
                                  	$scope.addCarReMarks = !$scope.addCarReMarks;
                                  	$scope.addCarReMarksObj = {};
                                  	getCarRemarks($scope.carSourceDetail.id);
                         		}else{
                         			$scope.SuccessMsgShow = false;
-                                  	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                                  	$scope.returnErrorMsg = '添加客源回访信息失败';
                                   	showMsg(event);
                         		}
                         	 }).error(function(data){
                         		$scope.SuccessMsgShow = false;
-                              	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                              	$scope.returnErrorMsg = '添加客源回访信息失败';
                               	showMsg(event);
                         	 });
                          };
@@ -411,7 +411,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                          $scope.paginationConfForCustomer.totalItems = data.returnData.totalItems;
                                          $scope.paginationConfForCustomer.itemsPerPage = data.returnData.itemsPerPage;
                                      }else{
-                                         $scope.ajaxMsg = "Get CustomerSource Data Error!";
+                                         $scope.ajaxMsg = "获取客源数据失败";
                                     }
                                      
                                   });
@@ -456,7 +456,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                         $scope.paginationConf.totalItems = data.returnData.totalItems;
                                         $scope.paginationConf.itemsPerPage = data.returnData.itemsPerPage;
                                     }else{
-                                        $scope.ajaxMsg ="Query carSource Data Error!";
+                                        $scope.ajaxMsg ="查询车源信息失败";
                                         $scope.dataStore = dataStore = {};
                                         $scope.formDataResult = {};
                                     }
@@ -475,7 +475,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                          $scope.paginationConfForCustomer.totalItems = data.returnData.totalItems;
                                          $scope.paginationConfForCustomer.itemsPerPage = data.returnData.itemsPerPage;
                                     }else{
-                                        $scope.ajaxMsg ="Query customer Data Error!";
+                                        $scope.ajaxMsg ="查询客源信息失败";
                                         $scope.dataStoreForCustomer = dataStoreForCustomer = {};
                                         $scope.formDataResultForCustomer = {};
                                     }
@@ -531,7 +531,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
               
               
 //            预算区间
-              $scope.budgetRangeOptions = ["5W-10W","10W-15W","15W-20W","20W-30W","30W-40W","40W-60W","60W-80W","80W-100W"];
+              $scope.budgetRangeOptions = ["5万-10万","10万-15万","15万-20万","20万-30万","30万-40万","40万-60万","60万-80万","80万-100万"];
               $scope.customerObjects.budgetRange = $scope.budgetRangeOptions[0];
            
 //            等级
@@ -543,12 +543,12 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                   var postData = $scope.customerObjects;
                   $http.post(window.location.origin+"/employee-manage/admin/createcustomer",postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
                       if(data == "success"){
-                          console.log("Save success!");
+                          console.log("新增客源成功");
                       }else{
-                          console.log("Save Faild!");
+                          console.log("新增客源失败");
                       }
                   }).error(function(data){
-                      console.log("Ajax posting Faild!");
+                      console.log("发生错误，请求失败");
                   });
               }
            
@@ -573,11 +573,11 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                             formData.append("file",inputFile);
                             if(!(inputFile.name.indexOf(".xls")!=-1)){
                                 $scope.SuccessMsgShow = false;
-                                $scope.returnErrorMsg = 'File formatter is  not Support.(.xls)';
+                                $scope.returnErrorMsg = '文件格式 不支持(请上传.xls格式)';
                                 showMsg(event);
                             }else if(inputFile.size>=4194304){//文件不超过4M
                                 $scope.SuccessMsgShow = false;
-                                $scope.returnErrorMsg = 'File bigger than 4M is not Support.';
+                                $scope.returnErrorMsg = '不支持大于4M的文件上传';
                                 showMsg(event);
                             }else{
 //                                  提交文件
@@ -588,18 +588,18 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                 }).success(function(data){
                                     $scope.uploadSuccess = true;
                                     $scope.SuccessMsgShow = true;
-                                        $scope.returnSuccessMsg = 'upLoad Success!';
+                                        $scope.returnSuccessMsg = '上传成功';
                                         showMsg(event);
                                 }).error(function(data){
                                     $scope.uploadFaild = true;
                                     $scope.SuccessMsgShow = false;
-                                        $scope.returnErrorMsg = 'Ajaxing Error';
+                                        $scope.returnErrorMsg = '上传失败';
                                         showMsg(event);
                                 });
                             }
                         }else{
                             $scope.SuccessMsgShow = false;
-                                $scope.returnErrorMsg = 'Please chose a file!';
+                                $scope.returnErrorMsg = '请选择一个文件';
                                 showMsg(event);
                         }
                         
@@ -729,7 +729,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 //                                      type:""
 //                              };
                         }else{
-                            console.log("Save Faild!");
+                            console.log("新增车源失败");
                         }
                     });
                   };
@@ -774,7 +774,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                         type:""
                                 };
                             }else{
-                                console.log("Save Faild!");
+                                console.log("新增车型失败");
                             }
                         });
                     }
@@ -814,11 +814,11 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                     formData.append("file",inputFile);
                                     if(!(inputFile.name.indexOf(".xls")!=-1)){
                                         $scope.SuccessMsgShow = false;
-                                        $scope.returnErrorMsg = 'File formatter is  not Support.(.xls)';
+                                        $scope.returnErrorMsg = '文件格式 不支持(请上传.xls格式)';
                                         showMsg(event);
                                     }else if(inputFile.size>=4194304){//文件不超过4M
                                         $scope.SuccessMsgShow = false;
-                                        $scope.returnErrorMsg = 'File bigger than 4M is not Support.';
+                                        $scope.returnErrorMsg = '不支持大于4M的文件上传';
                                         showMsg(event);
                                     }else{
 //                                      提交文件
@@ -829,18 +829,18 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                         }).success(function(data){
                                             $scope.uploadSuccess = true;
                                             $scope.SuccessMsgShow = true;
-                                            $scope.returnSuccessMsg = 'upLoad Success';
+                                            $scope.returnSuccessMsg = '上传成功';
                                             showMsg(event);
                                         }).error(function(data){
                                             $scope.uploadFaild = true;
                                             $scope.SuccessMsgShow = false;
-                                            $scope.returnErrorMsg = 'Ajaxing Error';
+                                            $scope.returnErrorMsg = '上传失败';
                                             showMsg(event);
                                         });
                                     }
                                 }else{
                                     $scope.SuccessMsgShow = false;
-                                    $scope.returnErrorMsg = 'Please chose a file!';
+                                    $scope.returnErrorMsg = '请选择上传文件';
                                     showMsg(event);
                                 }
                                 
@@ -868,11 +868,11 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                 formData.append("file",inputFile);
                                 if(!(inputFile.name.indexOf(".xls")!=-1)){
                                     $scope.SuccessMsgShow = false;
-                                    $scope.returnErrorMsg = 'File formatter is not Support.';
+                                    $scope.returnErrorMsg = '文件格式 不支持(请上传.xls格式)';
                                     showMsg(event);
                                 }else if(inputFile.size>=4194304){//文件不超过4M
                                     $scope.SuccessMsgShow = false;
-                                        $scope.returnErrorMsg = 'File bigger than 4M is not Support.';
+                                        $scope.returnErrorMsg = '不支持大于4M的文件上传';
                                         showMsg(event);
                                 }else{
 //                                      提交文件
@@ -883,18 +883,18 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                     }).success(function(data){
                                         $scope.uploadSuccess = true;
                                         $scope.SuccessMsgShow = true;
-                                        $scope.returnSuccessMsg = 'upLoad Success!';
+                                        $scope.returnSuccessMsg = '上传成功!';
                                         showMsg(event);
                                     }).error(function(data){
                                         $scope.uploadFaild = true;
                                         $scope.SuccessMsgShow = false;
-                                        $scope.returnErrorMsg = 'Ajaxing Error';
+                                        $scope.returnErrorMsg = '上传失败';
                                         showMsg(event);
                                     });
                                 }
                             }else{
                                 $scope.SuccessMsgShow = false;
-                                    $scope.returnErrorMsg = 'Please chose a file!';
+                                    $scope.returnErrorMsg = '请选择上传文件';
                                     showMsg(event);
                             }
                         };
@@ -1152,4 +1152,35 @@ routerApp.service('$fileUpload', ['$http', function($http){
 
     });
   }
-}])
+}]);
+
+
+routerApp.filter('publicOrNot',function(){
+    return function(field){
+       if(field == "1"){
+    	   return "公客";
+       }else{
+           return "私客";
+       }
+    }
+});
+
+routerApp.filter('topOrNot',function(){
+    return function(field){
+       if(field == "1"){
+    	   return "置顶";
+       }else{
+           return "不置顶";
+       }
+    }
+});
+
+routerApp.filter('customerType',function(){
+    return function(field){
+       if(field == "1"){
+    	   return "直接客户";
+       }else{
+           return "渠道客户";
+       }
+    }
+});

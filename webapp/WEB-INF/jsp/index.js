@@ -142,6 +142,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                            /*获得该节点*/
                            event.target.setAttribute('data-toggle','modal');
                            event.target.setAttribute('data-target','#myEditModal');
+                           
+                           $http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
+                               $scope.editTypeOptionsForCar = data;
+                            });
 
                          };
                          
@@ -205,17 +209,17 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                             	 $http.get(window.location.origin+'/employee-manage/admin/delcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:{id:$scope.delCoustomerId}}).
                             	 	success(function(data){
                             	 		if(data == "success"){
-                                            console.log("Del Success!");
+                                            console.log("删除成功");
                                             $scope.SuccessMsgShow = true;
-                                            $scope.returnSuccessMsg = 'Good job,Well done.';
+                                            $scope.returnSuccessMsg = '删除成功';
                                             event.target.setAttribute('data-toggle','modal');
                                             event.target.setAttribute('data-target','#myMsgModal');
                                             reGetDatas();
                                             $('#myDelModal').modal('hide');
                                         }else{
-                                            console.log("Del Faild");
+                                            console.log("删除失败");
                                             $scope.SuccessMsgShow = false;
-                                            $scope.returnErrorMsg = 'Sorry,Error happend.';
+                                            $scope.returnErrorMsg = '发生了错误，删除失败';
                                             event.target.setAttribute('data-toggle','modal');
                                             event.target.setAttribute('data-target','#myMsgModal');
                                             
@@ -224,7 +228,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                             	 	error(function(data){
                             	 		console.log("删除客源失败");
                             	 		  $scope.SuccessMsgShow = false;
-                                          $scope.returnErrorMsg = 'Sorry,Error happend in Ajax Posting.';
+                                          $scope.returnErrorMsg = '删除失败';
                                           event.target.setAttribute('data-toggle','modal');
                                           event.target.setAttribute('data-target','#myMsgModal');
                             	 	})
@@ -384,6 +388,12 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                             	$http.post(window.location.origin+'/employee-manage/admin/updatecustomer',postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
                             		success(function(data){
                             			console.log("客源修改成功");
+                            			$('#myeditCoustomerModal').modal('hide');
+                                        $scope.SuccessMsgShow = true;
+                                        $scope.returnSuccessMsg = '客源修改成功';
+                                        event.target.setAttribute('data-toggle','modal');
+                                        event.target.setAttribute('data-target','#myMsgModal');
+                            			
                             		}).
                             		error(function(data){
                             			console.log("客源修改失败");

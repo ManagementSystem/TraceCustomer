@@ -301,12 +301,24 @@
 									<input ng-model="editCarObject.carDecoration" type="text" class="form-control" placeholder="请填入内饰">
 								</div>
 							</div>
+							<!-- 
 							<div class="form-group">
 								<label class="col-md-4 control-label">
 									具体车型：
 								</label>
 								<div class="col-md-8">
 									<input ng-model="editCarObject.carTypeRecord" type="text" class="form-control" placeholder="请填入配置要求">
+								</div>
+							</div> -->
+							
+							<div class="form-group">
+							<label class="col-md-4 control-label">
+								车型要求：
+							</label>
+							<div class="col-md-8">
+							<select class="form-control" ng-model="editCarObject.carTypeRecord">
+		                    	<option ng-repeat="item in editTypeOptionsForCar">{{item.brand}}{{item.type}}</option>
+		                    </select>
 								</div>
 							</div>
 							<div class="form-group">
@@ -408,11 +420,7 @@
 									地区：
 								</label>
 								<div class="col-md-9" ng-init="Region=['东区','南区','西区','北区']">
-								<!-- <div class="col-md-9" ng-init="reg=['东区','南区','西区','北区']">
-									<select ng-model="customerObjects.region" class="form-control">
-										<option ng-repeat="item in reg">{{item}}</option>
-									</select>
-								</div> -->
+								
 								<select ng-model="editCustomerObject.region" class="form-control input-sm">
 									<option ng-repeat="item in Region">{{item}}</option>
 								</select>
@@ -424,8 +432,7 @@
 							</label>
 							<div class="col-md-9">
 							<select class="form-control" ng-model="editCustomerObject.carTypeRecord">
-								<option selected="selected" value={{editCustomerObject.carTypeRecord}}>{{editCustomerObject.carTypeRecord}}</option>
-		                    	<option ng-repeat="item in editTypeOptions" value={{item.brand}}{{item.type}}>{{item.brand}}{{item.type}}</option>
+		                    	<option ng-repeat="item in editTypeOptions">{{item.brand}}{{item.type}}</option>
 		                    </select>
 						</div>
 					</div>
@@ -547,24 +554,32 @@
 <h4 class="modal-title" id="myDelModalLabelTitle">详细</h4>
 </div>
 <div class="modal-body">
-<div><strong>区域:</strong>  {{carSourceDetail.region}}</div>
-<div><strong>城市:</strong>  {{carSourceDetail.city}}</div>
-<div><strong>店名:</strong>  {{carSourceDetail.shopName}}</div>
-<div><strong>大客户经理:</strong>  {{carSourceDetail.customerManager}}</div>
-<div><strong>大客户经理电话:</strong>  {{carSourceDetail.customerManagerTel}}</div>
-<div><strong>微信:</strong>  {{carSourceDetail.wechat}}</div>
-<div><strong>销售经理:</strong>  {{carSourceDetail.saleManager}}</div>
-<div><strong>销售经理电话:</strong>  {{carSourceDetail.saleManagerTel}}</div>
-<div><strong>类型:</strong>  {{carSourceDetail.type}}</div>
-<div><strong>负责人:</strong>  {{carSourceDetail.principal}}</div>
-<div><strong>具体车型:</strong>  {{carSourceDetail.carTypeRecord}}</div>
-<div><strong>配置:</strong>  {{carSourceDetail.configuration}}</div>
-<div><strong>颜色:</strong>  {{carSourceDetail.carColor}}</div>
-<div><strong>内饰:</strong>  {{carSourceDetail.carDecoration}}</div>
-<div><strong>生产日期:</strong>  {{carSourceDetail.productDate | date:"yyyy/MM/dd"}}</div>
-<div><strong>可售区域:</strong>  {{carSourceDetail.saleRegion}}</div>
-<div><strong>价格:</strong>  {{carSourceDetail.price}}</div>
-<div><strong>置顶:</strong>  {{carSourceDetail.isTop}}</div>
+<div class="row">
+	<div class="col-md-6">
+		<div><strong>区域:</strong>   {{carSourceDetail.region}}</div>
+		<div><strong>城市:</strong>   {{carSourceDetail.city}}</div>
+		<div><strong>店名:</strong>   {{carSourceDetail.shopName}}</div>
+		<div><strong>大客户经理:</strong>   {{carSourceDetail.customerManager}}</div>
+		<div><strong>大客户经理电话:</strong>   {{carSourceDetail.customerManagerTel}}</div>
+		<div><strong>微信:</strong>   {{carSourceDetail.wechat}}</div>
+		<div><strong>销售经理:</strong>   {{carSourceDetail.saleManager}}</div>
+		<div><strong>销售经理电话:</strong>   {{carSourceDetail.saleManagerTel}}</div>
+		<div><strong>类型:</strong>   {{carSourceDetail.type}}</div>
+	</div>
+	<div class="col-md-6">
+		<div><strong>负责人:</strong>   {{carSourceDetail.principal}}</div>
+		<div><strong>具体车型:</strong>   {{carSourceDetail.carTypeRecord}}</div>
+		<div><strong>配置:</strong>   {{carSourceDetail.configuration}}</div>
+		<div><strong>颜色:</strong>   {{carSourceDetail.carColor}}</div>
+		<div><strong>内饰:</strong>   {{carSourceDetail.carDecoration}}</div>
+		<div><strong>生产日期:</strong>   {{carSourceDetail.productDate | date:"yyyy/MM/dd"}}</div>
+		<div><strong>可售区域:</strong>   {{carSourceDetail.saleRegion}}</div>
+		<div><strong>价格:</strong>   {{carSourceDetail.price}}</div>
+		<div><strong>置顶:</strong>   {{carSourceDetail.isTop}}</div>
+	</div>
+</div>
+
+
 <div id="remarks"><strong>回访记录:</strong>
 <button type="button" ng-click="addCarReMarksRow($event)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 </div>
@@ -634,8 +649,7 @@
 </div>
 </div>
 <div class="modal-footer">
-<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-<button type="button" class="btn btn-primary">确定</button>
+<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
 </div>
 </div>
 </div>
@@ -649,22 +663,28 @@
 <h4 class="modal-title" id="myDelModalLabelTitle">提示</h4>
 </div>
 <div class="modal-body">
-<div><strong>客户类型:</strong>  {{coustomerSourceDetail.customerType}}</div>
-<div><strong>姓名:</strong>  {{coustomerSourceDetail.name}}</div>
-<div><strong>性别:</strong>  {{coustomerSourceDetail.sex}}</div>
-<div><strong>联系电话:</strong>  {{coustomerSourceDetail.phone}}</div>
-<div><strong>地区:</strong>  {{coustomerSourceDetail.region}}</div>
-<div><strong>车型要求:</strong>  {{coustomerSourceDetail.carTypeRecord}}</div>
-<div><strong>配置:</strong>  {{coustomerSourceDetail.configuration}}</div>
-<div><strong>购车款区间:</strong>  {{coustomerSourceDetail.budgetRange}}</div>
-<div><strong>颜色:</strong>  {{coustomerSourceDetail.carColor}}</div>
-<div><strong>内饰:</strong>  {{coustomerSourceDetail.carDecoration}}</div>
-<div><strong>按揭:</strong>  {{coustomerSourceDetail.installment}}</div>
-<div><strong>保险:</strong>  {{coustomerSourceDetail.insurance}}</div>
-<div><strong>客户登记:</strong>  {{coustomerSourceDetail.level}}</div>
-<div><strong>公客/私客:</strong>  {{coustomerSourceDetail.ispublic}}</div>
-<div><strong>导入时间:</strong>  {{coustomerSourceDetail.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</div>
-<div><strong>置顶:</strong>  {{coustomerSourceDetail.isTop}}</div>
+<div class="row">
+	<div class="col-md-6">
+		<div><strong>客户类型:</strong>  {{coustomerSourceDetail.customerType}}</div>
+		<div><strong>姓名:</strong>  {{coustomerSourceDetail.name}}</div>
+		<div><strong>性别:</strong>  {{coustomerSourceDetail.sex}}</div>
+		<div><strong>联系电话:</strong>  {{coustomerSourceDetail.phone}}</div>
+		<div><strong>地区:</strong>  {{coustomerSourceDetail.region}}</div>
+		<div><strong>车型要求:</strong>  {{coustomerSourceDetail.carTypeRecord}}</div>
+		<div><strong>配置:</strong>  {{coustomerSourceDetail.configuration}}</div>
+		<div><strong>购车款区间:</strong>  {{coustomerSourceDetail.budgetRange}}</div>
+		<div><strong>颜色:</strong>  {{coustomerSourceDetail.carColor}}</div>
+	</div>
+	<div class="col-md-6">
+		<div><strong>内饰:</strong>  {{coustomerSourceDetail.carDecoration}}</div>
+		<div><strong>按揭:</strong>  {{coustomerSourceDetail.installment}}</div>
+		<div><strong>保险:</strong>  {{coustomerSourceDetail.insurance}}</div>
+		<div><strong>客户登记:</strong>  {{coustomerSourceDetail.level}}</div>
+		<div><strong>公客/私客:</strong>  {{coustomerSourceDetail.ispublic}}</div>
+		<div><strong>导入时间:</strong>  {{coustomerSourceDetail.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</div>
+		<div><strong>置顶:</strong>  {{coustomerSourceDetail.isTop}}</div>
+	</div>
+</div>
 <div id="remarks"><strong>回访记录:</strong>
 <button type="button" ng-click="addCoustomerReMarksRow($event)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-plus"></i> 新增</button>
 </div>

@@ -204,10 +204,29 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                             	 //客源删除
                             	 $http.get(window.location.origin+'/employee-manage/admin/delcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:{id:$scope.delCoustomerId}}).
                             	 	success(function(data){
-                            	 		console.log("Del customer Success!");
+                            	 		if(data == "success"){
+                                            console.log("Del Success!");
+                                            $scope.SuccessMsgShow = true;
+                                            $scope.returnSuccessMsg = 'Good job,Well done.';
+                                            event.target.setAttribute('data-toggle','modal');
+                                            event.target.setAttribute('data-target','#myMsgModal');
+                                            reGetDatas();
+                                            $('#myDelModal').modal('hide');
+                                        }else{
+                                            console.log("Del Faild");
+                                            $scope.SuccessMsgShow = false;
+                                            $scope.returnErrorMsg = 'Sorry,Error happend.';
+                                            event.target.setAttribute('data-toggle','modal');
+                                            event.target.setAttribute('data-target','#myMsgModal');
+                                            
+                                        }
                             	 	}).
                             	 	error(function(data){
                             	 		console.log("Del customer Fail!");
+                            	 		  $scope.SuccessMsgShow = false;
+                                          $scope.returnErrorMsg = 'Sorry,Error happend in Ajax Posting.';
+                                          event.target.setAttribute('data-toggle','modal');
+                                          event.target.setAttribute('data-target','#myMsgModal');
                             	 	})
                              }
                             

@@ -80,7 +80,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="item in formDataResult">
-				<td>{{item.isTop}}</td>
+				<td>{{item.isTop | topOrNot}}</td>
 				<td>{{item.region}}</td>
 				<td>{{item.city}}</td>
 				<td>{{item.shopName}}</td>
@@ -142,8 +142,8 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="item in formDataResultForCustomer">
-				<td>{{item.isTop}}</td>
-				<td>{{item.customerType}}</td>
+				<td>{{item.isTop | topOrNot}}</td>
+				<td>{{item.customerType | customerType}}</td>
 				<td>{{item.name}}</td>
 				<td>{{item.sex}}</td>
 				<td>{{item.phone}}</td>
@@ -151,7 +151,7 @@
 				<td>{{item.budgetRange}}</td>
 				<td>{{item.carTypeRecord}}</td>
 				<td>{{item.level}}</td>
-				<td>{{item.ispublic}}</td>
+				<td>{{item.ispublic | publicOrNot}}</td>
 				<td>
 					<button type="button" ng-click="detailCoustomerItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
 					<button type="button" ng-click="editCoustomerItem($index,$event)" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-pencil"></i> 编辑</button>
@@ -166,7 +166,7 @@
 			<div class="input-group">
 				<div class="input-group-addon">每页条数</div>
 				<select ng-model="paginationConfForCustomer.itemsPerPage" class="form-control" title="每页条目数"
-					ng-options="pageSize for pageSize in [5,10,20,30]">
+					ng-options="pageSize for pageSize in [10,20,30]">
 				</select>
 			</div>
 			
@@ -374,8 +374,8 @@
 									客户类型：
 								</label>
 								<div class="col-md-9">
-									<input ng-model="editCustomerObject.customerType" type="radio" name="customerType" value="1"><label>直接客户</label>
-									<input ng-model="editCustomerObject.customerType" type="radio" name="customerType" value="2"><label>渠道客户</label>
+									<input ng-model="editCustomerObject.customerType" type="radio" name="customerType" value="直接客户"><label>直接客户</label>
+									<input ng-model="editCustomerObject.customerType" type="radio" name="customerType" value="渠道客户"><label>渠道客户</label>
 								</div>
 							</div>
 							<div class="form-group">
@@ -407,7 +407,7 @@
 								<label class="col-md-3 control-label">
 									地区：
 								</label>
-								<div class="col-md-9" ng-init="Region=['东','南','西','北']">
+								<div class="col-md-9" ng-init="Region=['东区','南区','西区','北区']">
 								<!-- <div class="col-md-9" ng-init="reg=['东区','南区','西区','北区']">
 									<select ng-model="customerObjects.region" class="form-control">
 										<option ng-repeat="item in reg">{{item}}</option>
@@ -423,8 +423,9 @@
 								车型要求：
 							</label>
 							<div class="col-md-9">
-							<select class="form-control" ng-model="editCustomerObject.carTypeId">
-		                    	<option ng-repeat="item in editTypeOptions" value={{item.id}}>{{item.brand}} {{item.type}}</option>
+							<select class="form-control" ng-model="editCustomerObject.carTypeRecord">
+								<option selected="selected" value={{editCustomerObject.carTypeRecord}}>{{editCustomerObject.carTypeRecord}}</option>
+		                    	<option ng-repeat="item in editTypeOptions" value={{item.brand}}{{item.type}}>{{item.brand}}{{item.type}}</option>
 		                    </select>
 						</div>
 					</div>
@@ -445,7 +446,7 @@
 				<label class="col-md-3 control-label">
 					预算区间：
 				</label>
-				<div class="col-md-9" ng-init="BudgetRange=['5W-10W','10W-15W','15W-20W','20W-30W','30W-40W','40W-60W','60W-80W','80W-100W']">
+				<div class="col-md-9" ng-init="BudgetRange=['5万-10万','10万-15万','15万-20万','20万-30万','30万-40万','40万-60万','60万-80万','80万-100万']">
 				<select class="form-control" ng-model="editCustomerObject.budgetRange">
 					<option ng-repeat="item in BudgetRange">{{item}}</option>
 				</select>

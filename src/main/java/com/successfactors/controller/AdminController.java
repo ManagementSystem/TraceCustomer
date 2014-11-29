@@ -120,7 +120,7 @@ public class AdminController extends BaseController{
 	
 	@RequestMapping(value="/getcustomer",method=RequestMethod.POST)
 	@ResponseBody
-	public ReturnValue getCustomerData(Map<String, String> conditions){
+	public ReturnValue getCustomerData(@RequestBody Map<String, String> conditions){
 		return customerService.getCustomerData(conditions);
 	}
 	

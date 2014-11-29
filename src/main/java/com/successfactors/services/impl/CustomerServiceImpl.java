@@ -178,7 +178,9 @@ public class CustomerServiceImpl implements CustomerService {
 		if (customer.getId() == null) {
 			return ReturnValueConstants.RETURN_ERROR;
 		}
+		
 		try {
+			customerDao.clear();
 			customerDao.update(customer);
 		} catch (Exception ex) {
 			return ReturnValueConstants.RETURN_ERROR;

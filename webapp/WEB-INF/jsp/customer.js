@@ -229,7 +229,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                         	  var postData = {
                         			'customerid':id  
                         	  }
-                        	  $http.get(window.location.origin+'/employee-manage/admin/getcustomerremarks',{params:postData}).
+                        	  $http.get(window.location.origin+'/employee-manage/user/getcustomerremarks',{params:postData}).
                         	  success(function(data){
                         		  if(data.returnState = "success"){
                         			  $scope.coumosterRemarkItems = data.returnData.item;
@@ -244,7 +244,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                         	  var postData = {
                         			'carid':id  
                         	  }
-                        	  $http.get(window.location.origin+'/employee-manage/admin/getcarremarks',{params:postData}).
+                        	  $http.get(window.location.origin+'/employee-manage/user/getcarremarks',{params:postData}).
                         	  success(function(data){
                         		  if(data.returnState = "success"){
                         			  $scope.carRemarkItems = data.returnData.item;
@@ -282,7 +282,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                            		 event.target.setAttribute('data-toggle','modal');
                                  	 event.target.setAttribute('data-target','#myMsgModal');
                            	 };
-                        	 $http.post(window.location.origin+'/employee-manage/admin/addcustomerremark',postData).success(function(data){
+                        	 $http.post(window.location.origin+'/employee-manage/user/addcustomerremark',postData).success(function(data){
                         		if(data == 'success'){
                         			//提示成功信息
                         			$scope.SuccessMsgShow = true;
@@ -314,7 +314,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                            		 event.target.setAttribute('data-toggle','modal');
                                  event.target.setAttribute('data-target','#myMsgModal');
                            	 };
-                        	 $http.post(window.location.origin+'/employee-manage/admin/addcarremark',postData).success(function(data){
+                        	 $http.post(window.location.origin+'/employee-manage/user/addcarremark',postData).success(function(data){
                         		if(data == 'success'){
                         			//提示成功信息
                         			$scope.SuccessMsgShow = true;
@@ -357,7 +357,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                                          currentPage: $scope.paginationConf.currentPage,
                                          itemsPerPage: $scope.paginationConf.itemsPerPage
                                      };
-                            	 $http.get(window.location.origin+'/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                            	 $http.get(window.location.origin+'/employee-manage/customer/getcar',postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
                             		 $scope.ajaxMsg ="Get CarSource Data Success!";
                             		 $scope.dataStore = dataStore = data.returnData.item;
                                      $scope.formDataResult = data.returnData.item;
@@ -370,7 +370,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                                          currentPage: $scope.paginationConfForCustomer.currentPage,
                                          itemsPerPage: $scope.paginationConfForCustomer.itemsPerPage
                                      };
-                            	 $http.get(window.location.origin+'/employee-manage/admin/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                            	 $http.post(window.location.origin+'/employee-manage/customer/getcustomer',postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
                                      if(data.returnState == "success"){
                                     	 $scope.ajaxMsg ="Get CustomerSource Data Success!";
                                     	 $scope.dataStoreForCustomer = dataStoreForCustomer = data.returnData.item;
@@ -392,14 +392,14 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                         $scope.searchGridData = function(event){
                         	if($scope.CarShow){
                         		var postData = $scope.carSourceSearch;
-                        		$http.get(window.location.origin+'/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                        		$http.get(window.location.origin+'/employee-manage/customer/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
                         			console.log("SearchSuccess!");
                                  }).error(function(data){
                                 	 console.log("Faild!");
                                  });
                         	}else{
                         		var postData = $scope.customerSearch;
-                        		$http.get(window.location.origin+'/employee-manage/admin/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
+                        		$http.get(window.location.origin+'/employee-manage/customer/getcustomer',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
                         			console.log("SearchSuccess!");
                                  }).error(function(data){
                                 	 console.log("Faild!");
@@ -415,7 +415,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                         $scope.searchGridData = function(event){
                         	if($scope.CarShow){
                         		//搜索车源
-                        		$http.post(window.location.origin+'/employee-manage/admin/querycar',$scope.carSourceSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
+                        		$http.post(window.location.origin+'/employee-manage/customer/querycar',$scope.carSourceSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
                         		success(function(data){
                         			if(data.returnState == "success"){
                         				$scope.dataStore = dataStore = data.returnData.item;
@@ -434,7 +434,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                         		});
                         	}else{
                         		//搜索客源
-                        		$http.post(window.location.origin+'/employee-manage/admin/querycustomer',$scope.customerSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
+                        		$http.post(window.location.origin+'/employee-manage/customer/querycustomer',$scope.customerSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
                         		success(function(data){
                         			if(data.returnState == "success"){
                         				 $scope.dataStoreForCustomer = dataStoreForCustomer = data.returnData.item;
@@ -493,7 +493,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
               };
 
 //        	  车型
-        	  $http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
+        	  $http.get(window.location.origin+'/employee-manage/user/getcartype').success(function(data){
                   $scope.TypeOptions = data;
                });
         	  
@@ -509,7 +509,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
         	  $scope.addCustomer = function(){
         		 
         		  var postData = $scope.customerObjects;
-        		  $http.post(window.location.origin+"/employee-manage/admin/createcustomer",postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
+        		  $http.post(window.location.origin+"/employee-manage/customer/createcustomer",postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
         			  if(data == "success"){
         				  console.log("Save success!");
         			  }else{
@@ -624,7 +624,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                   
                   
 //                  车型
-            	  $http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
+            	  $http.get(window.location.origin+'/employee-manage/user/getcartype').success(function(data){
                       $scope.TypeOptions = data;
                    });
 
@@ -688,7 +688,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                 	  $scope.addCarObject.productDate = $scope.dt.format( "yyyy-MM-dd" );
                 	  var postData = $scope.addCarObject;
                 	  
-                	  $http.post(window.location.origin+"/employee-manage/admin/createcar",postData).success(function(data){
+                	  $http.post(window.location.origin+"/employee-manage/customer/createcar",postData).success(function(data){
                   		if(data == "success"){
                   			console.log(data);
 //                  			reGetCarTypeDatas();
@@ -734,7 +734,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                     }else if($scope.addCartTypeConfig.type == ""){
                     	$scope.notNullType = false;
                     }else{
-                    	$http.post(window.location.origin+"/employee-manage/admin/createcartype",postData).success(function(data){
+                    	$http.post(window.location.origin+"/employee-manage/customer/createcartype",postData).success(function(data){
                     		if(data == "success"){
                     			reGetCarTypeDatas();
                     			$scope.addCartTypeConfig = {
@@ -752,7 +752,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                 //获取Grid数据方法
                 var reGetCarTypeDatas = function(){
                 	
-                    $http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
+                    $http.get(window.location.origin+'/employee-manage/user/getcartype').success(function(data){
                     $scope.dataStore = dataStore = data;
                     $scope.carTypeResult = data;
                  });
@@ -790,7 +790,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                                      	showMsg(event);
                             		}else{
 //                            			提交文件
-                            			$http.post(window.location.origin+'/employee-manage/admin/carupload',formData,
+                            			$http.post(window.location.origin+'/employee-manage/custumer/carupload',formData,
                             			{
                             	            transformRequest: angular.identity,
                             	            headers: {'Content-Type': undefined}

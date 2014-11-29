@@ -231,7 +231,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         	  var postData = {
                         			'customerid':id  
                         	  }
-                        	  $http.get(window.location.origin+'/employee-manage/admin/getcustomerremarks',{params:postData}).
+                        	  $http.get(window.location.origin+'/employee-manage/user/getcustomerremarks',{params:postData}).
                         	  success(function(data){
                         		  if(data.returnState = "success"){
                         			  $scope.coumosterRemarkItems = data.returnData.item;
@@ -246,7 +246,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         	  var postData = {
                         			'carid':id  
                         	  }
-                        	  $http.get(window.location.origin+'/employee-manage/admin/getcarremarks',{params:postData}).
+                        	  $http.get(window.location.origin+'/employee-manage/user/getcarremarks',{params:postData}).
                         	  success(function(data){
                         		  if(data.returnState = "success"){
                         			  $scope.carRemarkItems = data.returnData.item;
@@ -284,7 +284,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                            		 event.target.setAttribute('data-toggle','modal');
                                  	 event.target.setAttribute('data-target','#myMsgModal');
                            	 };
-                        	 $http.post(window.location.origin+'/employee-manage/admin/addcustomerremark',postData).success(function(data){
+                        	 $http.post(window.location.origin+'/employee-manage/user/addcustomerremark',postData).success(function(data){
                         		if(data == 'success'){
                         			//提示成功信息
                         			$scope.SuccessMsgShow = true;
@@ -316,7 +316,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                            		 event.target.setAttribute('data-toggle','modal');
                                  event.target.setAttribute('data-target','#myMsgModal');
                            	 };
-                        	 $http.post(window.location.origin+'/employee-manage/admin/addcarremark',postData).success(function(data){
+                        	 $http.post(window.location.origin+'/employee-manage/user/addcarremark',postData).success(function(data){
                         		if(data == 'success'){
                         			//提示成功信息
                         			$scope.SuccessMsgShow = true;

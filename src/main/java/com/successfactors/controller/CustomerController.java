@@ -66,6 +66,7 @@ public class CustomerController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/getcar")
+	@ResponseBody
 	public ReturnValue getCar(@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage,
 							  @RequestParam(value = "itemsPerPage", required = false, defaultValue = "20") int itemsPerPage){
 		return carService.getCarsDataToCustomer(currentPage, itemsPerPage);

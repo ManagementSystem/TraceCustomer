@@ -1,58 +1,94 @@
 
 <div class="row" style="margin-bottom: 19px;">
 
-  <div class="col-md-3">
+  <div class="col-md-2">
  	<button type="button" ng-click="changeDataType($event)" class="btn btn-success btn-lg">车源信息/客源信息</button>
   </div>
-  <div class="col-md-7">
+  <div class="col-md-9">
     <div class="row" ng-show="CarShow">
       <div class="col-md-3">
-        <div class="input-group pull-right global-search">
-          <label class="input-group-addon">区域</label>
-          <input type="text" class="form-control" ng-model="carSourceSearch.region"/>
-        </div>
-      </div>
+			<div class="input-group pull-right global-search">
+				<label class="input-group-addon">区域</label>
+				<div ng-init="Region=['东区','南区','西区','北区']">
+					<select ng-model="carSourceSearch.region" class="form-control input-sm">
+						<option value="" selected="selected"></option>
+						<option ng-repeat="item in Region">{{item}}</option>
+					</select>
+				</div>
+			</div>
+		</div>
       <div class="col-md-3">
-        <div class="input-group pull-right global-search">
-        <label class="input-group-addon">配置</label>
-        <input type="text" class="form-control" ng-model="carSourceSearch.config"/>
-      </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group pull-right global-search">
-          <label class="input-group-addon">颜色</label>
-          <input type="text" class="form-control" ng-model="carSourceSearch.carColor"/>
-        </div>
-      </div>
-      <div class="col-md-3">
-       <div class="input-group pull-right global-search">
-          <label class="input-group-addon">车型</label>
-          <input type="text" class="form-control" ng-model="carSourceSearch.cartype"/>
-      </div>
-      </div>
+			<div class="input-group pull-right global-search">
+				<label class="input-group-addon">
+						配置
+					</label>
+					<div ng-init="Config=['标准','舒适','高配','豪华']">
+						<select class="form-control" ng-model="carSourceSearch.configuration">
+							<option value="" selected="selected"></option>
+							<option ng-repeat="item in Config">{{item}}</option>
+						</select>
+					</div>
+			</div>
+		</div>
+      <div class="col-md-2">
+		<div class="input-group pull-right global-search">
+			<label class="input-group-addon">颜色</label>
+			<input type="text" class="form-control" ng-model="carSourceSearch.carColor"/>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="input-group pull-right global-search">
+			<label class="input-group-addon">车型</label>
+			<div>
+				<select class="form-control" ng-model="carSourceSearch.carTypeRecord">
+                   	<option value="" selected="selected"></option>
+                   	<option ng-repeat="item in editTypeOptionsForCar">{{item.brand}}{{item.type}}</option>
+                   </select>
+                </div>
+			
+		</div>
+	</div>
     </div>
     <div class="row" ng-show="!CarShow">
+      <div class="col-md-4">
+        <div class="input-group pull-right global-search">
+         <label class="input-group-addon">车型</label>
+			<div>
+				<select class="form-control" ng-model="carSourceSearch.carTypeRecord">
+                 	<option value="" selected="selected"></option>
+                 	<option ng-repeat="item in editTypeOptionsForCar">{{item.brand}}{{item.type}}</option>
+                 </select>
+           </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group pull-right global-search">
+        <label class="input-group-addon">颜色</label>
+        <input type="text" class="form-control" ng-model="customerSearch.carColor"/>
+      </div>
+      </div>
       <div class="col-md-3">
         <div class="input-group pull-right global-search">
-          <label class="input-group-addon">姓名</label>
-          <input type="text" class="form-control" ng-model="customerSearch.name"/>
+          <label class="input-group-addon">内饰要求</label>
+          <input type="text" class="form-control" ng-model="customerSearch.carDecoration"/>
         </div>
       </div>
       <div class="col-md-3">
         <div class="input-group pull-right global-search">
-        <label class="input-group-addon">等级</label>
-        <input type="text" class="form-control" ng-model="customerSearch.level"/>
-      </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group pull-right global-search">
-          <label class="input-group-addon">公/私客</label>
-          <input type="text" class="form-control" ng-model="customerSearch.ispublic"/>
+        <label class="input-group-addon">
+			配置
+		</label>
+		<div ng-init="Config=['标准','舒适','高配','豪华']">
+			<select class="form-control" ng-model="carSourceSearch.configuration">
+				<option value="" selected="selected"></option>
+				<option ng-repeat="item in Config">{{item}}</option>
+			</select>
+		</div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-1">
     <button type="button" class="btn btn-primary" ng-click="searchGridData($event)">搜索</button>
   </div>
 </div>
@@ -82,8 +118,8 @@
     	</tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResultForSupply">
-    		<td>{{item.isTop}}</td>
+    	<tr ng-repeat="item in formDataResultForSupply" style="background-color: {{item.isTop | importColor}}">
+    		<td>{{item.isTop | topOrNot}}</td>
     		<td>{{item.region}}</td>
     		<td>{{item.city}}</td>
     		<td>{{item.shopName}}</td>
@@ -115,9 +151,9 @@
   </div>
   <div class="col-md-3">
     <div class="input-group">
-      <div class="input-group-addon">GoTo</div>
+      <div class="input-group-addon">跳转到</div>
       <input class="form-control" type="number" ng-model='paginationConf.currentPage' min='1' max='{{numPages}}'>
-      <div class="input-group-addon">Page: {{paginationConf.currentPage}} / {{numPages}}</div>
+      <div class="input-group-addon">页: {{paginationConf.currentPage}} / {{numPages}}</div>
     </div>
   </div>
 </div>
@@ -127,40 +163,27 @@
     <table class="table table-bordered table-hover table-condensed">
     <thead>
     	<tr>
-    		<th>客户类型</th>
-    		<th>姓名</th>
-    		<th>性别</th>
-    		<th>联系方式</th>
-    		<th>区域</th>
+    		<th>置顶</th>
+    		<th>车型</th>
     		<th>购车预算</th>
-    		<th>客户等级</th>
     		<th>颜色要求</th>
     		<th>装饰要求</th>
     		<th>配置</th>
-    		<th>公/私客</th>
-    		<th>置顶</th>
-    		
-        <th style="width:63px;">操作</th>
+    		       <!--  <th style="width:63px;">操作</th> -->
     	</tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResultForSupplyForCustomer">
-    		<td>{{item.customerType}}</td>
-    		<td>{{item.name}}</td>
-    		<td>{{item.sex}}</td>
-    		<td>{{item.phone}}</td>
-    		<td>{{item.region}}</td>
+    	<tr ng-repeat="item in formDataResultForSupplyForCustomer" style="background-color: {{item.isTop | importColor}}">
+    		<td>{{item.isTop | topOrNot}}</td>
+    		<td>{{item.carTypeRecord}}</td>
     		<td>{{item.budgetRange}}</td>
-    		<td>{{item.level}}</td>
     		<td>{{item.carColor}}</td>
     		<td>{{item.decoration}}</td>
     		<td>{{item.configuration}}</td>
-    		<td>{{item.ispublic}}</td>
-    		<td>{{item.isTop}}</td>
-        <td>
+    	<!-- 	        <td>
          <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
        
-        </td>
+        </td> -->
     	</tr>
     </tbody>
 	</table>
@@ -168,20 +191,20 @@
   <div class="col-md-2">
   <div class="input-group">
       <div class="input-group-addon">每页条数</div>
-      <select ng-model="paginationConfForSupply.itemsPerPage" class="form-control" title="每页条目数"
-                  ng-options="pageSize for pageSize in [5,10,20,30]">
+      <select ng-model="paginationConfForCustomer.itemsPerPage" class="form-control" title="每页条目数"
+                  ng-options="pageSize for pageSize in [10,20,30]">
           </select>
     </div>
     
   </div>
   <div class="col-md-7">
-    <pagination style='margin:0px;'total-items="paginationConfForSupply.totalItems" ng-model="paginationConfForSupply.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+    <pagination style='margin:0px;'total-items="paginationConfForCustomer.totalItems" ng-model="paginationConfForCustomer.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="customerNumPages"></pagination>
   </div>
   <div class="col-md-3">
     <div class="input-group">
-      <div class="input-group-addon">GoTo</div>
-      <input class="form-control" type="number" ng-model='paginationConf.currentPage' min='1' max='{{numPages}}'>
-      <div class="input-group-addon">Page: {{paginationConf.currentPage}} / {{numPages}}</div>
+      <div class="input-group-addon">跳转到</div>
+      <input class="form-control" type="number" ng-model='paginationConfForCustomer.currentPage' min='1' max='{{customerNumPages}}'>
+      <div class="input-group-addon">页: {{paginationConfForCustomer.currentPage}} / {{customerNumPages}}</div>
     </div>
   </div>
 </div>
@@ -294,7 +317,7 @@
 </div>
 
 <!-- 详细数据dialog(客源) -->
-<div class="modal fade bs-example-modal-sm" id="myCustomerDetailModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
+<!-- <div class="modal fade bs-example-modal-sm" id="myCustomerDetailModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -366,7 +389,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- 提示信息弹出框 -->
 <div class="modal fade bs-example-modal-sm" id="myMsgModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">

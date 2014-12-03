@@ -12,7 +12,7 @@ public interface CarService {
 	
 	public String addCar(CarVO carVO);
 	
-	public ReturnValue getCarsData(int currentPage,int itemPerPage);
+//	public ReturnValue getCarsData(int currentPage,int itemPerPage);
 	
 	public ReturnValue getCars(Map<String, String> conditions);
 	
@@ -21,7 +21,7 @@ public interface CarService {
 	
 	public String importCars(MultipartFile mFile,String path,String suffix,String operator);
 	
-	public ReturnValue getCarsDataToCustomer(int currentPage, int itemPerPage);
+	public ReturnValue getCarsDataToCustomer(Map<String, String> conditions);
 	
 	public String delCar(Long id);
 	

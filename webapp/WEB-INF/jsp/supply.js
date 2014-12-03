@@ -78,8 +78,9 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                                     	$scope.newPassWordAgain ="";
                                     	$scope.changePSWSuccess = true;
                                     	setTimeout($scope.changePSWSuccess =false,2000);
+                                    	alert("修改成功");
                         			}else{
-                        				
+                        				alert("修改失败");
                         			}
                         		}).
                         		error(function(data){
@@ -95,23 +96,33 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                     controller: function($scope, $state,$http) {
                        $scope.ReturnMsg = false;
                         $scope.CarShow = true;
+                        $scope.searchFlag = false;
 //                        切换车源还是客源
                         $scope.changeDataType = function(event){
                         	$scope.CarShow = !($scope.CarShow);
+                        	$scope.searchFlag = false;
                         };
-//                        初始化车源搜索
+//                       初始化车源搜索
                         $scope.carSourceSearch = {
-                        		'region':'',
-                        		'config':'',
-                        		'carColor':'',
-                        		'cartype':''
+                                'region':'',
+                                'configuration':'',
+                                'carColor':'',
+                                'carTypeRecord':'',
+                                'currentPage':1,
+                                'itemsPerPage': 10,
                         };
                         $scope.customerSearch = {
-                        		'name':'',
-                        		'level':'',
-                        		'ispublic':''
+                                'carTypeRecord':'',
+                                'carColor':'',
+                                'carDecoration':'',
+                                'configuration':'',
+                                'currentPage':1,
+                                'itemsPerPage': 10,
+                                
                         }
-                        
+                        $http.get(window.location.origin+'/employee-manage/user/getcartype').success(function(data){
+                            $scope.editTypeOptionsForCar = data;
+                         });
 //                        车源的数据缓存和pageBar设置
                         var dataStore;
                         var dataEditItem;
@@ -174,6 +185,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                          
 //                         确认删除
                          $scope.deleCarData = function(event){
+                        	 
                         	 if($scope.CarShow){
                             	 $http.get(window.location.origin+'/employee-manage/admin/delcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:{id:$scope.delItemId}}).success(function(data){
                                     if(data == "success"){
@@ -220,7 +232,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                          var dataEditItemForCustomer;
                          $scope.paginationConfForCustomer = {
                          		   	currentPage:1,
-                                    itemsPerPage: 5,
+                                    itemsPerPage: 10,
                                     totalItems:30
                                 };
                           $scope.maxSize = 5;
@@ -348,6 +360,15 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                              event.target.setAttribute('data-toggle','modal');
                              event.target.setAttribute('data-target','#myDelModal');
                          };
+                         //
+                         var getDatas = function(){
+                        	 if($scope.searchFlag){
+                        		 $scope.searchGridData();
+                        	 }else{
+                        		 reGetDatas();
+                        	 }
+                         };
+                         
                         //获取Grid数据方法
                         var reGetDatas = function(){
                            
@@ -358,7 +379,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                                          itemsPerPage: $scope.paginationConf.itemsPerPage
                                      };
                             	 $http.post(window.location.origin+'/employee-manage/supply/getcar',postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
-                            		 $scope.ajaxMsg ="Get CarSource Data Success!";
+                            		 $scope.ajaxMsg ="成功获取数据!";
                             		 $scope.dataStore = dataStore = data.returnData.item;
                                      $scope.formDataResultForSupply = data.returnData.item;
                                      $scope.paginationConf.currentPage = data.returnData.currentPage;
@@ -372,7 +393,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                                      };
                             	 $http.post(window.location.origin+'/employee-manage/supply/getcustomer',postData,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).success(function(data){
                                      if(data.returnState == "success"){
-                                    	 $scope.ajaxMsg ="Get CustomerSource Data Success!";
+                                    	 $scope.ajaxMsg ="成功获取数据!";
                                     	 $scope.dataStoreForCustomer = dataStoreForCustomer = data.returnData.item;
                                          $scope.formDataResultForSupplyForCustomer = data.returnData.item;
                                          $scope.paginationConfForCustomer.currentPage = data.returnData.currentPage;
@@ -389,7 +410,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                         };
                         
 //                        搜索方法
-                        $scope.searchGridData = function(event){
+                       /* $scope.searchGridData = function(event){
                         	if($scope.CarShow){
                         		var postData = $scope.carSourceSearch;
                         		$http.get(window.location.origin+'/employee-manage/admin/getcar',{headers:{"Content-Type":"application/json;charset=UTF-8"},params:postData}).success(function(data){
@@ -405,19 +426,22 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                                 	 console.log("Faild!");
                                  });
                         	}
-                        };
+                        };*/
                         
                         
                         //监听当前页面和每页条数来获取grid数据
-                        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage + CarShow +paginationConfForCustomer.currentPage + paginationConfForCustomer.itemsPerPage', reGetDatas);
+                        $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage + CarShow +paginationConfForCustomer.currentPage + paginationConfForCustomer.itemsPerPage', getDatas);
 
                         //搜索功能
                         $scope.searchGridData = function(event){
                         	if($scope.CarShow){
                         		//搜索车源
-                        		$http.post(window.location.origin+'/employee-manage/admin/querycar',$scope.carSourceSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
+                        		$scope.carSourceSearch.currentPage = $scope.paginationConf.currentPage;
+                            	$scope.carSourceSearch.itemsPerPage = $scope.paginationConf.itemsPerPage;
+                        		$http.post(window.location.origin+'/employee-manage/supply/querycar',$scope.carSourceSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
                         		success(function(data){
                         			if(data.returnState == "success"){
+                        				$scope.searchFlag = true;
                         				$scope.dataStore = dataStore = data.returnData.item;
                                         $scope.formDataResultForSupply = data.returnData.item;
                                         $scope.paginationConf.currentPage = data.returnData.currentPage;
@@ -434,9 +458,12 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                         		});
                         	}else{
                         		//搜索客源
-                        		$http.post(window.location.origin+'/employee-manage/admin/querycustomer',$scope.customerSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
+                        		$scope.customerSearch.currentPage = $scope.paginationConfForCustomer.currentPage;
+                            	$scope.customerSearch.itemsPerPage = $scope.paginationConfForCustomer.itemsPerPage;
+                        		$http.post(window.location.origin+'/employee-manage/supply/querycustomer',$scope.customerSearch,{headers:{"Content-Type":"application/json;charset=UTF-8"}}).
                         		success(function(data){
                         			if(data.returnState == "success"){
+                        				$scope.searchFlag = true;
                         				 $scope.dataStoreForCustomer = dataStoreForCustomer = data.returnData.item;
                                          $scope.formDataResultForSupplyForCustomer = data.returnData.item;
                                          $scope.paginationConfForCustomer.currentPage = data.returnData.currentPage;
@@ -493,7 +520,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
               };
 
 //        	  车型
-        	  $http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
+        	  $http.get(window.location.origin+'/employee-manage/user/getcartype').success(function(data){
                   $scope.TypeOptions = data;
                });
         	  
@@ -646,13 +673,13 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                   
                   //初始化各个select组件
 //                  区域
-                  $scope.areaOptions=['East','South','West','North'];
+                  $scope.areaOptions=['东区','南区','西区','北区'];
                   $scope.addCarObject.region=$scope.areaOptions[0];
 //                  类型
-                  $scope.typeOptions =['Imported','Made in China','Comprehensive'];
+                  $scope.typeOptions =['进口','国产'];
                   $scope.addCarObject.type=$scope.typeOptions[0];
 //                  可售区域
-                  $scope.saleRegionOptions=['Whole Country','Province','Small place'];
+                  $scope.saleRegionOptions=['全国','省内','小区域'];
                   $scope.addCarObject.saleRegion=$scope.saleRegionOptions[0];
                   
                   $scope.saveCarSource = function(){
@@ -690,14 +717,22 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                 	  
                 	  $http.post(window.location.origin+"/employee-manage/admin/createcar",postData).success(function(data){
                   		if(data == "success"){
-                  			console.log(data);
-//                  			reGetCarTypeDatas();
-//                  			$scope.addCartTypeConfig = {
-//                              		brand:"",
-//                              		type:""
-//                              };
+                  			if(data == "success"){
+                                console.log(data);
+                                $scope.returnSuccessMsg = "新增客源成功";
+                                $scope.SuccessMsgShow = true;
+                          	  $('#myMsgModal').modal('show');
+                            }else{
+                            	 $scope.returnErrorMsg = "新增车源失败";
+                            	  $scope.SuccessMsgShow = false;
+                            	  $('#myMsgModal').modal('show');
+                                console.log("新增车源失败");
+                            }
                   		}else{
-                  			console.log("Save Faild!");
+                  			 $scope.returnErrorMsg = "新增车源失败";
+                  			  $scope.SuccessMsgShow = false;
+                        	  $('#myMsgModal').modal('show');
+                            console.log("新增车源失败");
                   		}
                   	});
                   };
@@ -790,7 +825,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                                      	showMsg(event);
                             		}else{
 //                            			提交文件
-                            			$http.post(window.location.origin+'/employee-manage/admin/carupload',formData,
+                            			$http.post(window.location.origin+'/employee-manage/supply/carupload',formData,
                             			{
                             	            transformRequest: angular.identity,
                             	            headers: {'Content-Type': undefined}
@@ -816,184 +851,6 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                         }
                 }
             }
-        })
-        .state('supply.settings', {
-            url: '/settings',
-            views: {
-                'main@supply': {
-                    templateUrl:'jsp/view/carView/testPage/testPage.html',
-                    controller:function($scope,$state,$http){
-                    	//上传用户excel文件
-                    	$scope.upLoadUserExcelFile = function(event){
-                    		 var showMsg = function(event){
-	                    		 event.target.setAttribute('data-toggle','modal');
-	                          	 event.target.setAttribute('data-target','#myMsgModal');
-	                    	 }
-                    		 
-                       		if(event.target.parentNode.childNodes[1].files.length !=0){
-                       			var inputFile = event.target.parentNode.childNodes[1].files[0];
-                       			var formData = new FormData();
-                    			formData.append("file",inputFile);
-                           		if(!(inputFile.name.indexOf(".xls")!=-1)){
-                           			$scope.SuccessMsgShow = false;
-                                    $scope.returnErrorMsg = 'File formatter is not Support.';
-                           			showMsg(event);
-                           		}else if(inputFile.size>=4194304){//文件不超过4M
-                           			$scope.SuccessMsgShow = false;
-                                    	$scope.returnErrorMsg = 'File bigger than 4M is not Support.';
-                                    	showMsg(event);
-                           		}else{
-//                           			提交文件
-                           			$http.post('',formData,
-                                	{
-                        	            transformRequest: angular.identity,
-                        	            headers: {'Content-Type': undefined}
-                        	        }).success(function(data){
-                           				$scope.uploadSuccess = true;
-                           				$scope.SuccessMsgShow = true;
-                                    	$scope.returnSuccessMsg = 'upLoad Success!';
-                                    	showMsg(event);
-                           			}).error(function(data){
-                           				$scope.uploadFaild = true;
-                           				$scope.SuccessMsgShow = false;
-                                    	$scope.returnErrorMsg = 'Ajaxing Error';
-                                    	showMsg(event);
-                           			});
-                           		}
-                       		}else{
-                       			$scope.SuccessMsgShow = false;
-                                	$scope.returnErrorMsg = 'Please chose a file!';
-                                	showMsg(event);
-                       		}
-                    	};
-                    }
-                    }
-                }
-           
-        })
-        .state('supply.reportform', {
-            url: '/reportform',
-            views: {
-                'main@supply': {
-                    templateUrl:'jsp/view/carView/reportFormManage/reportForm.html',
-                    controller: function($scope,$state,$http){
-                  	  
-                  	  
-//                  pageBar组件
-                  	$scope.paginationConf = {
-                 		   currentPage:1,
-                            itemsPerPage: 10,
-                            totalItems:10
-                        };
-                  $scope.maxSize = 5;
-
-                  $scope.setPage = function (pageNo) {
-                    $scope.currentPage = pageNo;
-                  };
-                  	  
-                  	//日期组件
-                      $scope.today = function() {
-                            $scope.dt = new Date();
-                            $scope.dt1 = new Date();
-                      };
-                      $scope.today();
-
-                      $scope.clear = function () {
-                        $scope.dt = null;
-                        $scope.dt1 = null;
-                      };
-
-                      // Disable weekend selection
-                      $scope.disabled = function(date, mode) {
-                        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-                      };
-                      $scope.open = function($event) {
-                        $event.preventDefault();
-                        $event.stopPropagation();
-
-                        $scope.opened = true;
-                      };
-                      
-                      $scope.open1 = function($event) {
-                          $event.preventDefault();
-                          $event.stopPropagation();
-
-                          $scope.opened1 = true;
-                        };
-
-                      $scope.dateOptions = {
-                        formatYear: 'yy',
-                        startingDay: 1
-                      };
-
-                      $scope.initDate = new Date('2016-15-20');
-                      $scope.formats = ['yyyy/MM/dd'];
-                      $scope.format = $scope.formats[0];
-                      
-                      $scope.searchReport = function(){
-                    	  getRePort();
-                      };
-                      
-                      //时间formatter
-                	  Date.prototype.format = function (format) {  
-                		    /*  
-                		     * eg:format="YYYY-MM-dd hh:mm:ss";  
-                		     */   
-                		    var  o = {  
-                		        "M+"  : this .getMonth() + 1,  // month   
-                		        "d+"  : this .getDate(),  // day   
-                		        "h+"  : this .getHours(),  // hour   
-                		        "m+"  : this .getMinutes(),  // minute   
-                		        "s+"  : this .getSeconds(),  // second   
-                		        "q+"  :Math.floor(( this .getMonth() + 3) / 3),  // quarter   
-                		        "S"  : this .getMilliseconds()  
-                		    // millisecond   
-                		    }  
-                		  
-                		    if  (/(y+)/.test(format)) {  
-                		        format = format.replace(RegExp.$1, (this .getFullYear() +  "" )  
-                		                .substr(4 - RegExp.$1.length));  
-                		    }  
-                		  
-                		    for  (  var  k  in  o) {  
-                		        if  ( new  RegExp( "("  + k +  ")" ).test(format)) {  
-                		            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]  
-                		                    : ("00"  + o[k]).substr(( ""  + o[k]).length));  
-                		        }  
-                		    }  
-                		    return  format;  
-                		};
-                		$scope.report={
-                				startTime:'',
-                				endTime:'',
-                				currentPage:'',
-                				itemsPerPage:''
-                		};
-                	  $scope.report.startTime = $scope.dt.format( "yyyy-MM-dd" );
-                	  $scope.report.endTime = $scope.dt1.format( "yyyy-MM-dd" );
-                	  $scope.report.currentPage=$scope.paginationConf.currentPage;
-                  	  $scope.report.itemsPerPage=$scope.paginationConf.itemsPerPage;
-                      
-                  	  var getRePort = function(){
-                  		 $http.post(window.location.origin+'/employee-manage/admin/getreport',$scope.report).
-		                   	  success(function(data){
-		                         if(data.returnState == "success"){
-		                       	  $scope.formDataResult = data.returnData.item;
-		                         }else{
-		                         	
-		                         }
-		                       }).
-		                       error(function(data){
-		                       	
-		                       });
-                  	  	};
-                  	  getRePort();
-                  	  $scope.$watch('paginationConf.currentPage + paginationConf.itemsPerPage', getRePort);
-                  	  	
-                    }
-                    }
-                }
-           
         })
 });
 
@@ -1023,6 +880,14 @@ routerSupplyApp.filter('customerType',function(){
     	   return "直接客户";
        }else{
            return "渠道客户";
+       }
+    }
+});
+
+routerSupplyApp.filter('importColor',function(){
+    return function(field){
+       if(field == "1"){
+    	   return "#FF3333";
        }
     }
 });

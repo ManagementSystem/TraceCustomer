@@ -7,6 +7,7 @@ import javax.persistence.Column;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.successfactors.bean.Car;
 import com.successfactors.bean.CarType;
 
 public class CarVO {
@@ -262,5 +263,13 @@ public class CarVO {
 		this.carType = carType;
 	}
 	
+	public void setCarsToCustomerGroup(Car car){
+		this.isTop = car.getIsTop();
+		this.region = car.getRegion();
+		this.carTypeRecord = car.getCarTypeRecord();
+		this.configuration = car.getConfiguration();
+		this.carColor = car.getCarColor();
+		this.price = car.getPrice();
+	}
 	
 }

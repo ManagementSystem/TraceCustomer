@@ -9,6 +9,9 @@ import java.util.TreeMap;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
@@ -44,13 +47,14 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 	}
 
 	@Override
-	public Page<Customer> queryCustomer(Map<String, String> conditions) {
+	public Page<Customer> queryCustomer(Map<String, String> conditions,boolean publicFlag) {
 		// TODO Auto-generated method stub
 		Page<Customer> page = new Page<Customer>();
 		int currentPage = 0;
 		int itemPerPage = 0;
 		Criteria c = getSession().createCriteria(Customer.class);
 		Criteria countC = getSession().createCriteria(Customer.class);
+		Conjunction con = Restrictions.conjunction();
 		for (String key : conditions.keySet()) {
 			String val = conditions.get(key);
 			if(key.equals("currentPage")){
@@ -59,12 +63,26 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 				itemPerPage = Integer.parseInt(val);
 			}else{
 				if(val != null && !"".equals(val)){
-					c.add(Restrictions.like(key, "%"+val+"%"));
-					countC.add(Restrictions.like(key, "%"+val+"%"));
+					con.add(Restrictions.like(key, "%"+val+"%"));
 				}
 			}
 		}
 		
+		if(publicFlag){
+			Disjunction dis = Restrictions.disjunction();
+			dis.add(Restrictions.eq("ispublic", "1"));
+			con.add(Restrictions.eq("ispublic", "0"));
+			dis.add(con);
+			Conjunction sumCon = Restrictions.conjunction();
+			sumCon.add(dis);
+			sumCon.add(Restrictions.eq("delFlag", 0));
+			countC.add(sumCon);
+			c.add(sumCon);
+		}else{
+			con.add(Restrictions.eq("delFlag", 0));
+			c.add(con);
+			countC.add(con);
+		}
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);
@@ -84,6 +102,8 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 		int itemPerPage = 0;
 		Criteria c = getSession().createCriteria(Customer.class);
 		Criteria countC = getSession().createCriteria(Customer.class);
+		Conjunction con = Restrictions.conjunction();
+		
 		for (String key : conditions.keySet()) {
 			String val = conditions.get(key);
 			if(key.equals("currentPage")){
@@ -92,18 +112,28 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 				itemPerPage = Integer.parseInt(val);
 			}else{
 				if(val != null && !"".equals(val)){
-					c.add(Restrictions.eq(key, val));
-					countC.add(Restrictions.eq(key, val));
-					
+//					c.add(Restrictions.eq(key, val));
+//					countC.add(Restrictions.eq(key, val));
+					con.add(Restrictions.eq(key, val));
 				}
 			}
 		}
+//		con.add(Restrictions.eq("delFlag", 0));
 		if(publicFlag){
-			c.add(Restrictions.or(Restrictions.eq("ispublic", "1")));
-			countC.add(Restrictions.or(Restrictions.eq("ispublic", "1")));
+			Disjunction dis = Restrictions.disjunction();
+			dis.add(Restrictions.eq("ispublic", "1"));
+			con.add(Restrictions.eq("ispublic", "0"));
+			dis.add(con);
+			Conjunction sumCon = Restrictions.conjunction();
+			sumCon.add(dis);
+			sumCon.add(Restrictions.eq("delFlag", 0));
+			countC.add(sumCon);
+			c.add(sumCon);
+		}else{
+			con.add(Restrictions.eq("delFlag", 0));
+			c.add(con);
+			countC.add(con);
 		}
-		countC.add(Restrictions.eq("delFlag", 0));
-		c.add(Restrictions.eq("delFlag",0));
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);

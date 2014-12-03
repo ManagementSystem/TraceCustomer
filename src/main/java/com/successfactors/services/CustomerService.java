@@ -13,16 +13,17 @@ public interface CustomerService {
 	
 	public ReturnValue getCustomerData(int currentPage,int itemsPerPage);
 	
-	public ReturnValue getCustomerData(Map<String, String> conditions);
+	public ReturnValue getCustomerData(Map<String, String> conditions, boolean publicFlag);
 	
-	public ReturnValue queryCustomerData(Map<String, String> conditions);
+	public ReturnValue queryCustomerData(Map<String, String> conditions, boolean publicFlag);
 	
 	public String addCustomer(CustomerVO vo);
 	
-	public String importCustomer(MultipartFile mFile,String path,String suffix);
+	public String importCustomer(MultipartFile mFile,String path,String suffix,String userName);
 	
-	public ReturnValue getCustomerDataToCGroup(Map<String, String> conditions,boolean publicFlag);
+	public ReturnValue getCustomerDataToCarGroup(Map<String, String> conditions,boolean publicFlag);
 	
+	public ReturnValue queryCustomerDataToCarGroup(Map<String, String> conditions,boolean publicFlag);
 	public String delCustomerById(Long id);
 	
 	public String updateCustomer(Customer customer);

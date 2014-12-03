@@ -1,6 +1,7 @@
 package com.successfactors.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,10 +37,12 @@ public class UserController extends BaseController{
 	@Autowired
 	private CustomerRemarkService customerRemarkService;
 	
-	@RequestMapping(value="/modifypwd")
+	@RequestMapping(value="/modifypwd",method = RequestMethod.POST)
 	@ResponseBody
-	public ReturnValue modifyPwd(String oldPwd,String pwd,String againPwd){
-		
+	public ReturnValue modifyPwd(@RequestBody Map<String, String> data){
+		String oldPwd = data.get("oldPwd");
+		String pwd = data.get("pwd");
+		String againPwd = data.get("againPwd");
 		ReturnValue returnValue = new ReturnValue();
 		if(oldPwd == null || pwd == null || againPwd == null){
 			returnValue.setError();

@@ -2,6 +2,7 @@ package com.successfactors.services.impl;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -66,11 +67,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional
-	public ReturnValue queryCustomerData(Map<String, String> conditions) {
+	public ReturnValue queryCustomerData(Map<String, String> conditions,boolean publicFlag) {
 		// TODO Auto-generated method stub
 		ReturnValue returnValue = new ReturnValue();
 		try {
-			Page<Customer> page = customerDao.queryCustomer(conditions);
+			Page<Customer> page = customerDao.queryCustomer(conditions,publicFlag);
 			returnValue.setSuccess();
 			returnValue.setReturnData(page);
 		} catch (Exception e) {
@@ -109,7 +110,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional
-	public String importCustomer(MultipartFile mFile, String path, String suffix) {
+	public String importCustomer(MultipartFile mFile, String path, String suffix,String userName) {
 		// TODO Auto-generated method stub
 		String returnMsg = ReturnValueConstants.RETURN_ERROR;
 		if (!mFile.isEmpty()) {
@@ -123,7 +124,7 @@ public class CustomerServiceImpl implements CustomerService {
 			try {
 				InputStream is = mFile.getInputStream();
 				FileUtil.saveFile(is, filePath);
-				List<Customer> cars = ReadExcelUtil.readCustomer(filePath);
+				List<Customer> cars = ReadExcelUtil.readCustomer(filePath,userName);
 				customerDao.add(cars);
 				returnMsg = ReturnValueConstants.RETURN_SUCCESS;
 			} catch (Exception ex) {
@@ -139,22 +140,59 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional
-	public ReturnValue getCustomerDataToCGroup(Map<String, String> conditions,
+	public ReturnValue getCustomerDataToCarGroup(Map<String, String> conditions,
 			boolean publicFlag) {
 		// TODO Auto-generated method stub
 		ReturnValue returnValue = new ReturnValue();
 		try {
 			Page<Customer> page = customerDao.getCustomers(conditions,
 					publicFlag);
+			Page<CustomerVO> pageVO = customerConvertToCarGroupData(page);
 			returnValue.setSuccess();
-			returnValue.setReturnData(page);
+			returnValue.setReturnData(pageVO);
 		} catch (Exception ex) {
 			returnValue.setError();
 		}
 
 		return returnValue;
 	}
+	
+	
+	@Override
+	@Transactional
+	public ReturnValue queryCustomerDataToCarGroup(Map<String, String> conditions,
+			boolean publicFlag) {
+		// TODO Auto-generated method stub
+		ReturnValue returnValue = new ReturnValue();
+		try {
+			Page<Customer> page = customerDao.queryCustomer(conditions,
+					publicFlag);
+			Page<CustomerVO> pageVO = customerConvertToCarGroupData(page);
+			returnValue.setSuccess();
+			returnValue.setReturnData(pageVO);
+		} catch (Exception ex) {
+			returnValue.setError();
+		}
 
+		return returnValue;
+	}
+	
+	private Page<CustomerVO> customerConvertToCarGroupData(Page<Customer> page){
+		Page<CustomerVO> pageVO = new Page<>();
+		List<CustomerVO> list = new ArrayList<>();
+		for (Customer customer : page.getItem()) {
+			CustomerVO vo = new CustomerVO();
+			//customer.setCustomersToCarGroup();
+			vo.setCustomersToCarGroup(customer);
+			list.add(vo);
+		}
+		pageVO.setItem(list);
+		pageVO.setCurrentPage(page.getCurrentPage());
+		pageVO.setItemsPerPage(page.getItemsPerPage());
+		pageVO.setTotalItems(page.getTotalItems());
+		return pageVO;
+	}
+	
 	@Override
 	@Transactional
 	public String delCustomerById(Long id) {
@@ -190,11 +228,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	@Transactional
-	public ReturnValue getCustomerData(Map<String, String> conditions) {
+	public ReturnValue getCustomerData(Map<String, String> conditions,boolean publicFlag) {
 		// TODO Auto-generated method stub
 		ReturnValue returnValue = new ReturnValue();
 		try {
-			Page<Customer> page = customerDao.getCustomers(conditions, false);
+			Page<Customer> page = customerDao.getCustomers(conditions, publicFlag);
 			returnValue.setSuccess();
 			returnValue.setReturnData(page);
 		} catch (Exception e) {

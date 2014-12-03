@@ -91,13 +91,36 @@ public class Customer{
 	@Column(name="istop",nullable=true,unique=false)
 	private Integer isTop;
 	
+	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY,mappedBy="customer")
 	private Set<CustomerRemarks> remarks;
 	
 	@Column(name="del_flag",nullable=false)
 	private Integer delFlag;
 	
+	@Column(name="city",nullable=true,unique=false,length=255)
+	private String city;
 	
+	@Column(name="company",nullable=true,unique=false,length=255)
+	private String company;
+	
+	
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 	public Set<CustomerRemarks> getRemarks() {
 		return remarks;
 	}
@@ -301,5 +324,22 @@ public class Customer{
 		this.sex = vo.getSex();
 		this.configuration = vo.getConfiguration();
 		this.isTop = vo.getIsTop();
+		this.city = vo.getCity();
+		this.company = vo.getCompany();
+	}
+	
+	public void setCustomersToCarGroup(){
+		this.carType = null;
+		this.customerType = "";
+		this.importName = "";
+		this.installment = null;
+		this.insurance = null;
+		this.level = "";
+		this.name = "";
+		this.sex = "";
+		this.phone = "";
+		this.region = "";
+		this.remarks = null;
+		this.city = "";
 	}
 }

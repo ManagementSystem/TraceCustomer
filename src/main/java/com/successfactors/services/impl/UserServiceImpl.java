@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public boolean pwdIsRight(String userName, String pwd) {
 		// TODO Auto-generated method stub
 		try {
@@ -106,7 +107,7 @@ public class UserServiceImpl implements UserService {
 			if(!file.exists()){
 				file.mkdirs();
 			}
-			String filePath = path + EXCEL_DIR + USER_EXCEL_FILE + "." + suffix;
+			String filePath = path + EXCEL_DIR + USER_EXCEL_FILE + ".xls" ;
 			try{
 				InputStream is = mFile.getInputStream();
 				FileUtil.saveFile(is, filePath);

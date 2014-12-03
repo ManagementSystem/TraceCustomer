@@ -33,7 +33,7 @@ public abstract class BaseDAO<T, ID extends Serializable> implements
 	
 	protected static final int BATCH_SIZE = 100;
 	
-	@PersistenceContext(type = PersistenceContextType.EXTENDED)
+	@PersistenceContext(type = PersistenceContextType.TRANSACTION)
 	private EntityManager entityManager;
 	
 

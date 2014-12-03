@@ -2,6 +2,7 @@ package com.successfactors.services.impl;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +75,7 @@ public class CarServiceImpl implements CarService{
 	}
 
 
-	@Override
+	/*@Override
 	@Transactional
 	public ReturnValue getCarsData(int currentPage, int itemPerPage) {
 		// TODO Auto-generated method stub
@@ -88,7 +89,7 @@ public class CarServiceImpl implements CarService{
 			returnValue.setError();
 		}
 		return returnValue;
-	}
+	}*/
 
 
 	@Override
@@ -141,13 +142,14 @@ public class CarServiceImpl implements CarService{
 
 	@Override
 	@Transactional
-	public ReturnValue getCarsDataToCustomer(int currentPage, int itemPerPage) {
+	public ReturnValue getCarsDataToCustomer(Map<String, String> conditions) {
 		// TODO Auto-generated method stub
 		ReturnValue returnValue = new ReturnValue();
 		try {
-			Page<Car> page = dao.getCarToCustomer(currentPage, itemPerPage);
+			Page<Car> page = dao.getCars(conditions);
+			Page<CarVO> pageVO = convertCarsToCustomer(page);
 			returnValue.setSuccess();
-			returnValue.setReturnData(page);
+			returnValue.setReturnData(pageVO);
 		} catch (Exception e) {
 			// TODO: handle exception
 			returnValue.setError();
@@ -155,6 +157,21 @@ public class CarServiceImpl implements CarService{
 		return returnValue;
 	}
 
+	private Page<CarVO> convertCarsToCustomer(Page<Car> page){
+		Page<CarVO> pageVO = new Page<>();
+		List<CarVO> list = new ArrayList<>();
+		
+		for (Car car : page.getItem()) {
+			CarVO carvo = new CarVO();
+			carvo.setCarsToCustomerGroup(car);
+			list.add(carvo);
+		}
+		pageVO.setItem(list);
+		pageVO.setCurrentPage(page.getCurrentPage());
+		pageVO.setItemsPerPage(page.getItemsPerPage());
+		pageVO.setTotalItems(page.getTotalItems());
+		return pageVO;
+	}
 
 	@Override
 	@Transactional

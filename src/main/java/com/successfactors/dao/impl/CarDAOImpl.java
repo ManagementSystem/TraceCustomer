@@ -8,6 +8,7 @@ import javax.servlet.jsp.jstl.core.Config;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
@@ -29,6 +30,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 	Logger logger = Logger.getLogger(CarDAOImpl.class);
 
 	@Override
+	@Deprecated
 	public Page<Car> getCar(int currentPage, int itemPerPage) {
 		// TODO Auto-generated method stub
 		String hql = "from Car c order by c.price asc";
@@ -53,6 +55,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		int itemPerPage = 0;
 		Criteria c = getSession().createCriteria(Car.class);
 		Criteria countC = getSession().createCriteria(Car.class);
+		Conjunction con = Restrictions.conjunction();
 		for (String key : conditions.keySet()) {
 			String val = conditions.get(key);
 			if(key.equals("currentPage")){
@@ -61,11 +64,15 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 				itemPerPage = Integer.parseInt(val);
 			}else{
 				if(val != null && !"".equals(val)){
-					c.add(Restrictions.like(key, "%"+val+"%"));
-					countC.add(Restrictions.like(key, "%"+val+"%"));
+//					c.add(Restrictions.like(key, "%"+val+"%"));
+//					countC.add(Restrictions.like(key, "%"+val+"%"));
+					con.add(Restrictions.like(key, "%"+val+"%"));
 				}
 			}
 		}
+		con.add(Restrictions.eq("delFlag", 0));
+		c.add(con);
+		countC.add(con);
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);
@@ -80,7 +87,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 	}
 	
 	
-	public Page<Car> getCarToCustomer(int currentPage,int itemPerPage){
+	/*public Page<Car> getCarToCustomer(int currentPage,int itemPerPage){
 		String hql = "from Car c order by c.price asc";
 		Query query = getSession().createQuery(hql);
 		query.setFirstResult((currentPage - 1) * itemPerPage);
@@ -96,7 +103,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		page.setTotalItems(getCount(null));
 		return page;
 	}
-
+*/
 	@Override
 	public Page<Car> getCars(Map<String, String> conditions) {
 		// TODO Auto-generated method stub
@@ -105,6 +112,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		int itemPerPage = 0;
 		Criteria c = getSession().createCriteria(Car.class);
 		Criteria countC = getSession().createCriteria(Car.class);
+		Conjunction con = Restrictions.conjunction();
 		for (String key : conditions.keySet()) {
 			String val = conditions.get(key);
 			if(key.equals("currentPage")){
@@ -113,14 +121,13 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 				itemPerPage = Integer.parseInt(val);
 			}else{
 				if(val != null && !"".equals(val)){
-					c.add(Restrictions.eq(key, val));
-					countC.add(Restrictions.eq(key, val));
-					
+					con.add(Restrictions.eq(key, val));
 				}
 			}
 		}
-		c.add(Restrictions.eq("delFlag", 0));
-		countC.add(Restrictions.eq("delFlag", 0));
+		con.add(Restrictions.eq("delFlag", 0));
+		c.add(con);
+		countC.add(con);
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);
@@ -132,6 +139,12 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		page.setCurrentPage(currentPage);
 		page.setTotalItems(totalResult);
 		return page;
+	}
+
+	@Override
+	public Page<Car> getCarToCustomer(Map<String, String> conditions) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

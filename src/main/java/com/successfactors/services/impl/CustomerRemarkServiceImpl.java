@@ -54,6 +54,7 @@ public class CustomerRemarkServiceImpl implements CustomerRemarkService{
 
 
 	@Override
+	@Transactional
 	public ReturnValue getCustomerRemarks(Long id, int currentPage,
 			int itemsPerPage) {
 		// TODO Auto-generated method stub

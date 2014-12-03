@@ -9,7 +9,7 @@ public interface CustomerDAO extends GenericDAO<Customer, Long>{
 	
 	public Page<Customer> getCustomers(int currentPage,int itemPerPage);
 	
-	public Page<Customer> queryCustomer(Map<String, String> conditions);
+	public Page<Customer> queryCustomer(Map<String, String> conditions,boolean publicFlag);
 	
 	public Page<Customer> getCustomers(Map<String, String> conditions,boolean publicFlag);
 	

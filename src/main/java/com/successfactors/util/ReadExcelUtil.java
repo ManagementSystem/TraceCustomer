@@ -76,12 +76,14 @@ public class ReadExcelUtil {
 				}else if(j == 2){
 					if(type == CellType.NUMBER){
 						int role = Integer.parseInt(cell.getContents());
-						if( role == 0){
+						if( role == 1){
 							user.setPermission(UserAuthConstants.ROLE_ADMIN);
-						}else if(role == 1){
-							user.setPermission(UserAuthConstants.ROLE_CUSTOMER);
 						}else if(role == 2){
+							user.setPermission(UserAuthConstants.ROLE_CUSTOMER);
+						}else if(role == 3){
 							user.setPermission(UserAuthConstants.ROLE_SUPPLY);
+						}else{
+							user.setPermission(UserAuthConstants.ROLE_USER);
 						}
 					}else{
 						throw new Exception("excel is error");
@@ -177,7 +179,7 @@ public class ReadExcelUtil {
 		return list;
 	}
 	
-	public static List<Customer> readCustomer(String inputFile) throws BiffException, IOException{
+	public static List<Customer> readCustomer(String inputFile,String userName) throws BiffException, IOException{
 		File inputWorkbook = new File(inputFile);
 		Workbook w;
 		
@@ -188,7 +190,8 @@ public class ReadExcelUtil {
 			Customer customer = new Customer();
 			customer.setImportTime(new Date());
 			customer.setDelFlag(0);
-			for(int j = 0;j< 16;++j){
+			customer.setImportName(userName);
+			for(int j = 0;j< 12;++j){
 				Cell cell = sheet.getCell(j,i);
 				switch(j){
 					case 0:
@@ -207,39 +210,41 @@ public class ReadExcelUtil {
 						customer.setRegion(cell.getContents());
 						break;
 					case 5:
-						customer.setCarTypeRecord(cell.getContents());
+						customer.setCity(cell.getContents());
 						break;
 					case 6:
-						customer.setConfiguration(cell.getContents());
+						customer.setCompany(cell.getContents());
 						break;
 					case 7:
-						customer.setBudgetRange(cell.getContents());
+						customer.setCarTypeRecord(cell.getContents());
 						break;
 					case 8:
-						customer.setCarColor(cell.getContents());
-						break;
-					case 9:
-						customer.setDecoration(cell.getContents());
-						break;
-					case 10:
-						customer.setInstallment(Integer.valueOf(cell.getContents()));
-						break;
-					case 11:
-						customer.setInsurance(Integer.valueOf(cell.getContents()));
-						break;
-					case 12:
 						customer.setLevel(cell.getContents());
 						break;
-					case 13:
-						customer.setIspublic(cell.getContents());
+					case 9:
+						if(cell.getType() == CellType.LABEL)
+							if("私客".trim().equals(cell.getContents()) || "私".trim().equals(cell.getContents()))
+								customer.setIspublic("0");
+							else
+								customer.setIspublic("1");
+						else
+							customer.setIspublic(cell.getContents());
 						break;
-					case 14:
-						customer.setDealCount(Integer.valueOf(cell.getContents()));
+					case 10:
+						if(cell.getType() == CellType.LABEL ||cell.getType() == CellType.EMPTY || "".trim().equals(cell.getContents()))
+							customer.setDealCount(Integer.valueOf(0));
+						else
+							customer.setDealCount(Integer.valueOf(cell.getContents()));
 						break;
-					case 15:
-						customer.setIsTop(Integer.valueOf(cell.getContents()));
+					case 11:
+						if(cell.getType() == CellType.LABEL)
+							if("否".equals(cell.getContents()))
+								customer.setIsTop(0);
+							else
+								customer.setIsTop(1);
+						else
+							customer.setIsTop(Integer.valueOf(cell.getContents()));
 						break;
-						
 				}
 				
 			}

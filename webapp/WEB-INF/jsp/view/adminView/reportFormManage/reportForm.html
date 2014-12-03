@@ -55,20 +55,20 @@
   <div class="col-md-2">
   <div class="input-group">
       <div class="input-group-addon">每页条数</div>
-      <select ng-model="paginationConf.itemsPerPage" class="form-control" title="每页条目数"
+      <select ng-model="paginationConfForReport.itemsPerPage" class="form-control" title="每页条目数"
                   ng-options="pageSize for pageSize in [10,20,30]">
           </select>
     </div>
     
   </div>
   <div class="col-md-7">
-    <pagination style='margin:0px;'total-items="paginationConf.totalItems" ng-model="paginationConf.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+    <pagination style='margin:0px;'total-items="paginationConfForReport.totalItems" ng-model="paginationConfForReport.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
   </div>
   <div class="col-md-3">
     <div class="input-group">
       <div class="input-group-addon">GoTo</div>
       <input class="form-control" type="number" ng-model='paginationConf.currentPage' min='1' max='{{numPages}}'>
-      <div class="input-group-addon">Page: {{paginationConf.currentPage}} / {{numPages}}</div>
+      <div class="input-group-addon">Page: {{paginationConfForReport.currentPage}} / {{numPages}}</div>
     </div>
   </div>
 </div>

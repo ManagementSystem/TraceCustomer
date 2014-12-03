@@ -1,33 +1,50 @@
 
 <div class="row" style="margin-bottom: 19px;">
 
-  <div class="col-md-3">
+  <div class="col-md-2">
  	<button type="button" ng-click="changeDataType($event)" class="btn btn-success btn-lg">车源信息/客源信息</button>
   </div>
-  <div class="col-md-7">
+  <div class="col-md-9">
     <div class="row" ng-show="CarShow">
       <div class="col-md-3">
         <div class="input-group pull-right global-search">
-          <label class="input-group-addon">区域</label>
-          <input type="text" class="form-control" ng-model="carSourceSearch.region"/>
+         <label class="input-group-addon">区域</label>
+					<div ng-init="Region=['东区','南区','西区','北区']">
+						<select ng-model="carSourceSearch.region" class="form-control input-sm">
+							<option value="" selected="selected"></option>
+							<option ng-repeat="item in Region">{{item}}</option>
+						</select>
+					</div>
         </div>
       </div>
       <div class="col-md-3">
         <div class="input-group pull-right global-search">
-        <label class="input-group-addon">配置</label>
-        <input type="text" class="form-control" ng-model="carSourceSearch.config"/>
+        <label class="input-group-addon">
+			配置
+		</label>
+		<div ng-init="Config=['标准','舒适','高配','豪华']">
+			<select class="form-control" ng-model="carSourceSearch.configuration">
+				<option value="" selected="selected"></option>
+				<option ng-repeat="item in Config">{{item}}</option>
+			</select>
+		</div>
       </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <div class="input-group pull-right global-search">
           <label class="input-group-addon">颜色</label>
           <input type="text" class="form-control" ng-model="carSourceSearch.carColor"/>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
        <div class="input-group pull-right global-search">
           <label class="input-group-addon">车型</label>
-          <input type="text" class="form-control" ng-model="carSourceSearch.cartype"/>
+			<div>
+				<select class="form-control" ng-model="carSourceSearch.carTypeRecord">
+                	<option value="" selected="selected"></option>
+                	<option ng-repeat="item in editTypeOptionsForCar">{{item.brand}}{{item.type}}</option>
+                </select>
+             </div>	
       </div>
       </div>
     </div>
@@ -46,13 +63,19 @@
       </div>
       <div class="col-md-3">
         <div class="input-group pull-right global-search">
-          <label class="input-group-addon">公/私客</label>
-          <input type="text" class="form-control" ng-model="customerSearch.ispublic"/>
+         <label class="input-group-addon">公/私客</label>
+			<div>
+				<select class="form-control" ng-model="customerSearch.ispublic">
+					<option value="" selected="selected"></option>
+					<option value="0">私客</option>
+					<option value="1">公客</option>
+				</select>
+			</div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-1">
     <button type="button" class="btn btn-primary" ng-click="searchGridData($event)">搜索</button>
   </div>
 </div>
@@ -67,40 +90,26 @@
     <table class="table table-bordered table-hover table-condensed">
     <thead>
     	<tr>
-    		<th>区域</th>
-    		<th>类型</th>
-    		<th>品牌</th>
-    		<th>负责人</th>
-    		<th>客户经理</th>
-    		<th>联系方式</th>
-    		<th>配置</th>
-    		<th>颜色</th>
-    		<th>装饰</th>
-    		<th>生成日期</th>
-    		<th>价格</th>
-    		<th>可售区域</th>
     		<th>置顶</th>
-        <th style="width:63px;">操作</th>
-    	</tr>
+			<th>区域</th>
+			<th>车型</th>
+			<th>配置</th>
+			<th>颜色</th>
+			<th>价格</th>
+      <!--   <th style="width:63px;">操作</th>
+    	</tr> -->
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResult">
+    	<tr ng-repeat="item in formDataResult" style="background-color: {{item.isTop | importColor}}">
+    		<td>{{item.isTop| topOrNot}}</td>
     		<td>{{item.region}}</td>
-    		<td>{{item.type}}</td>
-    		<td>{{item.dealer}}</td>
-    		<td>{{item.principal}}</td>
-    		<td>{{item.saleManager}}</td>
-    		<td>{{item.telphone}}</td>
+    		<td>{{item.carTypeRecord}}</td>
     		<td>{{item.configuration}}</td>
     		<td>{{item.carColor}}</td>
-    		<td>{{item.carDecoration}}</td>
-    		<td>{{item.productDate | date:"yyyy/MM/dd HH:mm:ss"}}</td>
     		<td>{{item.price}}</td>
-    		<td>{{item.sealRegion}}</td>
-    		<td>{{item.isTop}}</td>
-        <td>
+       <!--  <td>
          <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
-        </td>
+        </td> -->
     	</tr>
     </tbody>
 	</table>
@@ -119,9 +128,9 @@
   </div>
   <div class="col-md-3">
     <div class="input-group">
-      <div class="input-group-addon">GoTo</div>
+      <div class="input-group-addon">跳转到</div>
       <input class="form-control" type="number" ng-model='paginationConf.currentPage' min='1' max='{{numPages}}'>
-      <div class="input-group-addon">Page: {{paginationConf.currentPage}} / {{numPages}}</div>
+      <div class="input-group-addon">页: {{paginationConf.currentPage}} / {{numPages}}</div>
     </div>
   </div>
 </div>
@@ -137,6 +146,8 @@
     		<th>性别</th>
     		<th>联系方式</th>
     		<th>地区</th>
+    		<th>城市</th>
+    		<th>公司</th>
     		<th>购车预算</th>
     		<th>车型要求</th>
     		<th>客户等级</th>
@@ -147,17 +158,19 @@
     	</tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResultForCustomer">
-    		<td>{{item.isTop}}</td>
-    		<td>{{item.customerType}}</td>
+    	<tr ng-repeat="item in formDataResultForCustomer" style="background-color: {{item.isTop | importColor}}">
+    		<td>{{item.isTop | topOrNot}}</td>
+    		<td>{{item.customerType | customerType}}</td>
     		<td>{{item.name}}</td>
     		<td>{{item.sex}}</td>
     		<td>{{item.phone}}</td>
     		<td>{{item.region}}</td>
+    		<td>{{item.city}}</td>
+    		<th>{{item.company}}</th>
     		<td>{{item.budgetRange}}</td>
     		<td>{{item.carTypeRecord}}</td>
     		<td>{{item.level}}</td>
-    		<td>{{item.ispublic}}</td>
+    		<td>{{item.ispublic | publicOrNot}}</td>
         <td>
          <button type="button" ng-click="detailCoustomerItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
         </td>
@@ -169,19 +182,19 @@
   <div class="input-group">
       <div class="input-group-addon">每页条数</div>
       <select ng-model="paginationConfForCustomer.itemsPerPage" class="form-control" title="每页条目数"
-                  ng-options="pageSize for pageSize in [5,10,20,30]">
+                  ng-options="pageSize for pageSize in [10,20,30]">
           </select>
     </div>
     
   </div>
   <div class="col-md-7">
-    <pagination style='margin:0px;'total-items="paginationConfForCustomer.totalItems" ng-model="paginationConfForCustomer.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+    <pagination style='margin:0px;'total-items="paginationConfForCustomer.totalItems" ng-model="paginationConfForCustomer.currentPage" max-size="maxSize" class="pagination" boundary-links="true" rotate="false" num-pages="customerNumPages"></pagination>
   </div>
   <div class="col-md-3">
     <div class="input-group">
-      <div class="input-group-addon">GoTo</div>
-      <input class="form-control" type="number" ng-model='paginationConf.currentPage' min='1' max='{{numPages}}'>
-      <div class="input-group-addon">Page: {{paginationConf.currentPage}} / {{numPages}}</div>
+      <div class="input-group-addon">跳转到</div>
+      <input class="form-control" type="number" ng-model='paginationConf.currentPage' min='1' max='{{customerNumPages}}'>
+      <div class="input-group-addon">页: {{paginationConfForCustomer.currentPage}} / {{customerNumPages}}</div>
     </div>
   </div>
 </div>
@@ -291,22 +304,29 @@
         <h4 class="modal-title" id="myDelModalLabelTitle">提示</h4>
       </div>
       <div class="modal-body">
-      	<div><strong>属性:</strong>  {{coustomerSourceDetail.customerType}}</div>
-      	<div><strong>姓名:</strong>  {{coustomerSourceDetail.name}}</div>
-      	<div><strong>性别:</strong>  {{coustomerSourceDetail.sex}}</div>
-        <div><strong>联系电话:</strong>  {{coustomerSourceDetail.phone}}</div>
-        <div><strong>地区:</strong>  {{coustomerSourceDetail.region}}</div>
-      	<div><strong>车型要求:</strong>  {{coustomerSourceDetail.carTypeRecord}}</div>
-        <div><strong>配置:</strong>  {{coustomerSourceDetail.configuration}}</div>
-        <div><strong>购车款区间:</strong>  {{coustomerSourceDetail.budgetRange}}</div>
-      	<div><strong>颜色:</strong>  {{coustomerSourceDetail.carColor}}</div>
-        <div><strong>内饰:</strong>  {{coustomerSourceDetail.decoration}}</div>
-        <div><strong>按揭:</strong>  {{coustomerSourceDetail.installment}}</div>
-      	<div><strong>保险:</strong>  {{coustomerSourceDetail.insurance}}</div>
-        <div><strong>客户登记:</strong>  {{coustomerSourceDetail.level}}</div>
-        <div><strong>公客/私客:</strong>  {{coustomerSourceDetail.ispublic}}</div>
-        <div><strong>导入时间:</strong>  {{coustomerSourceDetail.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</div>
-        <div><strong>置顶:</strong>  {{coustomerSourceDetail.isTop}}</div>
+       <div class="row">
+       	<div class="col-md-6">
+	      	<div><strong>属性:</strong>  {{coustomerSourceDetail.customerType |customerType}}</div>
+	      	<div><strong>姓名:</strong>  {{coustomerSourceDetail.name}}</div>
+	      	<div><strong>性别:</strong>  {{coustomerSourceDetail.sex}}</div>
+	        <div><strong>联系电话:</strong>  {{coustomerSourceDetail.phone}}</div>
+	        <div><strong>地区:</strong>  {{coustomerSourceDetail.region}}</div>
+	      	<div><strong>车型要求:</strong>  {{coustomerSourceDetail.carTypeRecord}}</div>
+	        <div><strong>配置:</strong>  {{coustomerSourceDetail.configuration}}</div>
+	        <div><strong>购车款区间:</strong>  {{coustomerSourceDetail.budgetRange}}</div>
+        </div>
+        <div class="col-md-6">
+	       
+	      	<div><strong>颜色:</strong>  {{coustomerSourceDetail.carColor}}</div>
+	        <div><strong>内饰:</strong>  {{coustomerSourceDetail.decoration}}</div>
+	        <div><strong>按揭:</strong>  {{coustomerSourceDetail.installment |isOrNo}}</div>
+	      	<div><strong>保险:</strong>  {{coustomerSourceDetail.insurance |isOrNo}}</div>
+	        <div><strong>客户登记:</strong>  {{coustomerSourceDetail.level}}</div>
+	        <div><strong>公客/私客:</strong>  {{coustomerSourceDetail.ispublic | publicOrNot}}</div>
+	        <div><strong>导入时间:</strong>  {{coustomerSourceDetail.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</div>
+	        <div><strong>置顶:</strong>  {{coustomerSourceDetail.isTop |topOrNot}}</div>
+        </div>
+       </div>
         <div id="remarks"><strong>回访记录:</strong>
         	<button type="button" ng-click="addCoustomerReMarksRow($event)" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-plus"></i> 新增</button>
         </div>
@@ -348,6 +368,7 @@
     <table class="table table-bordered table-hover table-condensed">
     <thead>
     	<tr>
+    		<th>类型</th>
     		<th>回访内容</th>
     		<th>日期</th>
     		<th>记录人</th>
@@ -355,6 +376,7 @@
     </thead>
     <tbody>
     	<tr ng-repeat="item in coumosterRemarkItems">
+    		<td>{{item.type}}</td>
     		<td>{{item.content}}</td>
     		<td>{{item.updateTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
     		<td>{{item.remarkMan}}</td>

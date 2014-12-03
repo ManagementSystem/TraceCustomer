@@ -121,13 +121,13 @@ public class AdminController extends BaseController{
 	@RequestMapping(value="/getcustomer",method=RequestMethod.POST)
 	@ResponseBody
 	public ReturnValue getCustomerData(@RequestBody Map<String, String> conditions){
-		return customerService.getCustomerData(conditions);
+		return customerService.getCustomerData(conditions,false);
 	}
 	
 	@RequestMapping(value="/querycustomer",method=RequestMethod.POST)
 	@ResponseBody
 	public ReturnValue queryCustomerData(@RequestBody Map<String, String> conditions){
-		return customerService.queryCustomerData(conditions);
+		return customerService.queryCustomerData(conditions,false);
 	}
 	
 	@RequestMapping(value="/createcustomer",method=RequestMethod.POST)
@@ -207,7 +207,7 @@ public class AdminController extends BaseController{
 	    String[] str = fileName.split("/.");
 	    String suffix = str[str.length - 1];
 	    String path = request.getServletContext().getRealPath("");
-		return customerService.importCustomer(file, path,suffix);
+		return customerService.importCustomer(file, path,suffix,getUserName());
 	}
 	
 	@RequestMapping(value="/getreport",method=RequestMethod.POST)

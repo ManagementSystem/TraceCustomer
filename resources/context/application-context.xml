@@ -31,8 +31,8 @@
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/employee_schema"/>
-        <property name="username" value="zjw"/>
-        <property name="password" value="123456"/>
+        <property name="username" value="root"/>
+        <property name="password" value="jackson"/>
         <property name="maxActive" value="50"/> 
 		<property name="maxIdle" value="30"/> 
 		<property name="maxWait" value="1000"/> 
@@ -54,7 +54,7 @@
 		      <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
               <prop key="hibernate.hbm2ddl.auto">update</prop>
               <prop key="hibernate.connection.autocommit">true</prop>
-              <prop key="hibernate.format_sql">true</prop>
+              <!-- <prop key="hibernate.format_sql">true</prop> -->
 		   </props>
 		</property>
     </bean>

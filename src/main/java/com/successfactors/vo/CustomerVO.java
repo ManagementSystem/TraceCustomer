@@ -3,6 +3,8 @@ package com.successfactors.vo;
 import java.util.Date;
 import java.util.List;
 
+import com.successfactors.bean.Customer;
+
 public class CustomerVO {
 	
 	private String name;
@@ -43,6 +45,20 @@ public class CustomerVO {
 	
 	private Integer isTop;
 	
+	private String carTypeRecord;
+	
+	private String city;
+	
+	private String company;
+	
+	public String getCarTypeRecord() {
+		return carTypeRecord;
+	}
+
+	public void setCarTypeRecord(String carTypeRecord) {
+		this.carTypeRecord = carTypeRecord;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -195,5 +211,29 @@ public class CustomerVO {
 		this.isTop = isTop;
 	}
 	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setCustomersToCarGroup(Customer customer){
+		this.isTop = customer.getIsTop();
+		this.carTypeRecord = customer.getCarTypeRecord();
+		this.budgetRange = customer.getBudgetRange();
+		this.carColor = customer.getCarColor();
+		this.decoration = customer.getDecoration();
+		this.configuration = customer.getConfiguration();
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
 	
 }

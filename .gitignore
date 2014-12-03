@@ -1,2 +1,5 @@
 /target
 resources/write_test.xls
+*.lastUpdated
+*.properties
+*.orig

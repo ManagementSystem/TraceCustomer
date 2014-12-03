@@ -38,7 +38,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a>个人中心</a></li>
+            <!-- <li><a>个人中心</a></li> -->
             <li><a data-toggle="modal" data-target="#myChangePassWordModal">修改密码</a></li>
             <li class="divider"></li>
             <li><a data-toggle="modal" data-target="#myModal">注销</a></li>
@@ -62,7 +62,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">确定</button>
+        <a href="logout"><button type="button" class="btn btn-primary">确定</button></a>
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@
       <div class="modal-body">
       	<div class="row">
       	<div class="col-md-12">
-      	<div ng-show="changePSWSuccess">修改密码成功</div>
+      	
 	        <div class="form-group">
 	                <label class="col-md-3 control-label">
 	                    旧密码：
@@ -107,9 +107,13 @@
 	                <div ng-show = newPassAgainMsgNotnull style="color: #DD5665;margin-left: 76%;">确认密码不能为空</div>
 	                <div ng-show = newPassAgainMsg style="color: #DD5665;margin-left: 66%;">确认密码必须与新密码一致</div>
 	        </div>
+	        	<div>
+		      		<span ng-show="changePSWSuccess"><font color="#FF0000">修改密码成功</font> </span>
+		      	</div>
 	       </div>
 	      </div>
       </div>
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         <button type="button" class="btn btn-primary" ng-click="changPassWord($evnet)">确定</button>

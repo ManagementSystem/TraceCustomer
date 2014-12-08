@@ -109,11 +109,11 @@
     		<th>店名</th>
     		<th>大客户经理</th>
     		<th>大客户经理电话</th>
-    		<th>微信</th>
     		<th>销售经理</th>
     		<th>销售经理电话</th>
     		<th>车型</th>
     		<th>价格</th>
+    		<th>录入时间</th>
         <th style="width:63px;">操作</th>
     	</tr>
     </thead>
@@ -125,11 +125,11 @@
     		<td>{{item.shopName}}</td>
     		<td>{{item.customerManager}}</td>
     		<td>{{item.customerManagerTel}}</td>
-    		<td>{{item.wechat}}</td>
     		<td>{{item.saleManager}}</td>
     		<td>{{item.saleManagerTel}}</td>
     		<td>{{item.carTypeRecord}}</td>
     		<td>{{item.price}}</td>
+    		<td>{{item.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
         <td>
          <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
         </td>
@@ -169,6 +169,7 @@
     		<th>颜色要求</th>
     		<th>装饰要求</th>
     		<th>配置</th>
+    		<th>录入时间</th>
     		       <!--  <th style="width:63px;">操作</th> -->
     	</tr>
     </thead>
@@ -180,6 +181,7 @@
     		<td>{{item.carColor}}</td>
     		<td>{{item.decoration}}</td>
     		<td>{{item.configuration}}</td>
+    		<td>{{item.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
     	<!-- 	        <td>
          <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
        

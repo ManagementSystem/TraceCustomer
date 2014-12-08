@@ -40,7 +40,7 @@ public class CarServiceImpl implements CarService{
 	private static Logger logger = Logger.getLogger(CarServiceImpl.class);
 	
 	
-	private static final String EXCEL_DIR = "\\excel\\";
+	private static final String EXCEL_DIR = File.separator + "excel" + File.separator;
 	
 	private static final String CAR_EXCEL_FILE = "car_import";
 	

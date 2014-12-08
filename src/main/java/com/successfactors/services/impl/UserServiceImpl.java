@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 	
 	private static final String USER_EXCEL_FILE = "user_import";
 	
-	private static final String EXCEL_DIR = "\\excel\\";
+	private static final String EXCEL_DIR = File.separator + "excel" + File.separator;
 	@Autowired
 	private UsersDAO usersDao;
 

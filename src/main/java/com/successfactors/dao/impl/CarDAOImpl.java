@@ -132,7 +132,9 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);
 		c.addOrder(Order.desc("isTop"));
+		c.addOrder(Order.desc("importTime"));
 		c.addOrder(Order.asc("price"));
+		
 		List<Car> list = c.list();
 		page.setItem(list);
 		page.setItemsPerPage(itemPerPage);

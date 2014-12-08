@@ -8,11 +8,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">CZERP</a>
+      <a class="navbar-brand" href="#">客户追踪系统</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+     <div class="navbar-collapse collapse" role="navigation">
       <ul class="nav navbar-nav">
         <li><a href="#">首页</a></li>
       </ul>
@@ -20,9 +20,18 @@
          <li>
             <a ui-sref="index.customer.addCustomer">客户管理</a>
         </li>
-        <li>
-            <a ui-sref="index.carmanage.addCarSource">车源管理</a>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">车源管理<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li>
+             <a ui-sref="index.carmanage.addCarSource">车源管理</a>
+            </li>
+            <li>
+             <a ui-sref="index.carmanage.carchannel">渠道商管理</a>
+            </li>
+          </ul>
         </li>
+        
        <!--  <li>
             <a ui-sref="index.carmanage.addCarType">车型录入</a>
         </li> -->

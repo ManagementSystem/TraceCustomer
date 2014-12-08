@@ -697,6 +697,38 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('index.carmanage.carchannel',{
+        	url:'/carchannel',
+        	templateUrl:'jsp/view/adminView/carManage/carSourceManage/carChannelManage.html',
+        	controller: function($scope, $state,$http){
+        		$scope.addCarObject = {
+                        isTop:"",
+                        saleRegion:"",
+                        configuration:"",
+                        customerManager:"",
+                        carColor:"",
+                        carDecoration:"",
+                        dealer:"",
+                        price:"",
+                        principal:"",
+                        region:"",
+                        type:"",
+                        telphone:""
+                      };
+        				//车型
+		        		$http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
+		                    $scope.TypeOptions = data;
+		                    $scope.addCarObject.carTypeId = $scope.TypeOptions[0].id;
+		                 });
+                      //初始化各个select组件
+//                      区域
+                      $scope.areaOptions=['东区','南区','西区','北区'];
+                      $scope.addCarObject.region=$scope.areaOptions[0];
+//                      类型
+                      $scope.typeOptions =['进口店','国产店'];
+                      $scope.addCarObject.type=$scope.typeOptions[0];
+        	}
+        })
         .state('index.carmanage.addCarSource', {
             url: '/addCarSource',
             templateUrl: 'jsp/view/adminView/carManage/carSourceManage/addCarSourceform.html',
@@ -881,14 +913,25 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 'main@index': {
                     templateUrl:'jsp/view/adminView/sourceDataManage/carSourceDataImport.html',
                     controller: function($scope,$state,$http){
+                    		$scope.uploadIsDisable = false;
                              var showMsg = function(event){
+                            	 
                                  event.target.setAttribute('data-toggle','modal');
                                  event.target.setAttribute('data-target','#myMsgModal');
-                             }
-                        
+                             };
+                             
+                             $scope.changeBtnState = function(){
+                            	 if($scope.uploadIsDisable)
+                            		 $scope.uploadIsDisable = false;
+                            	 else
+                            		 $scope.uploadIsDisable = true;
+                            	 return $scope.uploadIsDisable;                                         
+                             };
+                             
+                             
                         //车源文件上传
-                            $scope.upLoadCarSourceExcelFile = function(event){
-                                if(event.target.parentNode.childNodes[1].files.length !=0){
+                            $scope.upLoadCarSourceExcelFile = function(event){             
+                            	if(event.target.parentNode.childNodes[1].files.length !=0){
                                     var inputFile = event.target.parentNode.childNodes[1].files[0];
                                     
                                     var formData = new FormData();
@@ -912,11 +955,13 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                             $scope.SuccessMsgShow = true;
                                             $scope.returnSuccessMsg = '上传成功';
                                             showMsg(event);
+                                            $scope.uploadIsDisable = true;
                                         }).error(function(data){
                                             $scope.uploadFaild = true;
                                             $scope.SuccessMsgShow = false;
                                             $scope.returnErrorMsg = '上传失败';
                                             showMsg(event);
+                                            $scope.uploadIsDisable = false;
                                         });
                                     }
                                 }else{
@@ -941,7 +986,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                              var showMsg = function(event){
                                  event.target.setAttribute('data-toggle','modal');
                                  event.target.setAttribute('data-target','#myMsgModal');
-                             }
+                             };
                              
                              if(event.target.parentNode.childNodes[1].files.length !=0){
                                  var inputFile = event.target.parentNode.childNodes[1].files[0];

@@ -83,6 +83,8 @@ public class CustomerDAOImpl extends BaseDAO<Customer, Long> implements Customer
 			c.add(con);
 			countC.add(con);
 		}
+		c.addOrder(Order.desc("isTop"));
+		c.addOrder(Order.desc("importTime"));
 		Integer totalResult = ((Number)countC.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);

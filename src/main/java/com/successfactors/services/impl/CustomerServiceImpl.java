@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	private Logger logger = Logger.getLogger(CustomerServiceImpl.class);
 
-	private static final String EXCEL_DIR = "\\excel\\";
+	private static final String EXCEL_DIR = File.separator + "excel" + File.separator;
 
 	private static final String CUSTOMER_EXCEL_FILE = "customer_import";
 

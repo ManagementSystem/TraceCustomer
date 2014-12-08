@@ -1,0 +1,151 @@
+<div class="row">
+	<div class="col-md-12" align="center">
+		<h2>渠道商管理</h2>
+	</div>
+</div>
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-2">
+    	<div class="row">
+	        <div class="form-group">
+	                <label class="col-md-12 control-label" style="margin-top: 10px;">
+	                    	渠道商车源Excel文件：
+	                </label>
+	        </div>
+        </div>
+        <div class="row">
+	        <div class="col-md-12 form-group">
+	                 <button type="button" class="btn btn-primary" ui-sref="index.carmanage.sourcedata">导入</button>
+	        </div>
+        </div>
+    </div>
+   <div class="col-md-10">
+        <form class="form-horizontal" role="form">
+            <div class="row">
+	            <div class="col-md-6">
+            		<div class="form-group">
+		                <label class="col-md-3 control-label">
+		                   	 城市：
+		                </label>
+		                <div class="col-md-9">
+		                    <input ng-model="addCarObject.city" type="text" class="form-control" placeholder="请填入城市名">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-3 control-label">
+		                   	 店名：
+		                </label>
+		                <div class="col-md-9">
+		                    <input ng-model="addCarObject.shopName" type="text" class="form-control" placeholder="请填入店名">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-3 control-label">
+		                   	 大客户经理：
+		                </label>
+		                <div class="col-md-9">
+		                    <input ng-model="addCarObject.customerManager" type="text" class="form-control" placeholder="请填入大客户经理的名字">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-3 control-label">
+		                   	 大客户经理电话：
+		                </label>
+		                <div class="col-md-9">
+		                    <input ng-model="addCarObject.customerManagerTel" type="text" class="form-control" placeholder="请填入大客户经理的电话">
+		                </div>
+		            </div>
+		             <div class="form-group">
+		                <label class="col-md-3 control-label">
+		                   	 微信：
+		                </label>
+		                <div class="col-md-9">
+		                    <input ng-model="addCarObject.wechat" type="text" class="form-control" placeholder="请填入微信号">
+		                </div>
+		            </div>
+		           
+	            </div>
+	            <div class="col-md-6">
+	             <div class="form-group">
+		                <label class="col-md-3 control-label">
+		                   	 销售经理：
+		                </label>
+		                <div class="col-md-9">
+		                    <input ng-model="addCarObject.saleManager" type="text" class="form-control" placeholder="请填入销售经理名字">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-3 control-label">
+		                   	 销售经理电话：
+		                </label>
+		                <div class="col-md-9">
+		                    <input ng-model="addCarObject.saleManagerTel" type="text" class="form-control" placeholder="请填入销售经理名字">
+		                </div>
+		            </div>
+	            <div class="form-group">
+		                <label class="col-md-3 control-label">
+		                    	类型：
+		                </label>
+		                <div class="col-md-9" ng-init="typeOptions">
+		                <!-- 进口、国产、综合 -->
+		                    <select ng-model="addCarObject.type" class="form-control" ng-options="opt for opt in typeOptions"></select>
+		                </div>
+		            </div>
+	            	<div class="form-group">
+		                <label class="col-md-3 control-label">
+		                    	具体车型：
+		                </label>
+		                <div class="col-md-9">
+		                    <select class="form-control" ng-model="addCarObject.carTypeId">
+		                    	<option ng-repeat="item in TypeOptions" value={{item.id}}>{{item.brand}} {{item.type}}</option>
+		                    </select>
+		                </div>
+		            </div>
+	            	 <div class="form-group">
+		                <label class="col-md-3 control-label">
+		                   	 负责人：
+		                </label>
+		                <div class="col-md-9">
+		                    <input ng-model="addCarObject.principal" type="text" class="form-control" placeholder="请填入负责人名字">
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <label class="col-md-3 control-label">
+		                    	置顶：
+		                </label>
+		                <div class="col-md-9">
+		                    <input ng-model="addCarObject.isTop" type="radio" name="toTop" value="1"><label>是</label>
+		                    <input ng-model="addCarObject.isTop" type="radio" name="toTop" value="0"><label>否</label>
+		                </div>
+		            </div>
+		            <div class="form-group">
+		                <div class="col-md-offset-3 col-md-9">
+		                	<button class="btn btn-primary" ng-click="saveCarSource()">提交</button>
+		                    <button class="btn btn-primary" ng-click="backToPrevious()">返回</button>
+		                </div>
+		            </div>
+	            </div>
+            </div>
+        </form>
+    </div>
+   
+</div>
+<div class="modal fade bs-example-modal-sm" id="myMsgModal" tabindex="-1" role="dialog" aria-labelledby="myDelModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content" style="width: 210px;margin-left: 32%;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myDelModalLabelTitle">提示</h4>
+			</div>
+			<div class="modal-body">
+				<p style="text-align: center;">
+					<span ng-show="SuccessMsgShow" style="color: rgba(6, 107, 34, 0.89);font-size: 16px;">{{returnSuccessMsg}}</span>
+					<span ng-show="!SuccessMsgShow" style="color: #BD5C5C;font-size: 16px;">{{returnErrorMsg}}</span>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+			<!--  <button type="button" class="btn btn-primary" ng-click="deleCarData()">确定</button> -->
+			</div>
+		</div>
+	</div>
+</div>

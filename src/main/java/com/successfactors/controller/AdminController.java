@@ -86,6 +86,7 @@ public class AdminController extends BaseController{
 	@ResponseBody
 	public String createCar(@RequestBody CarVO car){
 		//car.setOperator(getUserName());
+		car.setChannelFlag(0);
 		car.setOperator(getUserName());
 		return carService.addCar(car);
 	}
@@ -243,5 +244,13 @@ public class AdminController extends BaseController{
 	@ResponseBody
 	public String updateCar(@RequestBody Car car){
 		return carService.updateCar(car);
+	}
+	
+	@RequestMapping(value="/createchannelcar",method=RequestMethod.POST)
+	@ResponseBody
+	public String createChannelCar(@RequestBody CarVO vo){
+		vo.setChannelFlag(1);
+		vo.setOperator(getUserName());
+		return carService.addCar(vo);
 	}
 }

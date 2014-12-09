@@ -110,6 +110,9 @@ public class Car {
 	@Column(name="del_flag",nullable=false)
 	private Integer delFlag;
 	
+	
+	@Column(name="channel_flag",nullable=false)
+	private Integer channelFlag;
 	public Long getId() {
 		return id;
 	}
@@ -318,6 +321,14 @@ public class Car {
 		this.delFlag = delFlag;
 	}
 
+	public Integer getChannelFlag() {
+		return channelFlag;
+	}
+
+	public void setChannelFlag(Integer channelFlag) {
+		this.channelFlag = channelFlag;
+	}
+
 	public void setCarVO(CarVO vo){
 		this.operator = vo.getOperator();
 		this.isTop = vo.getIsTop();
@@ -340,6 +351,7 @@ public class Car {
 		this.city = vo.getCity();
 		this.saleManagerTel = vo.getSaleManagerTel();
 		this.carTypeRecord = vo.getCarTypeRecord();
+		this.channelFlag = vo.getChannelFlag();
 	}
 	
 	public void setCarToCustomer(){

@@ -111,6 +111,8 @@ public class ReadExcelUtil {
 			Car car = new Car();
 			car.setImportTime(new Date());
 			car.setDelFlag(0);
+			car.setChannelFlag(0);
+			car.setOperator(operator);
 			for(int j = 0;j< 18; ++j){
 				Cell cell = sheet.getCell(j,i);
 				//CellType type = cell.getType();

@@ -62,6 +62,8 @@ public class CarVO {
 	private String carTypeRecord;
 	
 	private CarType carType;
+	
+	private Integer channelFlag;
 	public Long getId() {
 		return id;
 	}
@@ -263,6 +265,7 @@ public class CarVO {
 		this.carType = carType;
 	}
 	
+	
 	public void setCarsToCustomerGroup(Car car){
 		this.isTop = car.getIsTop();
 		this.region = car.getRegion();
@@ -270,6 +273,14 @@ public class CarVO {
 		this.configuration = car.getConfiguration();
 		this.carColor = car.getCarColor();
 		this.price = car.getPrice();
+	}
+
+	public Integer getChannelFlag() {
+		return channelFlag;
+	}
+
+	public void setChannelFlag(Integer channelFlag) {
+		this.channelFlag = channelFlag;
 	}
 	
 }

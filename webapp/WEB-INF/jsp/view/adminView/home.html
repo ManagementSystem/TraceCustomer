@@ -100,15 +100,16 @@
 		<thead>
 			<tr>
 				<th>置顶</th>
+				<th>渠道商</th>
 				<th>区域</th>
 				<th>城市</th>
 				<th>店名</th>
 				<th>大客户经理</th>
-				<th>大客户经理电话</th>
+				<!-- <th>大客户经理电话</th> -->
 				<th>销售经理</th>
-				<th>销售经理电话</th>
+				<!-- <th>销售经理电话</th> -->
 				<th>车型</th>
-				<th>价格</th>
+				<!-- <th>价格</th> -->
 				<th>录入时间</th>
 				<th style="width:174px;">操作</th>
 			</tr>
@@ -116,15 +117,16 @@
 		<tbody>
 			<tr ng-repeat="item in formDataResult" style="background-color: {{item.isTop | importColor}}">
 				<td>{{item.isTop | topOrNot}}</td>
+				<td>{{item.channelFlag| isChannel}}</td>
 				<td>{{item.region}}</td>
 				<td>{{item.city}}</td>
 				<td>{{item.shopName}}</td>
 				<td>{{item.customerManager}}</td>
-				<td>{{item.customerManagerTel}}</td>
+				<!-- <td>{{item.customerManagerTel}}</td> -->
 				<td>{{item.saleManager}}</td>
-				<td>{{item.saleManagerTel}}</td>
+				<!-- <td>{{item.saleManagerTel}}</td> -->
 				<td>{{item.carTypeRecord}}</td>
-				<td>{{item.price}}</td>
+				<!-- <td>{{item.price | priceFormat}}</td> -->
 				<td>{{item.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
 				<td>
 					<button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>

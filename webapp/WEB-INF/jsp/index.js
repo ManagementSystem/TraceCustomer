@@ -701,19 +701,23 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         	url:'/carchannel',
         	templateUrl:'jsp/view/adminView/carManage/carSourceManage/carChannelManage.html',
         	controller: function($scope, $state,$http){
+        		
+        		$scope.backToPrevious = function() {
+                    window.history.back();
+                };
+        		
         		$scope.addCarObject = {
                         isTop:"",
-                        saleRegion:"",
-                        configuration:"",
+                        city:"",
+                        shopName:"",
                         customerManager:"",
-                        carColor:"",
-                        carDecoration:"",
-                        dealer:"",
-                        price:"",
-                        principal:"",
+                        customerManagerTel:"",
+                        wechat:"",
+                        saleManager:"",
+                        saleManagerTel:"",
+                        carTypeId:"",
                         region:"",
-                        type:"",
-                        telphone:""
+                        principal:""
                       };
         				//车型
 		        		$http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
@@ -722,11 +726,31 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
 		                 });
                       //初始化各个select组件
 //                      区域
-                      $scope.areaOptions=['东区','南区','西区','北区'];
-                      $scope.addCarObject.region=$scope.areaOptions[0];
+                    /*  $scope.areaOptions=['东区','南区','西区','北区'];
+                      $scope.addCarObject.region=$scope.areaOptions[0];*/
 //                      类型
                       $scope.typeOptions =['进口店','国产店'];
                       $scope.addCarObject.type=$scope.typeOptions[0];
+                      
+                      
+                      $scope.saveCarSource = function(){
+                    	  
+                          var postData = $scope.addCarObject;
+                    	  
+                    	  $http.post(window.location.origin+"/employee-manage/admin/createchannelcar",postData).success(function(data){
+                              if(data == "success"){
+                                  console.log(data);
+                                  $scope.returnSuccessMsg = "新增渠道商车源成功";
+                                  $scope.SuccessMsgShow = true;
+                            	  $('#myMsgModal').modal('show');
+                              }else{
+                              	 $scope.returnErrorMsg = "新增车源失败";
+                              	  $scope.SuccessMsgShow = false;
+                              	  $('#myMsgModal').modal('show');
+                              }
+                          });
+                      }
+                      
         	}
         })
         .state('index.carmanage.addCarSource', {
@@ -836,7 +860,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                       $http.post(window.location.origin+"/employee-manage/admin/createcar",postData).success(function(data){
                         if(data == "success"){
                             console.log(data);
-                            $scope.returnSuccessMsg = "新增客源成功";
+                            $scope.returnSuccessMsg = "新增车源成功";
                             $scope.SuccessMsgShow = true;
                       	  $('#myMsgModal').modal('show');
                         }else{
@@ -1322,3 +1346,23 @@ routerApp.filter('importColor',function(){
        }
     }
 });
+routerApp.filter('priceFormat',function(){
+    return function(field){
+       if(field == "0"){
+    	   return "/";
+       }else{
+    	   return field;
+       }
+    }
+});
+routerApp.filter('isChannel',function(){
+    return function(field){
+       if(field == "1"){
+    	   return "渠道商";
+       }else{
+    	   return "普通";
+       }
+       
+    }
+});
+

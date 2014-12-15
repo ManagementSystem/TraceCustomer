@@ -44,6 +44,8 @@ public class CarServiceImpl implements CarService{
 	
 	private static final String CAR_EXCEL_FILE = "car_import";
 	
+	private static final String CAR_CHANNEL_FILE = "carchannel_import";
+	
 	@Override
 	@Transactional
 	public String addCar(CarVO carVO) {
@@ -223,6 +225,37 @@ public class CarServiceImpl implements CarService{
 			return ReturnValueConstants.RETURN_ERROR;
 		}
 		return ReturnValueConstants.RETURN_SUCCESS;
+	}
+
+
+	@Override
+	@Transactional
+	public String importChannelCars(MultipartFile mFile, String path,
+			String suffix, String operator) {
+		// TODO Auto-generated method stub
+		String returnMsg = ReturnValueConstants.RETURN_ERROR;
+		if(!mFile.isEmpty()){
+			logger.info("upload channel car excel file");
+			File file = new File(path + EXCEL_DIR);
+			if(!file.exists()){
+				file.mkdirs();
+			}
+			String filePath = path + EXCEL_DIR + CAR_CHANNEL_FILE + ".xls";
+			try{
+				InputStream is = mFile.getInputStream();
+				FileUtil.saveFile(is, filePath);
+				List<Car> cars = ReadExcelUtil.readChannelCars(filePath,operator);
+				dao.add(cars);
+				returnMsg = ReturnValueConstants.RETURN_SUCCESS;
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				returnMsg = ReturnValueConstants.RETURN_ERROR;
+			}
+			
+		}else{
+			returnMsg = ReturnValueConstants.RETURN_ERROR;
+		}
+		return returnMsg;
 	}
 
 

@@ -95,6 +95,70 @@ public class ReadExcelUtil {
 		}
 		return userList;
 	}
+	public static List<Car> readChannelCars(String inputFile,String operator) throws BiffException, IOException{
+		File inputWorkbook = new File(inputFile);
+		Workbook w;
+		
+		w = Workbook.getWorkbook(inputWorkbook);
+		Sheet sheet = w.getSheet(0);
+		List<Car> list = new ArrayList<Car>();
+		for(int i = 1; i < sheet.getRows();i++){
+			Cell checkCell = sheet.getCell(0,i);
+			if(checkCell == null || "".equals(checkCell.getContents().trim())){
+				break;
+			}
+			Car car = new Car();
+			car.setImportTime(new Date());
+			car.setDelFlag(0);
+			car.setChannelFlag(1);
+			car.setOperator(operator);
+			for (int j = 0; j < 12; j++) {
+				Cell cell = sheet.getCell(j,i);
+				//CellType type = cell.getType();
+				switch (j){
+					case 0:
+						car.setRegion(cell.getContents());
+						break;
+					case 1:
+						car.setCity(cell.getContents());
+						break;
+					case 2:
+						car.setShopName(cell.getContents());
+						break;
+					case 3:
+						car.setCustomerManager(cell.getContents());
+						break;
+					case 4:
+						car.setCustomerManagerTel(cell.getContents());
+						break;
+					case 5:
+						car.setWechat(cell.getContents());
+						break;
+					case 6:
+						car.setSaleManager(cell.getContents());
+						break;
+					case 7:
+						car.setSaleManagerTel(cell.getContents());
+						break;
+					case 8:
+						car.setType(cell.getContents());
+						break;
+					case 9:
+						car.setPrincipal(cell.getContents());
+						break;
+					case 10:
+						car.setCarTypeRecord(cell.getContents());
+						break;
+					case 11:
+						car.setIsTop(Integer.valueOf(cell.getContents()));
+						break;
+				}
+			}
+			list.add(car);
+		}
+		return list;
+	}
+	
 	
 	public static List<Car> readCars(String inputFile,String operator) throws BiffException, IOException, ParseException{
 		File inputWorkbook = new File(inputFile);

@@ -44,6 +44,8 @@ public class CarsRemarkServiceImpl implements CarsRemarkService{
 			carRemark.setVO(vo);
 			carRemark.setUpdateTime(new Date());
 			carRemark.setCar(car);
+			car.setLastModifyTime(new Date());
+			carDao.save(car);
 			dao.save(carRemark);
 			return ReturnValueConstants.RETURN_SUCCESS;
 		} catch (Exception e) {

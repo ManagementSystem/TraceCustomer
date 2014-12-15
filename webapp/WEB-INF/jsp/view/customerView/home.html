@@ -49,35 +49,46 @@
       </div>
     </div>
     <div class="row" ng-show="!CarShow">
-      <div class="col-md-3">
-        <div class="input-group pull-right global-search">
-          <label class="input-group-addon">姓名</label>
-          <input type="text" class="form-control" ng-model="customerSearch.name"/>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group pull-right global-search">
-        <label class="input-group-addon">等级</label>
-        <input type="text" class="form-control" ng-model="customerSearch.level"/>
-      </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group pull-right global-search">
-         <label class="input-group-addon">公/私客</label>
-			<div>
-				<select class="form-control" ng-model="customerSearch.ispublic">
-					<option value="" selected="selected"></option>
-					<option value="0">私客</option>
-					<option value="1">公客</option>
-				</select>
+			<div class="col-md-3">
+				<div class="input-group pull-right global-search">
+					<label class="input-group-addon">姓名</label>
+					<input type="text" class="form-control" ng-model="customerSearch.name"/>
+				</div>
 			</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-1">
-    <button type="button" class="btn btn-primary" ng-click="searchGridData($event)">搜索</button>
-  </div>
+			<div class="col-md-3">
+				<div class="input-group pull-right global-search">
+					<label class="input-group-addon">区域</label>
+					<div ng-init="Region=['东区','南区','西区','北区']">
+						<select ng-model="carSourceSearch.region" class="form-control input-sm">
+							<option value="" selected="selected"></option>
+							<option ng-repeat="item in Region">{{item}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="input-group pull-right global-search">
+					<label class="input-group-addon">城市</label>
+					<input type="text" class="form-control" ng-model="customerSearch.city"/>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="input-group pull-right global-search">
+					<label class="input-group-addon">公/私客</label>
+					<div>
+						<select class="form-control" ng-model="customerSearch.ispublic">
+							<option value="" selected="selected"></option>
+							<option value="0">私客</option>
+							<option value="1">公客</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-1">
+		<button type="button" class="btn btn-primary" ng-click="searchGridData($event)">搜索</button>
+	</div>
 </div>
 <h4 ng-show="CarShow">车源信息</h4>
 <h4 ng-show="!CarShow">客源信息</h4>
@@ -101,7 +112,7 @@
     	</tr> -->
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResult" style="background-color: {{item.isTop | importColor}}">
+    	<tr ng-repeat="item in formDataResult" class="{{item.isTop|table_style:item.channelFlag}}">
     		<td>{{item.isTop| topOrNot}}</td>
     		<td>{{item.region}}</td>
     		<td>{{item.carTypeRecord}}</td>
@@ -143,37 +154,33 @@
     <thead>
     	<tr>
     		<th>置顶</th>
-    		<th>客户类型</th>
-    		<th>姓名</th>
-    		<th>性别</th>
-    		<th>联系方式</th>
-    		<th>地区</th>
-    		<th>城市</th>
-    		<th>公司</th>
-    		<th>购车预算</th>
-    		<th>车型要求</th>
-    		<th>客户等级</th>
-    		<th>公/私客</th>
-    		<th>录入时间</th>
+				<th>客户类型</th>
+				<th>姓名</th>
+				<th>性别</th>
+				<th>联系方式</th>
+				<th>地区</th>
+				<th>城市</th>
+				<th>车型要求</th>
+				<th>公/私客</th>
+				<th>录入时间</th>
+				<th>最后回访时间</th>
     		
         <th style="width:63px;">操作</th>
     	</tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResultForCustomer" style="background-color: {{item.isTop | importColor}}">
+    	<tr ng-repeat="item in formDataResultForCustomer" class="{{item.isTop|customerTableStyle}}">
     		<td>{{item.isTop | topOrNot}}</td>
-    		<td>{{item.customerType | customerType}}</td>
-    		<td>{{item.name}}</td>
-    		<td>{{item.sex}}</td>
-    		<td>{{item.phone}}</td>
-    		<td>{{item.region}}</td>
-    		<td>{{item.city}}</td>
-    		<th>{{item.company}}</th>
-    		<td>{{item.budgetRange}}</td>
-    		<td>{{item.carTypeRecord}}</td>
-    		<td>{{item.level}}</td>
-    		<td>{{item.ispublic | publicOrNot}}</td>
-    		<td>{{item.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
+				<td>{{item.customerType | customerType}}</td>
+				<td>{{item.name}}</td>
+				<td>{{item.sex}}</td>
+				<td>{{item.phone}}</td>
+				<td>{{item.region}}</td>
+				<td>{{item.city}}</td>
+				<td>{{item.carTypeRecord}}</td>
+				<td>{{item.ispublic | publicOrNot}}</td>
+				<td>{{item.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
+				<td>{{item.lastModifyTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
         <td>
          <button type="button" ng-click="detailCoustomerItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
         </td>

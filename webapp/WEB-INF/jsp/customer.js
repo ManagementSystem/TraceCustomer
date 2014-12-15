@@ -1087,5 +1087,37 @@ routercustomerApp.filter('importColor',function(){
        }
     }
 });
-
-
+routercustomerApp.filter('isChannel',function(){
+    return function(field){
+       if(field == "1"){
+    	   return "渠道商";
+       }else{
+    	   return "普通";
+       }
+       
+    }
+});
+//isTo, isChannal
+routercustomerApp.filter('table_style',function(){
+	return function(field1,field2){
+       if(field1 == "1" && field2 == "1")
+    	   return "istop-channel";
+       else if(field1 == "1" && field2 == "0"){
+    	   return "istop-normal";
+       }
+       else if(field1 == "0" && field2 == "1")
+    	   return "normal-channel";
+       else{
+    	   return "normal-normal";
+       }
+    };
+});
+routercustomerApp.filter('customerTableStyle',function(){
+	return function(field){
+	       if(field == "1")
+	    	   return "customerIsTop";
+	       else{
+	    	   return "customerNormal";
+	       }
+	    };
+	});

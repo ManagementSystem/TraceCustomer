@@ -43,6 +43,8 @@ public class CustomerRemarkServiceImpl implements CustomerRemarkService{
 			customerRemark.setVO(vo);
 			customerRemark.setUpdateTime(new Date());
 			customerRemark.setCustomer(customer);
+			customer.setLastModifyTime(new Date());
+			customerDao.save(customer);
 			customerRemarkDao.save(customerRemark);
 			return ReturnValueConstants.RETURN_SUCCESS;
 		} catch (Exception e) {

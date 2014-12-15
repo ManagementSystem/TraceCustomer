@@ -104,6 +104,9 @@ public class Customer{
 	@Column(name="company",nullable=true,unique=false,length=255)
 	private String company;
 	
+	@Column(name="last_modify")
+	private Date lastModifyTime;
+	
 	
 	public String getCompany() {
 		return company;
@@ -304,6 +307,16 @@ public class Customer{
 
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	
+	
+	public Date getLastModifyTime() {
+		return lastModifyTime;
+	}
+
+	public void setLastModifyTime(Date lastModifyTime) {
+		this.lastModifyTime = lastModifyTime;
 	}
 
 	public void setCustomerVO(CustomerVO vo){

@@ -10,6 +10,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
@@ -53,6 +54,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		Page<Car> page = new Page<Car>();
 		int currentPage = 0;
 		int itemPerPage = 0;
+		int channelFlag = 0;
 		Criteria c = getSession().createCriteria(Car.class);
 		Criteria countC = getSession().createCriteria(Car.class);
 		Conjunction con = Restrictions.conjunction();
@@ -62,7 +64,20 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 				currentPage = Integer.parseInt(val);
 			}else if(key.equals("itemsPerPage")){
 				itemPerPage = Integer.parseInt(val);
-			}else{
+			}else if(key.equals("channelFlag")&& !"".equals(val.trim())){
+				channelFlag = Integer.parseInt(val);
+				con.add(Restrictions.eq("channelFlag", channelFlag));
+			}else if(key.equals("other") && !"".equals(val.trim())){
+				Disjunction otherDisjun = Restrictions.disjunction();
+				otherDisjun.add(Restrictions.like("customerManager",  "%"+val+"%"));
+				otherDisjun.add(Restrictions.like("saleManager", "%"+val+"%"));
+				otherDisjun.add(Restrictions.like("wechat", "%"+val+"%"));
+				otherDisjun.add(Restrictions.like("customerManagerTel", "%"+val+"%"));
+				otherDisjun.add(Restrictions.like("saleManagerTel", "%"+val+"%"));
+				otherDisjun.add(Restrictions.like("shopName", "%"+val+"%"));
+				con.add(otherDisjun);
+			}
+			else{
 				if(val != null && !"".equals(val)){
 //					c.add(Restrictions.like(key, "%"+val+"%"));
 //					countC.add(Restrictions.like(key, "%"+val+"%"));
@@ -70,6 +85,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 				}
 			}
 		}
+		
 		con.add(Restrictions.eq("delFlag", 0));
 		c.add(con);
 		countC.add(con);
@@ -77,7 +93,8 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		c.setFirstResult((currentPage - 1) * itemPerPage);
 		c.setMaxResults(itemPerPage);
 		c.addOrder(Order.desc("isTop"));
-		c.addOrder(Order.asc("price"));
+		c.addOrder(Order.desc("importTime"));
+		c.addOrder(Order.desc("lastModifyTime"));
 		List<Car> list = c.list();
 		page.setItem(list);
 		page.setItemsPerPage(itemPerPage);
@@ -133,8 +150,7 @@ public class CarDAOImpl extends BaseDAO<Car, Long> implements CarDAO{
 		c.setMaxResults(itemPerPage);
 		c.addOrder(Order.desc("isTop"));
 		c.addOrder(Order.desc("importTime"));
-		c.addOrder(Order.asc("price"));
-		
+		c.addOrder(Order.desc("lastModifyTime"));
 		List<Car> list = c.list();
 		page.setItem(list);
 		page.setItemsPerPage(itemPerPage);

@@ -113,6 +113,10 @@ public class Car {
 	
 	@Column(name="channel_flag",nullable=false)
 	private Integer channelFlag;
+	
+	@Column(name="last_modify")
+	private Date lastModifyTime;
+	
 	public Long getId() {
 		return id;
 	}
@@ -327,6 +331,15 @@ public class Car {
 
 	public void setChannelFlag(Integer channelFlag) {
 		this.channelFlag = channelFlag;
+	}
+
+	
+	public Date getLastModifyTime() {
+		return lastModifyTime;
+	}
+
+	public void setLastModifyTime(Date lastModifyTime) {
+		this.lastModifyTime = lastModifyTime;
 	}
 
 	public void setCarVO(CarVO vo){

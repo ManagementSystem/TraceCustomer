@@ -79,4 +79,19 @@ public class SupplyController extends BaseController{
 		return carService.importCars(file, path,suffix,getUserName());
 	}
 	
+	@RequestMapping(value="/channelcarupload",method=RequestMethod.POST)
+	@ResponseBody
+	public String uploadChannelCarSourceExcel(MultipartHttpServletRequest  request,HttpServletResponse response){
+		Iterator<String> itr=request.getFileNames();
+		String fileName = itr.next();
+	    MultipartFile file=request.getFile(fileName);
+	    
+	    String[] str = fileName.split("\\.");
+	    String suffix = str[str.length - 1];
+	    String path = request.getServletContext().getRealPath("");
+		return carService.importChannelCars(file, path,suffix,getUserName());
+	}
+	
+	
+	
 }

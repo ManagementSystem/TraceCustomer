@@ -6,17 +6,20 @@
   </div>
   <div class="col-md-9">
     <div class="row" ng-show="CarShow">
-      <div class="col-md-3">
-			<div class="input-group pull-right global-search">
-				<label class="input-group-addon">区域</label>
-				<div ng-init="Region=['东区','南区','西区','北区']">
-					<select ng-model="carSourceSearch.region" class="form-control input-sm">
-						<option value="" selected="selected"></option>
-						<option ng-repeat="item in Region">{{item}}</option>
-					</select>
+     <div class="col-md-4">
+				<div class="input-group pull-right global-search">
+					<label class="input-group-addon">
+							商家类型:
+						</label>
+						<div>
+							<select class="form-control" ng-model="carSourceSearch.channelFlag">
+								<option value="" selected="selected"></option>
+								<option value="0">普通商家</option>
+								<option value="1">渠道商</option>
+							</select>
+						</div>
 				</div>
 			</div>
-		</div>
       <div class="col-md-3">
 			<div class="input-group pull-right global-search">
 				<label class="input-group-addon">
@@ -36,19 +39,48 @@
 			<input type="text" class="form-control" ng-model="carSourceSearch.carColor"/>
 		</div>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="input-group pull-right global-search">
-			<label class="input-group-addon">车型</label>
-			<div>
-				<select class="form-control" ng-model="carSourceSearch.carTypeRecord">
-                   	<option value="" selected="selected"></option>
-                   	<option ng-repeat="item in editTypeOptionsForCar">{{item.brand}}{{item.type}}</option>
-                   </select>
-                </div>
-			
+			<label class="input-group-addon">区域</label>
+			<div ng-init="Region=['东区','南区','西区','北区']">
+				<select ng-model="carSourceSearch.region" class="form-control input-sm">
+					<option value="" selected="selected"></option>
+					<option ng-repeat="item in Region">{{item}}</option>
+				</select>
+			</div>
 		</div>
 	</div>
     </div>
+    <div class="row" ng-show="CarShow" style="margin-top: 10px">
+		<div class="col-md-4">
+			<div class="input-group pull-right global-search">
+				<label class="input-group-addon">车型</label>
+				<div>
+					<select class="form-control" ng-model="carSourceSearch.carTypeRecord">
+                    	<option value="" selected="selected"></option>
+                    	<option ng-repeat="item in editTypeOptionsForCar">{{item.brand}}{{item.type}}</option>
+                    </select>
+                   </div>
+				
+			</div>
+		</div>
+		<div class="col-md-3">
+				<div class="input-group pull-right global-search">
+					<label class="input-group-addon">城市</label>
+					<div>
+						<input type="text" class="form-control" ng-model="carSourceSearch.city"/>
+                    </div>
+				</div>
+			</div>
+		<div class="col-md-5">
+			<div class="input-group pull-right global-search">
+				<label class="input-group-addon">关键字</label>
+				<div>
+					<input type="text" class="form-control" ng-model="carSourceSearch.other"/>
+                   </div>
+			</div>
+		</div>
+	</div>
     <div class="row" ng-show="!CarShow">
       <div class="col-md-4">
         <div class="input-group pull-right global-search">
@@ -104,32 +136,36 @@
     <thead>
     	<tr>
     		<th>置顶</th>
-    		<th>区域</th>
-    		<th>城市</th>
-    		<th>店名</th>
-    		<th>大客户经理</th>
-    		<th>大客户经理电话</th>
-    		<th>销售经理</th>
-    		<th>销售经理电话</th>
-    		<th>车型</th>
-    		<th>价格</th>
-    		<th>录入时间</th>
+				<th>渠道商</th>
+				<th>区域</th>
+				<th>城市</th>
+				<th>店名</th>
+				<th>大客户经理</th>
+				<!-- <th>大客户经理电话</th> -->
+				<th>销售经理</th>
+				<!-- <th>销售经理电话</th> -->
+				<th>车型</th>
+				<!-- <th>价格</th> -->
+				<th>录入时间</th>
+				<th>最后回访时间</th>
         <th style="width:63px;">操作</th>
     	</tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResultForSupply" style="background-color: {{item.isTop | importColor}}">
+    	<tr ng-repeat="item in formDataResultForSupply" class="{{item.isTop|table_style:item.channelFlag}}">
     		<td>{{item.isTop | topOrNot}}</td>
-    		<td>{{item.region}}</td>
-    		<td>{{item.city}}</td>
-    		<td>{{item.shopName}}</td>
-    		<td>{{item.customerManager}}</td>
-    		<td>{{item.customerManagerTel}}</td>
-    		<td>{{item.saleManager}}</td>
-    		<td>{{item.saleManagerTel}}</td>
-    		<td>{{item.carTypeRecord}}</td>
-    		<td>{{item.price}}</td>
-    		<td>{{item.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
+			<td>{{item.channelFlag| isChannel}}</td>
+			<td>{{item.region}}</td>
+			<td>{{item.city}}</td>
+			<td>{{item.shopName}}</td>
+			<td>{{item.customerManager}}</td>
+			<!-- <td>{{item.customerManagerTel}}</td> -->
+			<td>{{item.saleManager}}</td>
+			<!-- <td>{{item.saleManagerTel}}</td> -->
+			<td>{{item.carTypeRecord}}</td>
+			<!-- <td>{{item.price | priceFormat}}</td> -->
+			<td>{{item.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
+			<td>{{item.lastModifyTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
         <td>
          <button type="button" ng-click="detailItem($index,$event)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-eye-open"></i> 详细</button>
         </td>
@@ -174,7 +210,7 @@
     	</tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in formDataResultForSupplyForCustomer" style="background-color: {{item.isTop | importColor}}">
+    	<tr ng-repeat="item in formDataResultForSupplyForCustomer" class="{{item.isTop|customerTableStyle}}">
     		<td>{{item.isTop | topOrNot}}</td>
     		<td>{{item.carTypeRecord}}</td>
     		<td>{{item.budgetRange}}</td>

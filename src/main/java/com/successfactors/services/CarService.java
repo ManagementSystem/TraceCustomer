@@ -21,6 +21,8 @@ public interface CarService {
 	
 	public String importCars(MultipartFile mFile,String path,String suffix,String operator);
 	
+	public String importChannelCars(MultipartFile mFile,String path,String suffix,String operator);
+	
 	public ReturnValue getCarsDataToCustomer(Map<String, String> conditions);
 	
 	public String delCar(Long id);

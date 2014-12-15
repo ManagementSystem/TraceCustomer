@@ -1,1 +1,19 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.istop-channel {color:#FF0000;
+				background-color: #FFCC33}
+.istop-normal {color: #FF0000;
+				background-color: #FFFFFF}
+.normal-channel{
+	color: #000000;
+	background-color: #FFCC33
+}
+.normal-normal{
+	color:#000000;
+	background-color: #FFFFFF
+}
+.customerIsTop{
+	color: #FF0000
+}
+.customerNormal{
+	color:#000000
+}

@@ -160,7 +160,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                          $scope.saveEditCarSource = function(event){
                         	 var postData = $scope.editCarObject;
                         	
-                        	 $http.post(window.location.origin+"/employee-manage/admin/createcar",postData).success(function(data){
+                        	 $http.post(window.location.origin+"/employee-manage/supply/createcar",postData).success(function(data){
                            		if(data == "success"){
                            			console.log(data);
 //                           	    修改后刷新车源列表
@@ -611,6 +611,130 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('supply.carmanage.carchannel.sourcedata', {
+            url: '/channelsourcedata',
+            views: {
+                'main@index': {
+                    templateUrl:'jsp/view/carView/sourceDataManage/channelSourceDataImport.html',
+                    controller: function($scope,$state,$http){
+                    		$scope.uploadIsDisable = false;
+                             var showMsg = function(event){
+                            	 
+                                 event.target.setAttribute('data-toggle','modal');
+                                 event.target.setAttribute('data-target','#myMsgModal');
+                             };
+                             
+                             $scope.changeBtnState = function(){
+                            	 if($scope.uploadIsDisable)
+                            		 $scope.uploadIsDisable = false;
+                            	 else
+                            		 $scope.uploadIsDisable = true;
+                            	 return $scope.uploadIsDisable;                                         
+                             };
+                             
+                             
+                        //车源文件上传
+                            $scope.upLoadCarSourceExcelFile = function(event){             
+                            	if(event.target.parentNode.childNodes[1].files.length !=0){
+                                    var inputFile = event.target.parentNode.childNodes[1].files[0];
+                                    
+                                    var formData = new FormData();
+                                    formData.append("file",inputFile);
+                                    if(!(inputFile.name.indexOf(".xls")!=-1)){
+                                        $scope.SuccessMsgShow = false;
+                                        $scope.returnErrorMsg = '文件格式 不支持(请上传.xls格式)';
+                                        showMsg(event);
+                                    }else if(inputFile.size>=4194304){//文件不超过4M
+                                        $scope.SuccessMsgShow = false;
+                                        $scope.returnErrorMsg = '不支持大于4M的文件上传';
+                                        showMsg(event);
+                                    }else{
+//                                      提交文件
+                                        $http.post(window.location.origin+'/employee-manage/supply/channelcarupload',formData,
+                                        {
+                                            transformRequest: angular.identity,
+                                            headers: {'Content-Type': undefined}
+                                        }).success(function(data){
+                                            $scope.uploadSuccess = true;
+                                            $scope.SuccessMsgShow = true;
+                                            $scope.returnSuccessMsg = '上传成功';
+                                            showMsg(event);
+                                            $scope.uploadIsDisable = true;
+                                        }).error(function(data){
+                                            $scope.uploadFaild = true;
+                                            $scope.SuccessMsgShow = false;
+                                            $scope.returnErrorMsg = '上传失败';
+                                            showMsg(event);
+                                            $scope.uploadIsDisable = false;
+                                        });
+                                    }
+                                }else{
+                                    $scope.SuccessMsgShow = false;
+                                    $scope.returnErrorMsg = '请选择上传文件';
+                                    showMsg(event);
+                                }
+                                
+                            };
+                        }
+                }
+            }
+        })
+        .state('supply.carmanage.carchannel',{
+        	url:'/carchannel',
+        	templateUrl:'jsp/view/carView/carManage/carSourceManage/carChannelManage.html',
+        	controller: function($scope, $state,$http){
+        		
+        		$scope.backToPrevious = function() {
+                    window.history.back();
+                };
+        		
+        		$scope.addCarObject = {
+                        isTop:"",
+                        city:"",
+                        shopName:"",
+                        customerManager:"",
+                        customerManagerTel:"",
+                        wechat:"",
+                        saleManager:"",
+                        saleManagerTel:"",
+                        carTypeId:"",
+                        region:"",
+                        principal:""
+                      };
+        				//车型
+		        		$http.get(window.location.origin+'/employee-manage/user/getcartype').success(function(data){
+		                    $scope.TypeOptions = data;
+		                    $scope.addCarObject.carTypeId = $scope.TypeOptions[0].id;
+		                 });
+                      //初始化各个select组件
+		        	//区域
+                      $scope.areaOptions=['东区','南区','西区','北区'];
+                      $scope.addCarObject.region=$scope.areaOptions[0];
+                      // 类型
+                      $scope.typeOptions =['进口店','国产店'];
+                      $scope.addCarObject.type=$scope.typeOptions[0];
+                      
+                      
+                      $scope.saveCarSource = function(){
+                    	  
+                          var postData = $scope.addCarObject;
+                    	  
+                    	  $http.post(window.location.origin+"/employee-manage/supply/createchannelcar",postData).success(function(data){
+                              if(data == "success"){
+                                  console.log(data);
+                                  $scope.returnSuccessMsg = "新增渠道商车源成功";
+                                  $scope.SuccessMsgShow = true;
+                            	  $('#myMsgModal').modal('show');
+                              }else{
+                              	 $scope.returnErrorMsg = "新增车源失败";
+                              	  $scope.SuccessMsgShow = false;
+                              	  $('#myMsgModal').modal('show');
+                              }
+                          });
+                      }
+                      
+        	}
+        })
         .state('supply.carmanage.addCarSource', {
             url: '/addCarSource',
             templateUrl: 'jsp/view/carView/carManage/carSourceManage/addCarSourceform.html',
@@ -651,7 +775,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                   
                   
 //                  车型
-            	  $http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
+            	  $http.get(window.location.origin+'/employee-manage/user/getcartype').success(function(data){
                       $scope.TypeOptions = data;
                    });
 
@@ -715,7 +839,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                 	  $scope.addCarObject.productDate = $scope.dt.format( "yyyy-MM-dd" );
                 	  var postData = $scope.addCarObject;
                 	  
-                	  $http.post(window.location.origin+"/employee-manage/admin/createcar",postData).success(function(data){
+                	  $http.post(window.location.origin+"/employee-manage/supply/createcar",postData).success(function(data){
                   		if(data == "success"){
                   			if(data == "success"){
                                 console.log(data);
@@ -769,7 +893,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                     }else if($scope.addCartTypeConfig.type == ""){
                     	$scope.notNullType = false;
                     }else{
-                    	$http.post(window.location.origin+"/employee-manage/admin/createcartype",postData).success(function(data){
+                    	$http.post(window.location.origin+"/employee-manage/supply/createcartype",postData).success(function(data){
                     		if(data == "success"){
                     			reGetCarTypeDatas();
                     			$scope.addCartTypeConfig = {
@@ -787,7 +911,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                 //获取Grid数据方法
                 var reGetCarTypeDatas = function(){
                 	
-                    $http.get(window.location.origin+'/employee-manage/admin/getcartype').success(function(data){
+                    $http.get(window.location.origin+'/employee-manage/user/getcartype').success(function(data){
                     $scope.dataStore = dataStore = data;
                     $scope.carTypeResult = data;
                  });
@@ -851,7 +975,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                         }
                 }
             }
-        })
+        });
 });
 
 routerSupplyApp.filter('publicOrNot',function(){
@@ -861,7 +985,7 @@ routerSupplyApp.filter('publicOrNot',function(){
        }else{
            return "私客";
        }
-    }
+    };
 });
 
 routerSupplyApp.filter('topOrNot',function(){
@@ -871,7 +995,7 @@ routerSupplyApp.filter('topOrNot',function(){
        }else{
            return "不置顶";
        }
-    }
+    };
 });
 
 routerSupplyApp.filter('customerType',function(){
@@ -881,7 +1005,7 @@ routerSupplyApp.filter('customerType',function(){
        }else{
            return "渠道客户";
        }
-    }
+    };
 });
 
 routerSupplyApp.filter('importColor',function(){
@@ -889,5 +1013,39 @@ routerSupplyApp.filter('importColor',function(){
        if(field == "1"){
     	   return "#FF3333";
        }
-    }
+    };
 });
+routerSupplyApp.filter('isChannel',function(){
+    return function(field){
+       if(field == "1"){
+    	   return "渠道商";
+       }else{
+    	   return "普通";
+       }
+       
+    };
+});
+//isTo, isChannal
+routerSupplyApp.filter('table_style',function(){
+	return function(field1,field2){
+       if(field1 == "1" && field2 == "1")
+    	   return "istop-channel";
+       else if(field1 == "1" && field2 == "0"){
+    	   return "istop-normal";
+       }
+       else if(field1 == "0" && field2 == "1")
+    	   return "normal-channel";
+       else{
+    	   return "normal-normal";
+       }
+    };
+});
+routerSupplyApp.filter('customerTableStyle',function(){
+	return function(field){
+	       if(field == "1")
+	    	   return "customerIsTop";
+	       else{
+	    	   return "customerNormal";
+	       }
+	    };
+	});

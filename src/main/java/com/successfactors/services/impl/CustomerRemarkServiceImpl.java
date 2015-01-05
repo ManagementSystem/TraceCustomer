@@ -12,6 +12,7 @@ import com.successfactors.bean.Customer;
 import com.successfactors.bean.CustomerRemarks;
 import com.successfactors.bean.Page;
 import com.successfactors.bean.ReturnValue;
+import com.successfactors.constant.RemarkConstant;
 import com.successfactors.constant.ReturnValueConstants;
 import com.successfactors.dao.CustomerDAO;
 import com.successfactors.dao.CustomerRemarkDAO;
@@ -41,7 +42,11 @@ public class CustomerRemarkServiceImpl implements CustomerRemarkService{
 			}
 			CustomerRemarks customerRemark = new CustomerRemarks();
 			customerRemark.setVO(vo);
+			
 			customerRemark.setUpdateTime(new Date());
+			if(vo.getType().equals(RemarkConstant.DEAL_TYPE)){
+				customer.setDealState(1);
+			}
 			customerRemark.setCustomer(customer);
 			customer.setLastModifyTime(new Date());
 			customerDao.save(customer);

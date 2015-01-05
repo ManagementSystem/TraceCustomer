@@ -120,7 +120,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                     'ispublic':'',
                                     'currentPage':1,
                                     'itemsPerPage': 10,
-                                    
+                                    'other':''
                             };
                         };
 //                        
@@ -338,6 +338,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                  	$scope.addReMarks = !$scope.addReMarks;
                                  	$scope.addreMarksObj = {};
                                  	getCoustomerRemarks($scope.coustomerSourceDetail.id);
+                                 	GetDatas();
                         		}else{
                         			$scope.SuccessMsgShow = false;
                                   	$scope.returnErrorMsg = '添加客源回访信息失败';
@@ -370,6 +371,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                                  	$scope.addCarReMarks = !$scope.addCarReMarks;
                                  	$scope.addCarReMarksObj = {};
                                  	getCarRemarks($scope.carSourceDetail.id);
+                                 	GetDatas();
                         		}else{
                         			$scope.SuccessMsgShow = false;
                                   	$scope.returnErrorMsg = '添加客源回访信息失败';

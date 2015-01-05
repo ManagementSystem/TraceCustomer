@@ -117,6 +117,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                         		'ispublic':'',
                         		'currentPage':1,
                                 'itemsPerPage': 10,
+                                'other':''
                         };
                         $http.get(window.location.origin+'/employee-manage/user/getcartype').success(function(data){
                             $scope.editTypeOptionsForCar = data;
@@ -300,6 +301,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                                  	$scope.addReMarks = !$scope.addReMarks;
                                  	$scope.addreMarksObj = {};
                                  	getCoustomerRemarks($scope.coustomerSourceDetail.id);
+                                 	GetDatas();
                         		}else{
                         			$scope.SuccessMsgShow = false;
                                   	$scope.returnErrorMsg = 'add ReMarks Faild!';
@@ -509,7 +511,7 @@ routercustomerApp.config(function($stateProvider, $urlRouterProvider) {
                       installment:"1",
                       insurance:"1",
                       level:"",
-                      ispublic:"1",
+                      ispublic:"0",
                       deadline:"24",
                       customerType:"渠道客户",
                       carTypeId:"",

@@ -64,6 +64,8 @@ public class CarVO {
 	private CarType carType;
 	
 	private Integer channelFlag;
+	
+	private Date importTime;
 	public Long getId() {
 		return id;
 	}
@@ -266,6 +268,14 @@ public class CarVO {
 	}
 	
 	
+	public Date getImportTime() {
+		return importTime;
+	}
+
+	public void setImportTime(Date importTime) {
+		this.importTime = importTime;
+	}
+
 	public void setCarsToCustomerGroup(Car car){
 		this.isTop = car.getIsTop();
 		this.region = car.getRegion();
@@ -273,6 +283,7 @@ public class CarVO {
 		this.configuration = car.getConfiguration();
 		this.carColor = car.getCarColor();
 		this.price = car.getPrice();
+		this.importTime = car.getImportTime();
 	}
 
 	public Integer getChannelFlag() {

@@ -86,7 +86,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public String addCustomer(CustomerVO vo) {
 		// TODO Auto-generated method stub
 		try {
-			CarType carType = carTypeDao.getById((long) 1);
+			CarType carType = carTypeDao.getById(vo.getCarTypeId());
 			Customer customer = new Customer();
 			customer.setCustomerVO(vo);
 			customer.setCarType(carType);

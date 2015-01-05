@@ -107,6 +107,9 @@ public class Customer{
 	@Column(name="last_modify")
 	private Date lastModifyTime;
 	
+	@Column(name="deal_state")
+	private Integer dealState;
+	
 	
 	public String getCompany() {
 		return company;
@@ -317,6 +320,15 @@ public class Customer{
 
 	public void setLastModifyTime(Date lastModifyTime) {
 		this.lastModifyTime = lastModifyTime;
+	}
+
+	
+	public Integer getDealState() {
+		return dealState;
+	}
+
+	public void setDealState(Integer dealState) {
+		this.dealState = dealState;
 	}
 
 	public void setCustomerVO(CustomerVO vo){

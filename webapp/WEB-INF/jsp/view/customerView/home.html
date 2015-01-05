@@ -59,7 +59,7 @@
 				<div class="input-group pull-right global-search">
 					<label class="input-group-addon">区域</label>
 					<div ng-init="Region=['东区','南区','西区','北区']">
-						<select ng-model="carSourceSearch.region" class="form-control input-sm">
+						<select ng-model="customerSearch.region" class="form-control input-sm">
 							<option value="" selected="selected"></option>
 							<option ng-repeat="item in Region">{{item}}</option>
 						</select>
@@ -82,6 +82,14 @@
 							<option value="1">公客</option>
 						</select>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" ng-show="!CarShow" style="margin-top: 10px">
+			<div class="col-md-6" >
+				<div class="input-group pull-right global-search">
+					<label class="input-group-addon">关键字</label>
+					<input type="text" class="form-control" ng-model="customerSearch.other"/>
 				</div>
 			</div>
 		</div>
@@ -157,6 +165,7 @@
 				<th>客户类型</th>
 				<th>姓名</th>
 				<th>性别</th>
+				<th>公司</th>
 				<th>联系方式</th>
 				<th>地区</th>
 				<th>城市</th>
@@ -174,6 +183,7 @@
 				<td>{{item.customerType | customerType}}</td>
 				<td>{{item.name}}</td>
 				<td>{{item.sex}}</td>
+				<td>{{item.company}}</td>
 				<td>{{item.phone}}</td>
 				<td>{{item.region}}</td>
 				<td>{{item.city}}</td>
@@ -319,6 +329,7 @@
 	      	<div><strong>属性:</strong>  {{coustomerSourceDetail.customerType |customerType}}</div>
 	      	<div><strong>姓名:</strong>  {{coustomerSourceDetail.name}}</div>
 	      	<div><strong>性别:</strong>  {{coustomerSourceDetail.sex}}</div>
+	      	<div><strong>性别:</strong>  {{coustomerSourceDetail.company}}</div>
 	        <div><strong>联系电话:</strong>  {{coustomerSourceDetail.phone}}</div>
 	        <div><strong>地区:</strong>  {{coustomerSourceDetail.region}}</div>
 	      	<div><strong>车型要求:</strong>  {{coustomerSourceDetail.carTypeRecord}}</div>

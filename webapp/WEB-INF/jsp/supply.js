@@ -298,19 +298,20 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                         		if(data == 'success'){
                         			//提示成功信息
                         			$scope.SuccessMsgShow = true;
-                                 	$scope.returnSuccessMsg = 'add ReMarks Success!';
+                                 	$scope.returnSuccessMsg = '添加成功';
                                  	showMsg(event);
                                  	$scope.addReMarks = !$scope.addReMarks;
                                  	$scope.addreMarksObj = {};
                                  	getCoustomerRemarks($scope.coustomerSourceDetail.id);
+                                 	GetDatas();
                         		}else{
                         			$scope.SuccessMsgShow = false;
-                                  	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                                  	$scope.returnErrorMsg = '添加失败';
                                   	showMsg(event);
                         		}
                         	 }).error(function(data){
                         		$scope.SuccessMsgShow = false;
-                              	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                              	$scope.returnErrorMsg = '添加失败';
                               	showMsg(event);
                         	 });
                          };
@@ -326,23 +327,24 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                            		 event.target.setAttribute('data-toggle','modal');
                                  event.target.setAttribute('data-target','#myMsgModal');
                            	 };
-                        	 $http.post(window.location.origin+'/employee-manage/admin/addcarremark',postData).success(function(data){
+                        	 $http.post(window.location.origin+'/employee-manage/user/addcarremark',postData).success(function(data){
                         		if(data == 'success'){
                         			//提示成功信息
                         			$scope.SuccessMsgShow = true;
-                                 	$scope.returnSuccessMsg = 'add ReMarks Success!';
+                                 	$scope.returnSuccessMsg = '添加成功';
                                  	showMsg(event);
                                  	$scope.addCarReMarks = !$scope.addCarReMarks;
                                  	$scope.addCarReMarksObj = {};
                                  	getCarRemarks($scope.carSourceDetail.id);
+                                 	getDatas();
                         		}else{
                         			$scope.SuccessMsgShow = false;
-                                  	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                                  	$scope.returnErrorMsg = '添加失败';
                                   	showMsg(event);
                         		}
                         	 }).error(function(data){
                         		$scope.SuccessMsgShow = false;
-                              	$scope.returnErrorMsg = 'add ReMarks Faild!';
+                              	$scope.returnErrorMsg = '添加失败';
                               	showMsg(event);
                         	 });
                          };
@@ -614,7 +616,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
         .state('supply.carmanage.carchannel.sourcedata', {
             url: '/channelsourcedata',
             views: {
-                'main@index': {
+                'main@supply': {
                     templateUrl:'jsp/view/carView/sourceDataManage/channelSourceDataImport.html',
                     controller: function($scope,$state,$http){
                     		$scope.uploadIsDisable = false;

@@ -117,6 +117,13 @@ public class Car {
 	@Column(name="last_modify")
 	private Date lastModifyTime;
 	
+	@Column(name="comment")
+	private String comment;
+	
+	@Column(name="comment_flag")
+	private Integer commentFlag;
+	
+	
 	public Long getId() {
 		return id;
 	}

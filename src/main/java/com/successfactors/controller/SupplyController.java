@@ -18,6 +18,8 @@ import com.successfactors.bean.ReturnValue;
 import com.successfactors.services.CarService;
 import com.successfactors.services.CarsRemarkService;
 import com.successfactors.services.CustomerService;
+import com.successfactors.vo.CarRemarkVO;
+import com.successfactors.vo.CarVO;
 
 
 @RequestMapping(value="/supply")
@@ -92,6 +94,28 @@ public class SupplyController extends BaseController{
 		return carService.importChannelCars(file, path,suffix,getUserName());
 	}
 	
+	@RequestMapping(value="/addcarremark",method=RequestMethod.POST)
+	@ResponseBody
+	public String addCarRemark(@RequestBody CarRemarkVO vo){		
+		vo.setRemarkMan(getUserName());
+		return carRemarkService.addCarsRemark(vo);
+		
+	}
 	
+	@RequestMapping(value="/createchannelcar",method=RequestMethod.POST)
+	@ResponseBody
+	public String createChannelCar(@RequestBody CarVO vo){
+		vo.setChannelFlag(1);
+		vo.setOperator(getUserName());
+		return carService.addCar(vo);
+	}
+	
+	@RequestMapping(value="/createcar",method=RequestMethod.POST)
+	@ResponseBody
+	public String createCar(@RequestBody CarVO car){
+		car.setChannelFlag(0);
+		car.setOperator(getUserName());
+		return carService.addCar(car);
+	}
 	
 }

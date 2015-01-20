@@ -716,6 +716,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
                       $scope.typeOptions =['进口店','国产店'];
                       $scope.addCarObject.type=$scope.typeOptions[0];
                       
+                      $scope.addCarObject.isTop = "0";
                       
                       $scope.saveCarSource = function(){
                     	  
@@ -783,7 +784,7 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
 
                   //新增车源
                   $scope.addCarObject = {
-                  	isTop:"",
+                  	isTop:"0",
                   	saleRegion:"",
                   	configuration:"",
                   	customerManager:"",
@@ -807,6 +808,8 @@ routerSupplyApp.config(function($stateProvider, $urlRouterProvider) {
 //                  可售区域
                   $scope.saleRegionOptions=['全国','省内','小区域'];
                   $scope.addCarObject.saleRegion=$scope.saleRegionOptions[0];
+                  $scope.addCarObject.isTop = "0";
+                  
                   
                   $scope.saveCarSource = function(){
                 	  //时间formatter

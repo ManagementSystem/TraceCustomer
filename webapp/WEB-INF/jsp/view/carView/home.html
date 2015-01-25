@@ -155,16 +155,14 @@
 				<th>城市</th>
 				<th>店名</th>
 				<th>大客户经理</th>
-				<th>大客户经理电话</th>
 				<th>销售经理</th>
-				<th>销售经理电话</th>
 				<th>车型</th>
 				<th>价格</th>
 				<th>录入时间</th>
 				<th>最后回访时间</th>
         <th style="width:63px;">操作</th>
     	</tr> -->
-    	<tr>
+    	<!-- <tr>
     		<th>置顶</th>
     		<th>车型</th>
     		<th>购车预算</th>
@@ -174,34 +172,41 @@
     		<th>录入时间</th>
     		<th>最后回访时间</th>
     		<th style="width:63px;">操作</th>
+    	</tr> -->
+    	<tr>
+    			<th>置顶</th>
+				<th>渠道商</th>
+				<th>区域</th>
+				<th>城市</th>
+				<th>店名</th>
+				<th>大客户经理</th>
+				<th>销售经理</th>
+				<th>车型</th>
+				<th>配置</th>
+				<th>颜色</th>
+				<th>价格</th>
+				<th>录入时间</th>
+				<th>最后回访时间</th>
+        		<th style="width:63px;">操作</th>
     	</tr>
+    	
     	
     </thead>
     <tbody>
     	<tr ng-repeat="item in formDataResultForSupply" class="{{item.isTop|table_style:item.channelFlag}}">
-    		<!-- <td>{{item.isTop | topOrNot}}</td>
-			<td>{{item.channelFlag| isChannel}}</td>
-			<td>{{item.region}}</td>
-			<td>{{item.city}}</td>
-			<td>{{item.shopName}}</td>
-			<td>{{item.customerManager}}</td>
-			<td>{{item.customerManagerTel}}</td>
-			<td>{{item.saleManager}}</td>
-			<td>{{item.saleManagerTel}}</td>
-			<td>{{item.carTypeRecord}}</td>
-			<td>{{item.price | priceFormat}}</td>
-			<td>{{item.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
-			<td>{{item.lastModifyTime | date:"yyyy/MM/dd HH:mm:ss"}}</td> -->
-			
-			
 			<!-- update -->
 			
 			<td>{{item.isTop | topOrNot}}</td>
+			<td>{{item.channelFlag | isChannel}}
+    		<td>{{item.region}}</td>
+    		<td>{{item.city}}</td>
+    		<td>{{item.shopName}}</td>
+    		<td>{{item.customerManager}}</td>
+    		<td>{{item.saleManager}}</td>
     		<td>{{item.carTypeRecord}}</td>
-    		<td>{{item.budgetRange}}</td>
-    		<td>{{item.carColor}}</td>
-    		<td>{{item.decoration}}</td>
     		<td>{{item.configuration}}</td>
+    		<td>{{item.carColor}}</td>
+    		<td>{{item.price}}</td>
     		<td>{{item.importTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
 			<td>{{item.lastModifyTime | date:"yyyy/MM/dd HH:mm:ss"}}</td>
         <td>
